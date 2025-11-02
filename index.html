@@ -447,7 +447,7 @@
             return translatedReading;
         }
 
-        function changeLanguage() {
+        async function changeLanguage() {
             currentLanguage = document.getElementById('language-select').value;
 
             // Save language preference to localStorage
@@ -461,8 +461,8 @@
             document.getElementById('tap-hint').textContent = trans.clickToReveal;
             document.getElementById('new-card-button').textContent = trans.drawNewCard;
 
-            // Redraw card with new language
-            drawCard();
+            // Translate the current card instead of drawing a new one
+            await translateCurrentCard();
         }
 
         async function drawCard() {
@@ -528,6 +528,26 @@
                 document.getElementById('new-card-button').classList.remove('revealed');
             };
             img.src = imagePath;
+        }
+
+        async function translateCurrentCard() {
+            // If no card is drawn yet, just draw a new one
+            if (!currentCard) {
+                await drawCard();
+                return;
+            }
+
+            // Get card meaning
+            const meaning = getCardMeaning(currentCard.name);
+
+            // Re-generate reading in new language
+            const reading = await generateDailyAdvice(currentCard.name, meaning, currentIsReversed);
+            currentReading = reading;
+
+            // Update UI with translated text
+            const trans = translations[currentLanguage];
+            document.getElementById('card-reading').textContent = reading;
+            document.getElementById('card-orientation').textContent = currentIsReversed ? `(${trans.reversed})` : `(${trans.upright})`;
         }
 
         function revealReading() {
