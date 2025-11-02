@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarot Reading Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e0033 0%, #3d0066 100%);
+            color: #f0e6d2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #d4af37;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-label {
+            font-size: 1.3em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        #question-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            font-family: 'Georgia', serif;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            color: #f0e6d2;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        #question-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        #question-input::placeholder {
+            color: rgba(240, 230, 210, 0.5);
+        }
+
+        #pull-button {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #1e0033;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            margin-bottom: 40px;
+        }
+
+        #pull-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+        }
+
+        #pull-button:active {
+            transform: translateY(-1px);
+        }
+
+        #card-display {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #card-image {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+            transition: transform 0.6s ease;
+        }
+
+        #card-image.reversed {
+            transform: rotate(180deg);
+        }
+
+        .user-question {
+            font-size: 1.4em;
+            color: #ffd700;
+            margin-bottom: 25px;
+            padding: 15px 25px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            font-style: italic;
+        }
+
+        .user-question:empty {
+            display: none;
+        }
+
+        .card-name {
+            font-size: 2em;
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .card-orientation {
+            font-size: 1.2em;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .card-meaning {
+            font-size: 1.3em;
+            color: #f0e6d2;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .card-interpretation {
+            font-size: 1.1em;
+            color: #e6d5b8;
+            line-height: 1.8;
+            text-align: left;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .pull-another {
+            margin-top: 30px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid #d4af37;
+            color: #ffd700;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pull-another:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Tarot Reading Bot ✨</h1>
+        <p class="subtitle">Seek guidance from the cards</p>
+
+        <div class="question-container">
+            <label class="question-label" for="question-input">Question for Today:</label>
+            <input type="text" id="question-input" placeholder="What do I need to know today?" maxlength="200">
+        </div>
+
+        <button id="pull-button" onclick="pullCard()">Pull a Card</button>
+
+        <div id="card-display">
+            <div class="user-question" id="user-question"></div>
+            <img id="card-image" src="" alt="Tarot Card">
+            <div class="card-name" id="card-name"></div>
+            <div class="card-orientation" id="card-orientation"></div>
+            <div class="card-interpretation" id="card-interpretation"></div>
+            <button class="pull-another" onclick="pullCard()">Pull Another Card</button>
+        </div>
+    </div>
+
+    <script>
+        // Embedded tarot data
+        const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"innocence, new beginnings, free spirit","reversed":"recklessness, taken advantage of, inconsideration"},{"number":1,"name":"The Magician","upright":"willpower, desire, creation, manifestation","reversed":"trickery, illusions, out of touch"},{"number":2,"name":"The High Priestess","upright":"intuitive, unconscious, inner voice","reversed":"lack of center, lost inner voice, repressed feelings"},{"number":3,"name":"The Empress","upright":"motherhood, fertility, nature","reversed":"dependence, smothering, emptiness, nosiness"},{"number":4,"name":"The Emperor","upright":"authority, structure, control, fatherhood","reversed":"tyranny, rigidity, coldness"},{"number":5,"name":"The Hierophant","upright":"tradition, conformity, morality, ethics","reversed":"rebellion, subversiveness, new approaches"},{"number":6,"name":"The Lovers","upright":"partnerships, duality, union","reversed":"loss of balance, one-sidedness, disharmony"},{"number":7,"name":"The Chariot","upright":"direction, control, willpower","reversed":"lack of control, lack of direction, aggression"},{"number":8,"name":"Strength","upright":"inner strength, bravery, compassion, focus","reversed":"self doubt, weakness, insecurity"},{"number":9,"name":"The Hermit","upright":"contemplation, search for truth, inner guidance","reversed":"loneliness, isolation, lost your way"},{"number":10,"name":"Wheel of Fortune","upright":"change, cycles, inevitable fate","reversed":"no control, clinging to control, bad luck"},{"number":11,"name":"Justice","upright":"cause and effect, clarity, truth","reversed":"dishonesty, unaccountability, unfairness"},{"number":12,"name":"The Hanged Man","upright":"sacrifice, release, martyrdom","reversed":"stalling, needless sacrifice, fear of sacrifice"},{"number":13,"name":"Death","upright":"end of cycle, beginnings, change, metamorphosis","reversed":"fear of change, holding on, stagnation, decay"},{"number":14,"name":"Temperance","upright":"middle path, patience, finding meaning","reversed":"extremes, excess, lack of balance"},{"number":15,"name":"The Devil","upright":"addiction, materialism, playfulness","reversed":"freedom, release, restoring control"},{"number":16,"name":"The Tower","upright":"sudden upheaval, broken pride, disaster","reversed":"disaster avoided, delayed disaster, fear of suffering"},{"number":17,"name":"The Star","upright":"hope, faith, rejuvenation","reversed":"faithlessness, discouragement, insecurity"},{"number":18,"name":"The Moon","upright":"unconscious, illusions, intuition","reversed":"confusion, fear, misinterpretation"},{"number":19,"name":"The Sun","upright":"joy, success, celebration, positivity","reversed":"negativity, depression, sadness"},{"number":20,"name":"Judgement","upright":"reflection, reckoning, awakening","reversed":"lack of self awareness, doubt, self loathing"},{"number":21,"name":"The World","upright":"fulfillment, harmony, completion","reversed":"incompletion, no closure"}],"minor_arcana":{"wands":[{"name":"Ace of Wands","upright":"creation, willpower, inspiration, desire","reversed":"lack of energy, lack of passion, boredom"},{"name":"Two of Wands","upright":"planning, making decisions, leaving home","reversed":"fear of change, playing safe, bad planning"},{"name":"Three of Wands","upright":"looking ahead, expansion, rapid growth","reversed":"obstacles, delays, frustration"},{"name":"Four of Wands","upright":"community, home, celebration","reversed":"lack of support, transience, home conflicts"},{"name":"Five of Wands","upright":"competition, rivalry, conflict","reversed":"avoiding conflict, respecting differences"},{"name":"Six of Wands","upright":"victory, success, public reward","reversed":"excess pride, lack of recognition, punishment"},{"name":"Seven of Wands","upright":"perseverance, defensive, maintaining control","reversed":"give up, destroyed confidence, overwhelmed"},{"name":"Eight of Wands","upright":"rapid action, movement, quick decisions","reversed":"panic, waiting, slowdown"},{"name":"Nine of Wands","upright":"resilience, grit, last stand","reversed":"exhaustion, fatigue, questioning motivations"},{"name":"Ten of Wands","upright":"accomplishment, responsibility, burden","reversed":"inability to delegate, overstressed, burnt out"},{"name":"Page of Wands","upright":"exploration, excitement, freedom","reversed":"lack of direction, procrastination, creating conflict"},{"name":"Knight of Wands","upright":"action, adventure, fearlessness","reversed":"anger, impulsiveness, recklessness"},{"name":"Queen of Wands","upright":"courage, determination, joy","reversed":"selfishness, jealousy, insecurities"},{"name":"King of Wands","upright":"big picture, leader, overcoming challenges","reversed":"impulsive, overbearing, unachievable expectations"}],"cups":[{"name":"Ace of Cups","upright":"new feelings, spirituality, intuition","reversed":"emotional loss, blocked creativity, emptiness"},{"name":"Two of Cups","upright":"unity, partnership, connection","reversed":"imbalance, broken communication, tension"},{"name":"Three of Cups","upright":"friendship, community, happiness","reversed":"overindulgence, gossip, isolation"},{"name":"Four of Cups","upright":"apathy, contemplation, disconnectedness","reversed":"sudden awareness, choosing happiness, acceptance"},{"name":"Five of Cups","upright":"loss, grief, self-pity","reversed":"acceptance, moving on, finding peace"},{"name":"Six of Cups","upright":"familiarity, happy memories, healing","reversed":"moving forward, leaving home, independence"},{"name":"Seven of Cups","upright":"searching for purpose, choices, daydreaming","reversed":"lack of purpose, diversion, confusion"},{"name":"Eight of Cups","upright":"walking away, disillusionment, leaving behind","reversed":"avoidance, fear of change, fear of loss"},{"name":"Nine of Cups","upright":"satisfaction, emotional stability, luxury","reversed":"lack of inner joy, smugness, dissatisfaction"},{"name":"Ten of Cups","upright":"inner happiness, fulfillment, dreams coming true","reversed":"shattered dreams, broken family, domestic disharmony"},{"name":"Page of Cups","upright":"happy surprise, dreamer, sensitivity","reversed":"emotional immaturity, insecurity, disappointment"},{"name":"Knight of Cups","upright":"following the heart, idealist, romantic","reversed":"moodiness, disappointment"},{"name":"Queen of Cups","upright":"compassion, calm, comfort","reversed":"martyrdom, insecurity, dependence"},{"name":"King of Cups","upright":"compassion, control, balance","reversed":"coldness, moodiness, bad advice"}],"swords":[{"name":"Ace of Swords","upright":"breakthrough, clarity, sharp mind","reversed":"confusion, brutality, chaos"},{"name":"Two of Swords","upright":"difficult choices, indecision, stalemate","reversed":"lesser of two evils, no right choice, confusion"},{"name":"Three of Swords","upright":"heartbreak, suffering, grief","reversed":"recovery, forgiveness, moving on"},{"name":"Four of Swords","upright":"rest, restoration, contemplation","reversed":"restlessness, burnout, stress"},{"name":"Five of Swords","upright":"unbridled ambition, win at all costs, sneakiness","reversed":"lingering resentment, desire to reconcile, forgiveness"},{"name":"Six of Swords","upright":"transition, leaving behind, moving on","reversed":"emotional baggage, unresolved issues, resisting transition"},{"name":"Seven of Swords","upright":"deception, trickery, tactics and strategy","reversed":"coming clean, rethinking approach, deception"},{"name":"Eight of Swords","upright":"imprisonment, entrapment, self-victimization","reversed":"self acceptance, new perspective, freedom"},{"name":"Nine of Swords","upright":"anxiety, hopelessness, trauma","reversed":"hope, reaching out, despair"},{"name":"Ten of Swords","upright":"failure, collapse, defeat","reversed":"can't get worse, only upwards, inevitable end"},{"name":"Page of Swords","upright":"curiosity, restlessness, mental energy","reversed":"deception, manipulation, all talk"},{"name":"Knight of Swords","upright":"action, impulsiveness, defending beliefs","reversed":"no direction, disregard for consequences, unpredictability"},{"name":"Queen of Swords","upright":"complexity, perceptiveness, clear mindedness","reversed":"cold hearted, cruel, bitterness"},{"name":"King of Swords","upright":"head over heart, discipline, truth","reversed":"manipulative, cruel, weakness"}],"pentacles":[{"name":"Ace of Pentacles","upright":"opportunity, prosperity, new venture","reversed":"lost opportunity, missed chance, bad investment"},{"name":"Two of Pentacles","upright":"balancing decisions, priorities, adapting to change","reversed":"loss of balance, disorganized, overwhelmed"},{"name":"Three of Pentacles","upright":"teamwork, collaboration, building","reversed":"lack of teamwork, disorganized, group conflict"},{"name":"Four of Pentacles","upright":"conservation, frugality, security","reversed":"greediness, stinginess, possessiveness"},{"name":"Five of Pentacles","upright":"need, poverty, insecurity","reversed":"recovery, charity, improvement"},{"name":"Six of Pentacles","upright":"charity, generosity, sharing","reversed":"strings attached, stinginess, power and domination"},{"name":"Seven of Pentacles","upright":"hard work, perseverance, diligence","reversed":"work without results, distractions, lack of rewards"},{"name":"Eight of Pentacles","upright":"apprenticeship, passion, high standards","reversed":"lack of passion, uninspired, no motivation"},{"name":"Nine of Pentacles","upright":"fruits of labor, rewards, luxury","reversed":"reckless spending, living beyond means, false success"},{"name":"Ten of Pentacles","upright":"legacy, culmination, inheritance","reversed":"fleeting success, lack of stability, lack of resources"},{"name":"Page of Pentacles","upright":"ambition, desire, diligence","reversed":"lack of commitment, greediness, laziness"},{"name":"Knight of Pentacles","upright":"efficiency, hard work, responsibility","reversed":"laziness, obsessiveness, work without reward"},{"name":"Queen of Pentacles","upright":"practicality, creature comforts, financial security","reversed":"self-centeredness, jealousy, smothering"},{"name":"King of Pentacles","upright":"abundance, prosperity, security","reversed":"greed, indulgence, sensuality"}]}};
+
+        // All 78 cards with their image paths
+        const allCards = {
+            major: [
+                { name: "The Fool", file: "00-the-fool.png", number: 0 },
+                { name: "The Magician", file: "01-the-magician.png", number: 1 },
+                { name: "The High Priestess", file: "02-the-high-priestess.png", number: 2 },
+                { name: "The Empress", file: "03-the-empress.png", number: 3 },
+                { name: "The Emperor", file: "04-the-emperor.png", number: 4 },
+                { name: "The Hierophant", file: "05-the-hierophant.png", number: 5 },
+                { name: "The Lovers", file: "06-the-lovers.png", number: 6 },
+                { name: "The Chariot", file: "07-the-chariot.png", number: 7 },
+                { name: "Strength", file: "08-strength.png", number: 8 },
+                { name: "The Hermit", file: "09-the-hermit.png", number: 9 },
+                { name: "Wheel of Fortune", file: "10-wheel-of-fortune.png", number: 10 },
+                { name: "Justice", file: "11-justice.png", number: 11 },
+                { name: "The Hanged Man", file: "12-the-hanged-man.png", number: 12 },
+                { name: "Death", file: "13-death.png", number: 13 },
+                { name: "Temperance", file: "14-temperance.png", number: 14 },
+                { name: "The Devil", file: "15-the-devil.png", number: 15 },
+                { name: "The Tower", file: "16-the-tower.png", number: 16 },
+                { name: "The Star", file: "17-the-star.png", number: 17 },
+                { name: "The Moon", file: "18-the-moon.png", number: 18 },
+                { name: "The Sun", file: "19-the-sun.png", number: 19 },
+                { name: "Judgement", file: "20-judgement.png", number: 20 },
+                { name: "The World", file: "21-the-world.png", number: 21 }
+            ],
+            minor: []
+        };
+
+        // Generate minor arcana cards
+        const suits = ['cups', 'pentacles', 'swords', 'wands'];
+        const ranks = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'page', 'knight', 'queen', 'king'];
+
+        suits.forEach(suit => {
+            ranks.forEach(rank => {
+                const name = rank === 'ace' ? `Ace of ${suit.charAt(0).toUpperCase() + suit.slice(1)}` :
+                             ['page', 'knight', 'queen', 'king'].includes(rank) ?
+                             `${rank.charAt(0).toUpperCase() + rank.slice(1)} of ${suit.charAt(0).toUpperCase() + suit.slice(1)}` :
+                             `${rank} of ${suit.charAt(0).toUpperCase() + suit.slice(1)}`;
+
+                allCards.minor.push({
+                    name: name,
+                    file: `${rank}-of-${suit}.png`,
+                    suit: suit
+                });
+            });
+        });
+
+        function getCardMeaning(cardName, isReversed) {
+            // Check major arcana
+            const majorCard = tarotData.major_arcana.find(c => c.name === cardName);
+            if (majorCard) {
+                return {
+                    upright: majorCard.upright,
+                    reversed: majorCard.reversed,
+                    type: 'major'
+                };
+            }
+
+            // Check minor arcana
+            for (const suit in tarotData.minor_arcana) {
+                const minorCard = tarotData.minor_arcana[suit].find(c => c.name === cardName);
+                if (minorCard) {
+                    return {
+                        upright: minorCard.upright,
+                        reversed: minorCard.reversed,
+                        type: 'minor',
+                        suit: suit
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        function generateInterpretation(cardName, meaning, isReversed, userQuestion) {
+            const meaningText = isReversed ? meaning.reversed : meaning.upright;
+            const hasQuestion = userQuestion && userQuestion.trim().length > 0;
+
+            if (!hasQuestion) {
+                // Generic reading - brief and direct
+                return isReversed ?
+                    `The card appears reversed, suggesting ${meaningText}. Look within for answers.` :
+                    `The card speaks of ${meaningText}. This energy is present in your life now.`;
+            }
+
+            // Question-specific interpretation - analyze question
+            const questionLower = userQuestion.toLowerCase();
+
+            // Detect question type
+            const isAboutLove = /love|relationship|partner|romance|marriage|dating|crush/i.test(questionLower);
+            const isAboutCareer = /work|job|career|business|money|finance|income|promotion/i.test(questionLower);
+            const isAboutDecision = /should|choose|decide|which|option|path/i.test(questionLower);
+            const isAboutFuture = /will|future|going to|happen|outcome/i.test(questionLower);
+            const isAboutGrowth = /improve|grow|develop|learn|change|become/i.test(questionLower);
+            const isAboutProblem = /why|problem|issue|wrong|difficulty|struggle/i.test(questionLower);
+
+            // Generate direct, concise answer
+            let answer = '';
+
+            if (isReversed) {
+                // Reversed cards - blockages, internal work
+                if (isAboutDecision) {
+                    answer = `Not yet. There's hesitation or fear blocking clarity. The energy of ${meaningText} suggests you need to resolve inner doubts first.`;
+                } else if (isAboutProblem) {
+                    answer = `The issue stems from ${meaningText}. This is an internal blockage rather than external circumstances. Work on releasing this.`;
+                } else if (isAboutFuture) {
+                    answer = `If things continue as they are, ${meaningText} indicates the path ahead. But you can shift this by addressing what's blocked within.`;
+                } else if (isAboutLove) {
+                    answer = meaning.suit === 'cups' ?
+                        `Emotionally, ${meaningText} is creating distance or confusion. Heal this within yourself before seeking connection with another.` :
+                        `Love is blocked by ${meaningText}. Self-doubt or past wounds need attention before the relationship can flourish.`;
+                } else if (isAboutCareer) {
+                    answer = meaning.suit === 'pentacles' ?
+                        `Career-wise, ${meaningText} describes current challenges. Face this reality honestly and take practical steps to shift it.` :
+                        `Your own limiting beliefs around ${meaningText} are the real obstacle. Change your mindset, not just your circumstances.`;
+                } else if (isAboutGrowth) {
+                    answer = `Growth requires confronting ${meaningText}. This is your inner work right now - face it rather than avoid it.`;
+                } else {
+                    answer = `The answer is complicated by ${meaningText}. Something internal is blocking the flow. Address this first.`;
+                }
+            } else {
+                // Upright cards - clear guidance, flow
+                if (isAboutDecision) {
+                    answer = `Yes. Choose the path aligned with ${meaningText}. This is the answer your intuition already knows.`;
+                } else if (isAboutProblem) {
+                    answer = `This isn't a problem - it's ${meaningText} showing you what needs to be understood. Accept it and work with it.`;
+                } else if (isAboutFuture) {
+                    answer = `Your path leads to ${meaningText}. This is the natural outcome if you stay aligned with your current direction.`;
+                } else if (isAboutLove) {
+                    answer = meaning.suit === 'cups' ?
+                        `Love flows when you embody ${meaningText}. This is the energy needed now - be authentic and open.` :
+                        `In matters of the heart, ${meaningText} is key. Embrace this quality to attract or deepen connection.`;
+                } else if (isAboutCareer) {
+                    answer = meaning.suit === 'pentacles' ?
+                        `Financially and career-wise, ${meaningText} describes your opportunity. Take practical action aligned with this.` :
+                        `Success comes through ${meaningText}. Let this guide your professional decisions and actions.`;
+                } else if (isAboutGrowth) {
+                    answer = `Your growth path is clear: develop ${meaningText}. This is what you're being called to embody now.`;
+                } else {
+                    answer = `The answer: ${meaningText}. Trust this guidance and act accordingly.`;
+                }
+            }
+
+            return answer;
+        }
+
+        function pullCard() {
+            console.log('Pull card function called');
+
+            try {
+                // Get user's question
+                const userQuestion = document.getElementById('question-input').value.trim();
+                console.log('User question:', userQuestion);
+
+                // Combine all cards into one array
+                const deck = [...allCards.major, ...allCards.minor];
+                console.log('Deck size:', deck.length);
+
+            // Random card selection
+            const randomIndex = Math.floor(Math.random() * deck.length);
+            const selectedCard = deck[randomIndex];
+
+            // Random orientation (upright or reversed)
+            const isReversed = Math.random() < 0.3; // 30% chance of reversed
+
+            // Determine image path
+            const isMajor = allCards.major.includes(selectedCard);
+            const imagePath = isMajor ?
+                `images/major_arcana/${selectedCard.file}` :
+                `images/minor_arcana/${selectedCard.suit}/${selectedCard.file}`;
+
+            // Get card meaning
+            const meaning = getCardMeaning(selectedCard.name, isReversed);
+            const meaningText = isReversed ? meaning.reversed : meaning.upright;
+
+            // Generate interpretation with user's question
+            const interpretation = generateInterpretation(selectedCard.name, meaning, isReversed, userQuestion);
+
+            // Display the user's question
+            const questionDisplay = document.getElementById('user-question');
+            if (userQuestion) {
+                questionDisplay.textContent = `"${userQuestion}"`;
+            } else {
+                questionDisplay.textContent = '';
+            }
+
+            // Display the card
+            const cardImage = document.getElementById('card-image');
+            cardImage.src = imagePath;
+
+            // Add or remove reversed class for visual rotation
+            if (isReversed) {
+                cardImage.classList.add('reversed');
+            } else {
+                cardImage.classList.remove('reversed');
+            }
+
+            document.getElementById('card-name').textContent = selectedCard.name;
+            document.getElementById('card-orientation').textContent = isReversed ? '(Reversed)' : '(Upright)';
+            document.getElementById('card-interpretation').textContent = interpretation;
+
+            // Show the card display
+            const cardDisplay = document.getElementById('card-display');
+            cardDisplay.style.display = 'block';
+
+            // Scroll to card display
+            cardDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            console.log('Card pulled successfully');
+
+            } catch (error) {
+                console.error('Error pulling card:', error);
+                alert('Error pulling card: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
