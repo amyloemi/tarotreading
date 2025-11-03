@@ -391,6 +391,28 @@
 
 		</div>
 
+		<!-- Nav Panel (Mobile) -->
+		<div id="navPanel">
+			<nav>
+				<a href="index.html" class="link depth-0">Home</a>
+				<div class="link depth-0" style="padding: 1em;">
+					<select id="language-select-mobile" onchange="changeMobileLanguage()" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+						<option value="en">🇬🇧 English</option>
+						<option value="fr">🇫🇷 Français</option>
+						<option value="es">🇪🇸 Español</option>
+						<option value="zh">🇨🇳 中文</option>
+						<option value="ja">🇯🇵 日本語</option>
+						<option value="ko">🇰🇷 한국어</option>
+					</select>
+				</div>
+			</nav>
+		</div>
+
+		<!-- Nav Button (Mobile) -->
+		<div id="navButton">
+			<a href="#navPanel" class="toggle"></a>
+		</div>
+
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.dropotron.min.js"></script>
@@ -621,6 +643,31 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
         async function changeLanguage() {
             currentLanguage = document.getElementById('language-select').value;
 
+            // Sync mobile dropdown
+            const mobileSelect = document.getElementById('language-select-mobile');
+            if (mobileSelect) mobileSelect.value = currentLanguage;
+
+            // Save language preference to localStorage
+            localStorage.setItem('tarotLanguage', currentLanguage);
+
+            const trans = translations[currentLanguage];
+
+            // Update UI text
+            document.getElementById('title').textContent = trans.title;
+            document.getElementById('subtitle').textContent = trans.subtitle;
+            document.getElementById('tap-hint').textContent = trans.clickToReveal;
+            document.getElementById('new-card-button').textContent = trans.drawNewCard;
+
+            // Translate the current card instead of drawing a new one
+            await translateCurrentCard();
+        }
+
+        async function changeMobileLanguage() {
+            currentLanguage = document.getElementById('language-select-mobile').value;
+
+            // Sync desktop dropdown
+            document.getElementById('language-select').value = currentLanguage;
+
             // Save language preference to localStorage
             localStorage.setItem('tarotLanguage', currentLanguage);
 
@@ -776,8 +823,10 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
 
 
         window.onload = function() {
-            // Set the dropdown to the saved language
+            // Set both dropdowns to the saved language
             document.getElementById('language-select').value = currentLanguage;
+            const mobileSelect = document.getElementById('language-select-mobile');
+            if (mobileSelect) mobileSelect.value = currentLanguage;
 
             // Update UI to match saved language
             const trans = translations[currentLanguage];
