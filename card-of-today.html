@@ -619,7 +619,10 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
 
                 const trans = translations[currentLanguage];
                 document.getElementById('card-name').textContent = selectedCard.name;
-                document.getElementById('card-orientation').textContent = isReversed ? `(${trans.reversed})` : `(${trans.upright})`;
+                // Use Chinese punctuation for Chinese language
+                const leftParen = currentLanguage === 'zh' ? '（' : '(';
+                const rightParen = currentLanguage === 'zh' ? '）' : ')';
+                document.getElementById('card-orientation').textContent = isReversed ? `${leftParen}${trans.reversed}${rightParen}` : `${leftParen}${trans.upright}${rightParen}`;
                 document.getElementById('card-reading').textContent = reading;
 
                 // Reset reveal state
@@ -649,7 +652,10 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
             // Update UI with translated text
             const trans = translations[currentLanguage];
             document.getElementById('card-reading').textContent = reading;
-            document.getElementById('card-orientation').textContent = currentIsReversed ? `(${trans.reversed})` : `(${trans.upright})`;
+            // Use Chinese punctuation for Chinese language
+            const leftParen = currentLanguage === 'zh' ? '（' : '(';
+            const rightParen = currentLanguage === 'zh' ? '）' : ')';
+            document.getElementById('card-orientation').textContent = currentIsReversed ? `${leftParen}${trans.reversed}${rightParen}` : `${leftParen}${trans.upright}${rightParen}`;
         }
 
 
