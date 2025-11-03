@@ -18,11 +18,36 @@
 					url('tarot-background.jpg') center/cover fixed;
 			}
 
+			/* Keep page wrapper transparent */
+			#page-wrapper {
+				background: transparent !important;
+			}
+
+			/* Keep main section backgrounds transparent/dark */
+			#main {
+				background: transparent !important;
+			}
+
+			section.box {
+				background: rgba(0, 0, 0, 0.3) !important;
+				backdrop-filter: blur(10px);
+			}
+
 			#banner {
 				background:
 					linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 					url('tarot-background.jpg') center/cover;
 				box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+			}
+
+			/* Make header text always visible */
+			#header {
+				background: rgba(0, 0, 0, 0.8) !important;
+				backdrop-filter: blur(10px);
+			}
+
+			#header.alt {
+				background: transparent !important;
 			}
 
 			/* Custom styles for tarot reading */
