@@ -128,6 +128,19 @@
 				display: none;
 			}
 
+			#new-card-button.revealed {
+				display: inline-block !important;
+				animation: fadeInUp 0.6s ease;
+			}
+
+			#new-card-section {
+				display: none;
+			}
+
+			#new-card-section.revealed {
+				display: block !important;
+			}
+
 			@keyframes pulseGlow {
 				0%, 100% {
 					opacity: 0.8;
@@ -291,7 +304,7 @@
 							Let it guide your choices and trust in the journey ahead.
 						</div>
 
-						<ul class="actions special" id="new-card-section" style="display: none;">
+						<ul class="actions special" id="new-card-section">
 							<li><a href="#" class="button primary" onclick="event.preventDefault(); drawNewCard();" id="new-card-button">Draw New Card</a></li>
 						</ul>
 					</section>
@@ -629,7 +642,7 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
                 document.getElementById('card-container').classList.remove('revealed');
                 document.getElementById('tap-hint').classList.remove('hidden');
                 document.getElementById('card-reading').classList.remove('revealed');
-                document.getElementById('new-card-button').classList.remove('revealed');
+                document.getElementById('new-card-section').classList.remove('revealed');
             };
             img.onerror = function() {
                 // Hide loading spinner on error
@@ -675,7 +688,7 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
             container.classList.add('revealed');
             document.getElementById('tap-hint').classList.add('hidden');
             document.getElementById('card-reading').classList.add('revealed');
-            document.getElementById('new-card-button').classList.add('revealed');
+            document.getElementById('new-card-section').classList.add('revealed');
         }
 
 
