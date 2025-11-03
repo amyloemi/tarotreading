@@ -692,8 +692,10 @@ const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"inno
         }
 
 
-        function drawNewCard() {
-            drawCard();
+        async function drawNewCard() {
+            await drawCard();
+            // Scroll to top to see the new card
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
 
