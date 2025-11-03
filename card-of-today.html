@@ -1,309 +1,402 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Card of Today - Tarot Reading</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>My Tarot Today - Card of the Day</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* Custom background with tarot image */
+			body {
+				background:
+					linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+					url('tarot-background.jpg') center/cover fixed;
+			}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK SC', 'Noto Sans CJK TC', 'Noto Sans CJK JP', 'Noto Sans CJK KR', 'Microsoft YaHei', 'SimSun', sans-serif;
-            background: linear-gradient(135deg, #a8d8ea 0%, #c9e4f5 100%);
-            color: #2c3e50;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+			#banner {
+				background:
+					linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+					url('tarot-background.jpg') center/cover;
+				box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+			}
 
-        .container {
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
+			/* Custom styles for tarot reading */
+			.card-image-container {
+				text-align: center;
+				margin: 40px 0;
+				cursor: pointer;
+			}
 
-        .language-selector {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
+			.card-image-container img {
+				max-width: 350px;
+				width: 100%;
+				border-radius: 15px;
+				box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+				transition: transform 0.6s ease, box-shadow 0.3s ease;
+			}
 
-        #language-select {
-            padding: 8px 15px;
-            font-size: 1em;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans CJK', 'Noto Sans', sans-serif;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #4a90e2;
-            border-radius: 20px;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(74, 144, 226, 0.2);
-            min-width: 120px;
-            text-align: center;
-        }
+			.card-image-container:hover img {
+				transform: translateY(-5px);
+				box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+			}
 
-        #language-select:hover {
-            background: white;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-        }
+			.card-image-container img.reversed {
+				transform: rotate(180deg);
+			}
 
-        #language-select:focus {
-            outline: none;
-            border-color: #5a9fd4;
-        }
+			.card-image-container:hover img.reversed {
+				transform: rotate(180deg) translateY(-5px);
+			}
 
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            color: #4a90e2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+			.card-name {
+				font-size: 2.5em;
+				color: #4c5c96;
+				margin: 30px 0 10px 0;
+				font-weight: bold;
+				text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+			}
 
-        .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 50px;
-            color: #5a9fd4;
-        }
+			.card-orientation {
+				font-size: 1.2em;
+				color: #717171;
+				font-style: italic;
+				margin-bottom: 30px;
+			}
 
-        .card-container {
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(74, 144, 226, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+			.card-reading {
+				background: rgba(255, 255, 255, 0.15);
+				backdrop-filter: blur(10px);
+				padding: 35px;
+				border-radius: 15px;
+				border: none;
+				font-size: 1.15em;
+				line-height: 2;
+				color: #1a1a1a;
+				margin: 30px 0;
+				display: none;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+				font-family: Calibri, 'Trebuchet MS', sans-serif;
+				text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+			}
 
-        .card-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(74, 144, 226, 0.4);
-            background: rgba(255, 255, 255, 0.85);
-        }
+			.card-reading.revealed {
+				display: block;
+				animation: fadeInUp 0.6s ease;
+			}
 
-        .card-container.revealed {
-            cursor: default;
-        }
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
 
-        .card-container.revealed:hover {
-            transform: none;
-        }
+			.tap-hint {
+				background: rgba(0, 0, 0, 0.6);
+				backdrop-filter: blur(10px);
+				color: #d4af37;
+				border: 2px solid #d4af37;
+				padding: 14px 35px;
+				border-radius: 30px;
+				display: inline-block;
+				margin: 20px 0;
+				animation: pulseGlow 2s infinite;
+				font-size: 1.05em;
+				font-weight: 600;
+				box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-family: 'Apple Chancery', cursive, serif;
+			}
 
-        .tap-hint {
-            background: rgba(74, 144, 226, 0.2);
-            color: #4a90e2;
-            padding: 10px 30px;
-            border-radius: 25px;
-            font-size: 1em;
-            border: 1px solid rgba(74, 144, 226, 0.5);
-            animation: pulse 2s infinite;
-            margin-bottom: 20px;
-            display: block;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            white-space: nowrap;
-        }
+			.tap-hint:hover {
+				transform: scale(1.05);
+				background: rgba(0, 0, 0, 0.8);
+				box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+			}
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
+			.tap-hint.hidden {
+				display: none;
+			}
 
-        .tap-hint.hidden {
-            display: none;
-        }
+			@keyframes pulseGlow {
+				0%, 100% {
+					opacity: 0.8;
+					box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+				}
+				50% {
+					opacity: 1;
+					box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+				}
+			}
 
-        #card-image {
-            max-width: 350px;
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-            margin-bottom: 30px;
-            transition: transform 0.6s ease, opacity 0.3s ease;
-        }
+			.language-dropdown {
+				margin-bottom: 0;
+			}
 
-        #card-image.loading {
-            opacity: 0.3;
-        }
+			.language-dropdown select {
+				padding: 10px 20px;
+				border-radius: 25px;
+				border: 2px solid rgba(255, 255, 255, 0.8);
+				font-size: 0.95em;
+				background: rgba(255, 255, 255, 0.95);
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-weight: 500;
+			}
 
-        #card-image.reversed {
-            transform: rotate(180deg);
-        }
+			.language-dropdown select:hover {
+				background: white;
+				border-color: #4c5c96;
+			}
 
-        .loading-spinner {
-            display: none;
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(74, 144, 226, 0.2);
-            border-top: 5px solid #4a90e2;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
+			.loading-spinner {
+				display: none;
+				width: 60px;
+				height: 60px;
+				border: 5px solid rgba(76, 92, 150, 0.2);
+				border-top: 5px solid #4c5c96;
+				border-radius: 50%;
+				animation: spin 1s linear infinite;
+				margin: 30px auto;
+			}
 
-        .loading-spinner.visible {
-            display: block;
-        }
+			.loading-spinner.visible {
+				display: block;
+			}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+			@keyframes spin {
+				0% { transform: rotate(0deg); }
+				100% { transform: rotate(360deg); }
+			}
 
-        .card-name {
-            font-size: 2em;
-            color: #4a90e2;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+			.box.special {
+				background: rgba(255, 255, 255, 0.95);
+				backdrop-filter: blur(10px);
+				box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+			}
 
-        .card-orientation {
-            font-size: 1.1em;
-            color: #5a9fd4;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
+			/* Header with semi-transparent background */
+			#header {
+				background: rgba(255, 255, 255, 0.95);
+				backdrop-filter: blur(10px);
+			}
 
-        .card-reading {
-            font-size: 1.2em;
-            color: #2c3e50;
-            line-height: 1.8;
-            background: rgba(74, 144, 226, 0.1);
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 4px solid #4a90e2;
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.5s ease;
-        }
+			/* Features section styling */
+			.box.special.features {
+				background: rgba(255, 255, 255, 0.9);
+			}
 
-        .card-reading.revealed {
-            opacity: 1;
-            max-height: 500px;
-            margin-top: 20px;
-        }
+			/* Footer styling */
+			#footer {
+				background: rgba(0, 0, 0, 0.8);
+				backdrop-filter: blur(10px);
+			}
 
-        .new-card-button {
-            margin-top: 30px;
-            background: linear-gradient(135deg, #4a90e2 0%, #5a9fd4 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-        }
+			/* Main section padding */
+			#main.container {
+				padding-top: 50px;
+			}
 
-        .new-card-button.revealed {
-            opacity: 1;
-            max-height: 100px;
-        }
+			/* Apple Chancery font for title */
+			#banner h2#title {
+				font-family: 'Apple Chancery', cursive, serif;
+				font-size: 3.5em;
+				font-weight: normal;
+				letter-spacing: 1px;
+			}
 
-        .new-card-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
-            background: linear-gradient(135deg, #5a9fd4 0%, #4a90e2 100%);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="language-selector">
-            <select id="language-select" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-                <option value="es">Español</option>
-                <option value="zh">中文</option>
-                <option value="ja">日本語</option>
-                <option value="ko">한국어</option>
-            </select>
-        </div>
+			/* Custom styling for Draw New Card button */
+			.button.primary {
+				background: rgba(0, 0, 0, 0.6) !important;
+				backdrop-filter: blur(10px);
+				color: #d4af37 !important;
+				border: 2px solid #d4af37 !important;
+				font-family: 'Apple Chancery', cursive, serif !important;
+				font-size: 1.05em !important;
+				padding: 14px 35px !important;
+				border-radius: 30px !important;
+				box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+				transition: all 0.3s ease !important;
+				text-align: center !important;
+				display: inline-block !important;
+				line-height: 1.5 !important;
+				vertical-align: middle !important;
+				animation: pulseGlow 2s infinite !important;
+			}
 
-        <h1 id="title">🌟 Card of Today 🌟</h1>
-        <p class="subtitle" id="subtitle">Your daily guidance awaits</p>
+			.button.primary:hover {
+				background: rgba(0, 0, 0, 0.8) !important;
+				box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
+				transform: scale(1.05);
+			}
+		</style>
+	</head>
+	<body class="landing is-preload">
+		<div id="page-wrapper">
 
-        <div class="card-container" id="card-container" onclick="revealReading()">
-            <div class="tap-hint" id="tap-hint">✨ Click to reveal ✨</div>
-            <div class="loading-spinner" id="loading-spinner"></div>
-            <img id="card-image" src="" alt="Card of the Day">
-            <div class="card-name" id="card-name"></div>
-            <div class="card-orientation" id="card-orientation"></div>
-            <div class="card-reading" id="card-reading"></div>
-            <button class="new-card-button" id="new-card-button" onclick="event.stopPropagation(); drawNewCard()">Draw New Card</button>
-        </div>
-    </div>
+			<!-- Header -->
+				<header id="header" class="alt">
+					<h1><a href="index.html">🔮 My Tarot Today</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li class="language-dropdown">
+								<select id="language-select" onchange="changeLanguage()">
+									<option value="en">🇬🇧 English</option>
+									<option value="fr">🇫🇷 Français</option>
+									<option value="es">🇪🇸 Español</option>
+									<option value="zh">🇨🇳 中文</option>
+									<option value="ja">🇯🇵 日本語</option>
+									<option value="ko">🇰🇷 한국어</option>
+								</select>
+							</li>
+						</ul>
+					</nav>
+				</header>
 
-    <script src="https://cdn.jsdelivr.net/npm/@vitalets/google-translate-api@9/dist/index.umd.js"></script>
-    <script>
-        // Language translations
+			<!-- Banner -->
+				<section id="banner">
+					<h2 id="title">Card of Today</h2>
+					<p id="subtitle">Your daily guidance awaits</p>
+				</section>
+
+			<!-- Main -->
+				<section id="main" class="container">
+
+					<section class="box special">
+						<div class="tap-hint" id="tap-hint" onclick="revealReading()">✨ Click to reveal your reading ✨</div>
+
+						<div class="loading-spinner" id="loading-spinner"></div>
+
+						<div class="card-image-container" onclick="revealReading()">
+							<img id="card-image" src="images/major_arcana/00-the-fool.png" alt="Card of the Day">
+						</div>
+
+						<div class="card-name" id="card-name">The Fool</div>
+						<div class="card-orientation" id="card-orientation">(Upright)</div>
+
+						<div class="card-reading" id="card-reading">
+							Today brings the powerful energy of innocence, new beginnings, and free spirit.
+							Embrace this theme fully - it holds an important lesson or opportunity for you.
+							Let it guide your choices and trust in the journey ahead.
+						</div>
+
+						<ul class="actions special" id="new-card-section" style="display: none;">
+							<li><a href="#" class="button primary" onclick="event.preventDefault(); drawNewCard();" id="new-card-button">Draw New Card</a></li>
+						</ul>
+					</section>
+
+					<section class="box special features">
+						<div class="features-row">
+							<section>
+								<span class="icon solid major fa-star accent2"></span>
+								<h3>Major Arcana</h3>
+								<p>22 powerful cards representing life's big lessons and spiritual themes</p>
+							</section>
+							<section>
+								<span class="icon solid major fa-moon accent3"></span>
+								<h3>Minor Arcana</h3>
+								<p>56 cards organized by four suits representing different life aspects</p>
+							</section>
+						</div>
+						<div class="features-row">
+							<section>
+								<span class="icon solid major fa-globe accent4"></span>
+								<h3>Multi-Language</h3>
+								<p>Available in English, French, Spanish, Chinese, Japanese, and Korean</p>
+							</section>
+							<section>
+								<span class="icon solid major fa-heart accent5"></span>
+								<h3>Daily Guidance</h3>
+								<p>Authentic Rider-Waite deck with personalized readings for your day</p>
+							</section>
+						</div>
+					</section>
+
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/amyloemi/mytarottoday" class="icon brands fa-github"><span class="label">Github</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; My Tarot Today. All rights reserved.</li>
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+        // Language translations (without emojis in title)
         const translations = {
             en: {
-                title: "🌟 Card of Today 🌟",
+                title: "Card of Today",
                 subtitle: "Your daily guidance awaits",
-                clickToReveal: "✨ Click to reveal ✨",
+                clickToReveal: "✨ Click to reveal your reading ✨",
                 drawNewCard: "Draw New Card",
                 upright: "Upright",
                 reversed: "Reversed"
             },
             fr: {
-                title: "🌟 Carte du Jour 🌟",
+                title: "Carte du Jour",
                 subtitle: "Vos conseils quotidiens vous attendent",
-                clickToReveal: "✨ Cliquez pour révéler ✨",
+                clickToReveal: "✨ Cliquez pour révéler votre lecture ✨",
                 drawNewCard: "Tirer une Nouvelle Carte",
                 upright: "À l'endroit",
                 reversed: "Inversé"
             },
             es: {
-                title: "🌟 Carta del Día 🌟",
+                title: "Carta del Día",
                 subtitle: "Tu guía diaria te espera",
-                clickToReveal: "✨ Haz clic para revelar ✨",
+                clickToReveal: "✨ Haz clic para revelar tu lectura ✨",
                 drawNewCard: "Sacar Nueva Carta",
                 upright: "Derecha",
                 reversed: "Invertida"
             },
             zh: {
-                title: "🌟 今日塔罗牌 🌟",
+                title: "今日塔罗牌",
                 subtitle: "您的每日指引在等待",
-                clickToReveal: "✨ 点击揭示 ✨",
+                clickToReveal: "✨ 点击揭示您的阅读 ✨",
                 drawNewCard: "抽取新牌",
                 upright: "正位",
                 reversed: "逆位"
             },
             ja: {
-                title: "🌟 今日のカード 🌟",
+                title: "今日のカード",
                 subtitle: "あなたの毎日のガイダンスが待っています",
-                clickToReveal: "✨ クリックして表示 ✨",
+                clickToReveal: "✨ クリックしてリーディングを表示 ✨",
                 drawNewCard: "新しいカードを引く",
                 upright: "正位置",
                 reversed: "逆位置"
             },
             ko: {
-                title: "🌟 오늘의 카드 🌟",
-                subtitle: "당신의 일일 가이드가 기다립니다",
-                clickToReveal: "✨ 클릭하여 공개 ✨",
+                title: "오늘의 카드",
+                subtitle: "당신의 일일 안내를 기다리고 있습니다",
+                clickToReveal: "✨ 클릭하여 리딩 공개 ✨",
                 drawNewCard: "새 카드 뽑기",
                 upright: "정방향",
                 reversed: "역방향"
@@ -314,9 +407,9 @@
         let currentLanguage = localStorage.getItem('tarotLanguage') || 'en';
 
         // Embedded tarot data
-        const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"innocence, new beginnings, free spirit","reversed":"recklessness, taken advantage of, inconsideration"},{"number":1,"name":"The Magician","upright":"willpower, desire, creation, manifestation","reversed":"trickery, illusions, out of touch"},{"number":2,"name":"The High Priestess","upright":"intuitive, unconscious, inner voice","reversed":"lack of center, lost inner voice, repressed feelings"},{"number":3,"name":"The Empress","upright":"motherhood, fertility, nature","reversed":"dependence, smothering, emptiness, nosiness"},{"number":4,"name":"The Emperor","upright":"authority, structure, control, fatherhood","reversed":"tyranny, rigidity, coldness"},{"number":5,"name":"The Hierophant","upright":"tradition, conformity, morality, ethics","reversed":"rebellion, subversiveness, new approaches"},{"number":6,"name":"The Lovers","upright":"partnerships, duality, union","reversed":"loss of balance, one-sidedness, disharmony"},{"number":7,"name":"The Chariot","upright":"direction, control, willpower","reversed":"lack of control, lack of direction, aggression"},{"number":8,"name":"Strength","upright":"inner strength, bravery, compassion, focus","reversed":"self doubt, weakness, insecurity"},{"number":9,"name":"The Hermit","upright":"contemplation, search for truth, inner guidance","reversed":"loneliness, isolation, lost your way"},{"number":10,"name":"Wheel of Fortune","upright":"change, cycles, inevitable fate","reversed":"no control, clinging to control, bad luck"},{"number":11,"name":"Justice","upright":"cause and effect, clarity, truth","reversed":"dishonesty, unaccountability, unfairness"},{"number":12,"name":"The Hanged Man","upright":"sacrifice, release, martyrdom","reversed":"stalling, needless sacrifice, fear of sacrifice"},{"number":13,"name":"Death","upright":"end of cycle, beginnings, change, metamorphosis","reversed":"fear of change, holding on, stagnation, decay"},{"number":14,"name":"Temperance","upright":"middle path, patience, finding meaning","reversed":"extremes, excess, lack of balance"},{"number":15,"name":"The Devil","upright":"addiction, materialism, playfulness","reversed":"freedom, release, restoring control"},{"number":16,"name":"The Tower","upright":"sudden upheaval, broken pride, disaster","reversed":"disaster avoided, delayed disaster, fear of suffering"},{"number":17,"name":"The Star","upright":"hope, faith, rejuvenation","reversed":"faithlessness, discouragement, insecurity"},{"number":18,"name":"The Moon","upright":"unconscious, illusions, intuition","reversed":"confusion, fear, misinterpretation"},{"number":19,"name":"The Sun","upright":"joy, success, celebration, positivity","reversed":"negativity, depression, sadness"},{"number":20,"name":"Judgement","upright":"reflection, reckoning, awakening","reversed":"lack of self awareness, doubt, self loathing"},{"number":21,"name":"The World","upright":"fulfillment, harmony, completion","reversed":"incompletion, no closure"}],"minor_arcana":{"wands":[{"name":"Ace of Wands","upright":"creation, willpower, inspiration, desire","reversed":"lack of energy, lack of passion, boredom"},{"name":"Two of Wands","upright":"planning, making decisions, leaving home","reversed":"fear of change, playing safe, bad planning"},{"name":"Three of Wands","upright":"looking ahead, expansion, rapid growth","reversed":"obstacles, delays, frustration"},{"name":"Four of Wands","upright":"community, home, celebration","reversed":"lack of support, transience, home conflicts"},{"name":"Five of Wands","upright":"competition, rivalry, conflict","reversed":"avoiding conflict, respecting differences"},{"name":"Six of Wands","upright":"victory, success, public reward","reversed":"excess pride, lack of recognition, punishment"},{"name":"Seven of Wands","upright":"perseverance, defensive, maintaining control","reversed":"give up, destroyed confidence, overwhelmed"},{"name":"Eight of Wands","upright":"rapid action, movement, quick decisions","reversed":"panic, waiting, slowdown"},{"name":"Nine of Wands","upright":"resilience, grit, last stand","reversed":"exhaustion, fatigue, questioning motivations"},{"name":"Ten of Wands","upright":"accomplishment, responsibility, burden","reversed":"inability to delegate, overstressed, burnt out"},{"name":"Page of Wands","upright":"exploration, excitement, freedom","reversed":"lack of direction, procrastination, creating conflict"},{"name":"Knight of Wands","upright":"action, adventure, fearlessness","reversed":"anger, impulsiveness, recklessness"},{"name":"Queen of Wands","upright":"courage, determination, joy","reversed":"selfishness, jealousy, insecurities"},{"name":"King of Wands","upright":"big picture, leader, overcoming challenges","reversed":"impulsive, overbearing, unachievable expectations"}],"cups":[{"name":"Ace of Cups","upright":"new feelings, spirituality, intuition","reversed":"emotional loss, blocked creativity, emptiness"},{"name":"Two of Cups","upright":"unity, partnership, connection","reversed":"imbalance, broken communication, tension"},{"name":"Three of Cups","upright":"friendship, community, happiness","reversed":"overindulgence, gossip, isolation"},{"name":"Four of Cups","upright":"apathy, contemplation, disconnectedness","reversed":"sudden awareness, choosing happiness, acceptance"},{"name":"Five of Cups","upright":"loss, grief, self-pity","reversed":"acceptance, moving on, finding peace"},{"name":"Six of Cups","upright":"familiarity, happy memories, healing","reversed":"moving forward, leaving home, independence"},{"name":"Seven of Cups","upright":"searching for purpose, choices, daydreaming","reversed":"lack of purpose, diversion, confusion"},{"name":"Eight of Cups","upright":"walking away, disillusionment, leaving behind","reversed":"avoidance, fear of change, fear of loss"},{"name":"Nine of Cups","upright":"satisfaction, emotional stability, luxury","reversed":"lack of inner joy, smugness, dissatisfaction"},{"name":"Ten of Cups","upright":"inner happiness, fulfillment, dreams coming true","reversed":"shattered dreams, broken family, domestic disharmony"},{"name":"Page of Cups","upright":"happy surprise, dreamer, sensitivity","reversed":"emotional immaturity, insecurity, disappointment"},{"name":"Knight of Cups","upright":"following the heart, idealist, romantic","reversed":"moodiness, disappointment"},{"name":"Queen of Cups","upright":"compassion, calm, comfort","reversed":"martyrdom, insecurity, dependence"},{"name":"King of Cups","upright":"compassion, control, balance","reversed":"coldness, moodiness, bad advice"}],"swords":[{"name":"Ace of Swords","upright":"breakthrough, clarity, sharp mind","reversed":"confusion, brutality, chaos"},{"name":"Two of Swords","upright":"difficult choices, indecision, stalemate","reversed":"lesser of two evils, no right choice, confusion"},{"name":"Three of Swords","upright":"heartbreak, suffering, grief","reversed":"recovery, forgiveness, moving on"},{"name":"Four of Swords","upright":"rest, restoration, contemplation","reversed":"restlessness, burnout, stress"},{"name":"Five of Swords","upright":"unbridled ambition, win at all costs, sneakiness","reversed":"lingering resentment, desire to reconcile, forgiveness"},{"name":"Six of Swords","upright":"transition, leaving behind, moving on","reversed":"emotional baggage, unresolved issues, resisting transition"},{"name":"Seven of Swords","upright":"deception, trickery, tactics and strategy","reversed":"coming clean, rethinking approach, deception"},{"name":"Eight of Swords","upright":"imprisonment, entrapment, self-victimization","reversed":"self acceptance, new perspective, freedom"},{"name":"Nine of Swords","upright":"anxiety, hopelessness, trauma","reversed":"hope, reaching out, despair"},{"name":"Ten of Swords","upright":"failure, collapse, defeat","reversed":"can't get worse, only upwards, inevitable end"},{"name":"Page of Swords","upright":"curiosity, restlessness, mental energy","reversed":"deception, manipulation, all talk"},{"name":"Knight of Swords","upright":"action, impulsiveness, defending beliefs","reversed":"no direction, disregard for consequences, unpredictability"},{"name":"Queen of Swords","upright":"complexity, perceptiveness, clear mindedness","reversed":"cold hearted, cruel, bitterness"},{"name":"King of Swords","upright":"head over heart, discipline, truth","reversed":"manipulative, cruel, weakness"}],"pentacles":[{"name":"Ace of Pentacles","upright":"opportunity, prosperity, new venture","reversed":"lost opportunity, missed chance, bad investment"},{"name":"Two of Pentacles","upright":"balancing decisions, priorities, adapting to change","reversed":"loss of balance, disorganized, overwhelmed"},{"name":"Three of Pentacles","upright":"teamwork, collaboration, building","reversed":"lack of teamwork, disorganized, group conflict"},{"name":"Four of Pentacles","upright":"conservation, frugality, security","reversed":"greediness, stinginess, possessiveness"},{"name":"Five of Pentacles","upright":"need, poverty, insecurity","reversed":"recovery, charity, improvement"},{"name":"Six of Pentacles","upright":"charity, generosity, sharing","reversed":"strings attached, stinginess, power and domination"},{"name":"Seven of Pentacles","upright":"hard work, perseverance, diligence","reversed":"work without results, distractions, lack of rewards"},{"name":"Eight of Pentacles","upright":"apprenticeship, passion, high standards","reversed":"lack of passion, uninspired, no motivation"},{"name":"Nine of Pentacles","upright":"fruits of labor, rewards, luxury","reversed":"reckless spending, living beyond means, false success"},{"name":"Ten of Pentacles","upright":"legacy, culmination, inheritance","reversed":"fleeting success, lack of stability, lack of resources"},{"name":"Page of Pentacles","upright":"ambition, desire, diligence","reversed":"lack of commitment, greediness, laziness"},{"name":"Knight of Pentacles","upright":"efficiency, hard work, responsibility","reversed":"laziness, obsessiveness, work without reward"},{"name":"Queen of Pentacles","upright":"practicality, creature comforts, financial security","reversed":"self-centeredness, jealousy, smothering"},{"name":"King of Pentacles","upright":"abundance, prosperity, security","reversed":"greed, indulgence, sensuality"}]}};
+const tarotData = {"major_arcana":[{"number":0,"name":"The Fool","upright":"innocence, new beginnings, free spirit","reversed":"recklessness, taken advantage of, inconsideration"},{"number":1,"name":"The Magician","upright":"willpower, desire, creation, manifestation","reversed":"trickery, illusions, out of touch"},{"number":2,"name":"The High Priestess","upright":"intuitive, unconscious, inner voice","reversed":"lack of center, lost inner voice, repressed feelings"},{"number":3,"name":"The Empress","upright":"motherhood, fertility, nature","reversed":"dependence, smothering, emptiness, nosiness"},{"number":4,"name":"The Emperor","upright":"authority, structure, control, fatherhood","reversed":"tyranny, rigidity, coldness"},{"number":5,"name":"The Hierophant","upright":"tradition, conformity, morality, ethics","reversed":"rebellion, subversiveness, new approaches"},{"number":6,"name":"The Lovers","upright":"partnerships, duality, union","reversed":"loss of balance, one-sidedness, disharmony"},{"number":7,"name":"The Chariot","upright":"direction, control, willpower","reversed":"lack of control, lack of direction, aggression"},{"number":8,"name":"Strength","upright":"inner strength, bravery, compassion, focus","reversed":"self doubt, weakness, insecurity"},{"number":9,"name":"The Hermit","upright":"contemplation, search for truth, inner guidance","reversed":"loneliness, isolation, lost your way"},{"number":10,"name":"Wheel of Fortune","upright":"change, cycles, inevitable fate","reversed":"no control, clinging to control, bad luck"},{"number":11,"name":"Justice","upright":"cause and effect, clarity, truth","reversed":"dishonesty, unaccountability, unfairness"},{"number":12,"name":"The Hanged Man","upright":"sacrifice, release, martyrdom","reversed":"stalling, needless sacrifice, fear of sacrifice"},{"number":13,"name":"Death","upright":"end of cycle, beginnings, change, metamorphosis","reversed":"fear of change, holding on, stagnation, decay"},{"number":14,"name":"Temperance","upright":"middle path, patience, finding meaning","reversed":"extremes, excess, lack of balance"},{"number":15,"name":"The Devil","upright":"addiction, materialism, playfulness","reversed":"freedom, release, restoring control"},{"number":16,"name":"The Tower","upright":"sudden upheaval, broken pride, disaster","reversed":"disaster avoided, delayed disaster, fear of suffering"},{"number":17,"name":"The Star","upright":"hope, faith, rejuvenation","reversed":"faithlessness, discouragement, insecurity"},{"number":18,"name":"The Moon","upright":"unconscious, illusions, intuition","reversed":"confusion, fear, misinterpretation"},{"number":19,"name":"The Sun","upright":"joy, success, celebration, positivity","reversed":"negativity, depression, sadness"},{"number":20,"name":"Judgement","upright":"reflection, reckoning, awakening","reversed":"lack of self awareness, doubt, self loathing"},{"number":21,"name":"The World","upright":"fulfillment, harmony, completion","reversed":"incompletion, no closure"}],"minor_arcana":{"wands":[{"name":"Ace of Wands","upright":"creation, willpower, inspiration, desire","reversed":"lack of energy, lack of passion, boredom"},{"name":"Two of Wands","upright":"planning, making decisions, leaving home","reversed":"fear of change, playing safe, bad planning"},{"name":"Three of Wands","upright":"looking ahead, expansion, rapid growth","reversed":"obstacles, delays, frustration"},{"name":"Four of Wands","upright":"community, home, celebration","reversed":"lack of support, transience, home conflicts"},{"name":"Five of Wands","upright":"competition, rivalry, conflict","reversed":"avoiding conflict, respecting differences"},{"name":"Six of Wands","upright":"victory, success, public reward","reversed":"excess pride, lack of recognition, punishment"},{"name":"Seven of Wands","upright":"perseverance, defensive, maintaining control","reversed":"give up, destroyed confidence, overwhelmed"},{"name":"Eight of Wands","upright":"rapid action, movement, quick decisions","reversed":"panic, waiting, slowdown"},{"name":"Nine of Wands","upright":"resilience, grit, last stand","reversed":"exhaustion, fatigue, questioning motivations"},{"name":"Ten of Wands","upright":"accomplishment, responsibility, burden","reversed":"inability to delegate, overstressed, burnt out"},{"name":"Page of Wands","upright":"exploration, excitement, freedom","reversed":"lack of direction, procrastination, creating conflict"},{"name":"Knight of Wands","upright":"action, adventure, fearlessness","reversed":"anger, impulsiveness, recklessness"},{"name":"Queen of Wands","upright":"courage, determination, joy","reversed":"selfishness, jealousy, insecurities"},{"name":"King of Wands","upright":"big picture, leader, overcoming challenges","reversed":"impulsive, overbearing, unachievable expectations"}],"cups":[{"name":"Ace of Cups","upright":"new feelings, spirituality, intuition","reversed":"emotional loss, blocked creativity, emptiness"},{"name":"Two of Cups","upright":"unity, partnership, connection","reversed":"imbalance, broken communication, tension"},{"name":"Three of Cups","upright":"friendship, community, happiness","reversed":"overindulgence, gossip, isolation"},{"name":"Four of Cups","upright":"apathy, contemplation, disconnectedness","reversed":"sudden awareness, choosing happiness, acceptance"},{"name":"Five of Cups","upright":"loss, grief, self-pity","reversed":"acceptance, moving on, finding peace"},{"name":"Six of Cups","upright":"familiarity, happy memories, healing","reversed":"moving forward, leaving home, independence"},{"name":"Seven of Cups","upright":"searching for purpose, choices, daydreaming","reversed":"lack of purpose, diversion, confusion"},{"name":"Eight of Cups","upright":"walking away, disillusionment, leaving behind","reversed":"avoidance, fear of change, fear of loss"},{"name":"Nine of Cups","upright":"satisfaction, emotional stability, luxury","reversed":"lack of inner joy, smugness, dissatisfaction"},{"name":"Ten of Cups","upright":"inner happiness, fulfillment, dreams coming true","reversed":"shattered dreams, broken family, domestic disharmony"},{"name":"Page of Cups","upright":"happy surprise, dreamer, sensitivity","reversed":"emotional immaturity, insecurity, disappointment"},{"name":"Knight of Cups","upright":"following the heart, idealist, romantic","reversed":"moodiness, disappointment"},{"name":"Queen of Cups","upright":"compassion, calm, comfort","reversed":"martyrdom, insecurity, dependence"},{"name":"King of Cups","upright":"compassion, control, balance","reversed":"coldness, moodiness, bad advice"}],"swords":[{"name":"Ace of Swords","upright":"breakthrough, clarity, sharp mind","reversed":"confusion, brutality, chaos"},{"name":"Two of Swords","upright":"difficult choices, indecision, stalemate","reversed":"lesser of two evils, no right choice, confusion"},{"name":"Three of Swords","upright":"heartbreak, suffering, grief","reversed":"recovery, forgiveness, moving on"},{"name":"Four of Swords","upright":"rest, restoration, contemplation","reversed":"restlessness, burnout, stress"},{"name":"Five of Swords","upright":"unbridled ambition, win at all costs, sneakiness","reversed":"lingering resentment, desire to reconcile, forgiveness"},{"name":"Six of Swords","upright":"transition, leaving behind, moving on","reversed":"emotional baggage, unresolved issues, resisting transition"},{"name":"Seven of Swords","upright":"deception, trickery, tactics and strategy","reversed":"coming clean, rethinking approach, deception"},{"name":"Eight of Swords","upright":"imprisonment, entrapment, self-victimization","reversed":"self acceptance, new perspective, freedom"},{"name":"Nine of Swords","upright":"anxiety, hopelessness, trauma","reversed":"hope, reaching out, despair"},{"name":"Ten of Swords","upright":"failure, collapse, defeat","reversed":"can't get worse, only upwards, inevitable end"},{"name":"Page of Swords","upright":"curiosity, restlessness, mental energy","reversed":"deception, manipulation, all talk"},{"name":"Knight of Swords","upright":"action, impulsiveness, defending beliefs","reversed":"no direction, disregard for consequences, unpredictability"},{"name":"Queen of Swords","upright":"complexity, perceptiveness, clear mindedness","reversed":"cold hearted, cruel, bitterness"},{"name":"King of Swords","upright":"head over heart, discipline, truth","reversed":"manipulative, cruel, weakness"}],"pentacles":[{"name":"Ace of Pentacles","upright":"opportunity, prosperity, new venture","reversed":"lost opportunity, missed chance, bad investment"},{"name":"Two of Pentacles","upright":"balancing decisions, priorities, adapting to change","reversed":"loss of balance, disorganized, overwhelmed"},{"name":"Three of Pentacles","upright":"teamwork, collaboration, building","reversed":"lack of teamwork, disorganized, group conflict"},{"name":"Four of Pentacles","upright":"conservation, frugality, security","reversed":"greediness, stinginess, possessiveness"},{"name":"Five of Pentacles","upright":"need, poverty, insecurity","reversed":"recovery, charity, improvement"},{"name":"Six of Pentacles","upright":"charity, generosity, sharing","reversed":"strings attached, stinginess, power and domination"},{"name":"Seven of Pentacles","upright":"hard work, perseverance, diligence","reversed":"work without results, distractions, lack of rewards"},{"name":"Eight of Pentacles","upright":"apprenticeship, passion, high standards","reversed":"lack of passion, uninspired, no motivation"},{"name":"Nine of Pentacles","upright":"fruits of labor, rewards, luxury","reversed":"reckless spending, living beyond means, false success"},{"name":"Ten of Pentacles","upright":"legacy, culmination, inheritance","reversed":"fleeting success, lack of stability, lack of resources"},{"name":"Page of Pentacles","upright":"ambition, desire, diligence","reversed":"lack of commitment, greediness, laziness"},{"name":"Knight of Pentacles","upright":"efficiency, hard work, responsibility","reversed":"laziness, obsessiveness, work without reward"},{"name":"Queen of Pentacles","upright":"practicality, creature comforts, financial security","reversed":"self-centeredness, jealousy, smothering"},{"name":"King of Pentacles","upright":"abundance, prosperity, security","reversed":"greed, indulgence, sensuality"}]}};
 
-        // All 78 cards with their image paths
+// All 78 cards with their image paths
         const allCards = {
             major: [
                 { name: "The Fool", file: "00-the-fool.png", number: 0 },
@@ -345,7 +438,9 @@
             minor: []
         };
 
-        // Generate minor arcana cards
+        
+
+// Generate minor arcana cards
         const suits = ['cups', 'pentacles', 'swords', 'wands'];
         const ranks = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'page', 'knight', 'queen', 'king'];
 
@@ -363,6 +458,8 @@
                 });
             });
         });
+
+        
 
         let currentCard = null;
         let currentIsReversed = false;
@@ -395,6 +492,7 @@
             return null;
         }
 
+
         async function translateText(text, targetLang) {
             if (targetLang === 'en') return text;
 
@@ -424,6 +522,7 @@
             return text;
         }
 
+
         async function generateDailyAdvice(cardName, meaning, isReversed) {
             const meaningTextRaw = isReversed ? meaning.reversed : meaning.upright;
 
@@ -447,6 +546,7 @@
             return translatedReading;
         }
 
+
         async function changeLanguage() {
             currentLanguage = document.getElementById('language-select').value;
 
@@ -464,6 +564,7 @@
             // Translate the current card instead of drawing a new one
             await translateCurrentCard();
         }
+
 
         async function drawCard() {
             // Show loading spinner
@@ -530,6 +631,7 @@
             img.src = imagePath;
         }
 
+
         async function translateCurrentCard() {
             // If no card is drawn yet, just draw a new one
             if (!currentCard) {
@@ -550,6 +652,7 @@
             document.getElementById('card-orientation').textContent = currentIsReversed ? `(${trans.reversed})` : `(${trans.upright})`;
         }
 
+
         function revealReading() {
             const container = document.getElementById('card-container');
             if (container.classList.contains('revealed')) {
@@ -562,11 +665,12 @@
             document.getElementById('new-card-button').classList.add('revealed');
         }
 
+
         function drawNewCard() {
             drawCard();
         }
 
-        // Draw card on page load
+
         window.onload = function() {
             // Set the dropdown to the saved language
             document.getElementById('language-select').value = currentLanguage;
@@ -583,4 +687,8 @@
         };
     </script>
 </body>
+</html>
+
+    </script>
+	</body>
 </html>
