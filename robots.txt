@@ -1,0 +1,21 @@
+# robots.txt for My Tarot Today
+# https://mytarottoday.com
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /gallery.html
+Allow: /assets/
+Allow: /decks/
+
+# Disallow admin/backend areas (if any in future)
+Disallow: /archive/
+Disallow: /docs/
+Disallow: /scripts/
+Disallow: /github-deploy/
+
+# Crawl-delay for polite bots
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://mytarottoday.com/sitemap.xml

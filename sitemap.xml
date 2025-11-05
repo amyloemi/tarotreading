@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage - Daily Tarot Reading -->
+  <url>
+    <loc>https://mytarottoday.com/</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mytarottoday.com/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mytarottoday.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://mytarottoday.com/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://mytarottoday.com/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://mytarottoday.com/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://mytarottoday.com/" />
+  </url>
+
+  <!-- Gallery Page - Card Collection -->
+  <url>
+    <loc>https://mytarottoday.com/gallery.html</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mytarottoday.com/gallery.html" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mytarottoday.com/gallery.html" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://mytarottoday.com/gallery.html" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://mytarottoday.com/gallery.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://mytarottoday.com/gallery.html" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://mytarottoday.com/gallery.html" />
+  </url>
+
+</urlset>
