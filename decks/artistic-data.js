@@ -96,12 +96,19 @@ const artisticData = {
 
     // Get all cards as a flat array
     getAllCards: function() {
+        // Add type/suit properties to cards for filtering
+        const major = this.cards.major.map(card => ({ ...card, type: 'major' }));
+        const wands = this.cards.wands.map(card => ({ ...card, suit: 'wands' }));
+        const cups = this.cards.cups.map(card => ({ ...card, suit: 'cups' }));
+        const swords = this.cards.swords.map(card => ({ ...card, suit: 'swords' }));
+        const pentacles = this.cards.pentacles.map(card => ({ ...card, suit: 'pentacles' }));
+
         return [
-            ...this.cards.major,
-            ...this.cards.wands,
-            ...this.cards.cups,
-            ...this.cards.swords,
-            ...this.cards.pentacles
+            ...major,
+            ...wands,
+            ...cups,
+            ...swords,
+            ...pentacles
         ];
     },
 

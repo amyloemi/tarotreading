@@ -1,0 +1,797 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<!-- Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-EXTBHDX0C2"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'G-EXTBHDX0C2');
+		</script>
+
+		<title>The Fool's Journey - My Tarot Today</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<!-- SEO Meta Tags -->
+		<meta name="description" content="Discover the Fool's Journey through the 22 Major Arcana cards - a timeless story of spiritual awakening and personal transformation in tarot." />
+		<meta name="keywords" content="fool's journey, major arcana, tarot story, spiritual journey, tarot cards, personal transformation, tarot meaning" />
+		<meta name="author" content="My Tarot Today" />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href="https://mytarottoday.com/journey.html" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://mytarottoday.com/journey.html" />
+		<meta property="og:title" content="The Fool's Journey - The Story of the Major Arcana" />
+		<meta property="og:description" content="Follow the Fool through all 22 Major Arcana cards on a journey of spiritual awakening and self-discovery." />
+		<meta property="og:image" content="https://mytarottoday.com/tarot-background.jpg" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="The Fool's Journey - Major Arcana Story" />
+		<meta name="twitter:description" content="Discover the timeless story of transformation through the 22 Major Arcana tarot cards." />
+
+		<!-- Additional Meta Tags -->
+		<meta name="theme-color" content="#9370DB" />
+
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* Custom background with tarot image */
+			body {
+				background:
+					linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+					url('tarot-background.jpg') center/cover fixed;
+			}
+
+			#banner {
+				background:
+					linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+					url('tarot-background.jpg') center/cover;
+				box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+			}
+
+			/* Make header text visible when scrolling over white background */
+			#header:not(.alt) {
+				background: rgba(255, 255, 255, 0.95) !important;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			#header:not(.alt) h1 a,
+			#header:not(.alt) nav a,
+			#header:not(.alt) select {
+				color: #333 !important;
+			}
+
+			/* Language dropdown text color and alignment */
+			#language-select {
+				color: #333;
+			}
+
+			#language-select option {
+				line-height: 1.8;
+				padding: 5px 0;
+			}
+
+			#banner h2#title {
+				font-family: 'Apple Chancery', cursive, serif;
+				font-size: 3.5em;
+				font-weight: normal;
+				letter-spacing: 1px;
+			}
+
+			/* Story section styling */
+			.story-section {
+				background: rgba(255, 255, 255, 0.95);
+				backdrop-filter: blur(10px);
+				padding: 60px 40px;
+				border-radius: 20px;
+				margin: 40px auto;
+				max-width: 1200px;
+				box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+			}
+
+			.story-intro {
+				text-align: center;
+				margin-bottom: 60px;
+			}
+
+			.story-intro h3 {
+				font-size: 2em;
+				color: #4c5c96;
+				margin-bottom: 20px;
+				font-family: 'Apple Chancery', cursive, serif;
+			}
+
+			.story-intro p {
+				font-size: 1.2em;
+				color: #666;
+				line-height: 1.8;
+				max-width: 800px;
+				margin: 0 auto;
+				text-align: left;
+			}
+
+			.journey-stage {
+				margin: 50px 0;
+				padding: 40px;
+				background: rgba(147, 112, 219, 0.05);
+				border-radius: 15px;
+				border-left: 5px solid #9370DB;
+			}
+
+			.journey-stage h4 {
+				font-size: 1.8em;
+				color: #4c5c96;
+				margin-bottom: 30px;
+				font-family: 'Apple Chancery', cursive, serif;
+			}
+
+			.card-item {
+				margin: 25px 0;
+				padding: 20px;
+				background: white;
+				border-radius: 10px;
+				box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+				display: flex;
+				align-items: flex-start;
+				gap: 20px;
+			}
+
+			.card-item:hover {
+				transform: translateX(10px);
+				box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+			}
+
+			.card-image {
+				flex-shrink: 0;
+				width: 120px;
+				height: auto;
+				border-radius: 8px;
+				box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+			}
+
+			.card-content {
+				flex: 1;
+			}
+
+			.card-item h5 {
+				font-size: 1.3em;
+				color: #2c3e50;
+				margin-bottom: 10px;
+				font-weight: bold;
+			}
+
+			.card-item .card-number {
+				color: #9370DB;
+				font-weight: bold;
+				margin-right: 10px;
+			}
+
+			.card-item p {
+				color: #555;
+				line-height: 1.8;
+				font-size: 1.05em;
+			}
+
+			.cyclical-note {
+				background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), rgba(255, 215, 0, 0.1));
+				padding: 40px;
+				border-radius: 15px;
+				margin-top: 60px;
+				text-align: center;
+				border: 2px solid rgba(147, 112, 219, 0.3);
+			}
+
+			.cyclical-note h4 {
+				font-size: 1.6em;
+				color: #4c5c96;
+				margin-bottom: 20px;
+				font-family: 'Apple Chancery', cursive, serif;
+			}
+
+			.cyclical-note p {
+				font-size: 1.15em;
+				color: #555;
+				line-height: 1.8;
+				text-align: left;
+			}
+
+			#header {
+				background: rgba(255, 255, 255, 0.95);
+				backdrop-filter: blur(10px);
+			}
+
+			#footer {
+				background: rgba(0, 0, 0, 0.8);
+				backdrop-filter: blur(10px);
+			}
+
+			/* Mobile responsive */
+			@media (max-width: 768px) {
+				.story-section {
+					padding: 30px 20px;
+				}
+
+				.story-intro h3 {
+					font-size: 1.5em;
+				}
+
+				.story-intro p {
+					font-size: 1em;
+				}
+
+				.journey-stage {
+					padding: 20px;
+				}
+
+				.journey-stage h4 {
+					font-size: 1.4em;
+				}
+
+				.card-item {
+					padding: 15px;
+					flex-direction: column;
+					align-items: center;
+					text-align: center;
+				}
+
+				.card-image {
+					width: 100px;
+				}
+
+				.card-item h5 {
+					font-size: 1.1em;
+				}
+			}
+		</style>
+	</head>
+	<body class="landing is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header" class="alt">
+					<h1><a href="index.html">🔮 My Tarot Today</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="gallery.html">Gallery</a></li>
+							<li><a href="journey.html">The Fool's Journey</a></li>
+							<li class="language-dropdown">
+								<select id="language-select" onchange="changeLanguage()" style="padding: 10px 20px; border-radius: 25px; border: 2px solid rgba(255, 255, 255, 0.8); font-size: 0.95em; background: rgba(255, 255, 255, 0.95); cursor: pointer; transition: all 0.3s ease; font-weight: 500; line-height: 1.4; vertical-align: middle;">
+									<option value="en">🇬🇧 English</option>
+									<option value="fr">🇫🇷 Français</option>
+									<option value="es">🇪🇸 Español</option>
+									<option value="zh">🇨🇳 中文</option>
+									<option value="ja">🇯🇵 日本語</option>
+									<option value="ko">🇰🇷 한국어</option>
+								</select>
+							</li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+					<h2 id="title">The Fool's Journey</h2>
+					<p>A timeless story of transformation through the Major Arcana</p>
+				</section>
+
+			<!-- Main -->
+				<section id="main" class="container">
+
+					<div class="story-section">
+
+						<!-- Introduction -->
+						<div class="story-intro">
+							<h3>The Journey Begins</h3>
+							<p>The Fool's Journey is a powerful metaphor for the journey through life itself. Each of the 22 Major Arcana cards represents a stage on this journey—an experience that we must embrace to realize our wholeness. From the innocent beginnings of The Fool to the completion and mastery of The World, this is a story of spiritual awakening, personal transformation, and the eternal cycle of growth.</p>
+						</div>
+
+						<!-- Stage 1: The Beginning -->
+						<div class="journey-stage">
+							<h4>🌅 The Beginning: Innocence & Discovery</h4>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/00-the-fool.png" alt="The Fool" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">0.</span> The Fool</h5>
+									<p>The journey begins with The Fool, a card of new beginnings and infinite potential. Standing at the edge of a cliff, The Fool represents each of us as we begin our journey of life. Filled with excitement, inspiration, and freedom, The Fool is naive and inexperienced—unaware of the dangers ahead, yet full of good intentions and boundless enthusiasm. This is the spark of pure potential before experience shapes us.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Stage 2: Early Stages -->
+						<div class="journey-stage">
+							<h4>📚 Early Learning: The Conscious & Unconscious (Cards 1-7)</h4>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/01-the-magician.png" alt="The Magician" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">I.</span> The Magician</h5>
+									<p>The Fool first encounters The Magician, who represents infinite potential and the power to manifest our deepest desires. With all the tools of the elements before him, The Magician teaches conscious action and the realization that we have everything we need to create our reality.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/02-the-high-priestess.png" alt="The High Priestess" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">II.</span> The High Priestess</h5>
+									<p>The High Priestess appears when The Fool begins to discover the physical and spiritual world on a deeper level. She is the gatekeeper of intuition, teaching the balance between the seen and unseen, the conscious and unconscious mind.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/03-the-empress.png" alt="The Empress" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">III.</span> The Empress</h5>
+									<p>The Empress represents the world of nature, abundance, and sensation. She teaches The Fool about nurturing, creativity, and the fertile ground from which all life springs forth.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/04-the-emperor.png" alt="The Emperor" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">IV.</span> The Emperor</h5>
+									<p>The authoritative father figure of The Emperor shows The Fool that there are rules, structures, and patterns in the world that must be acknowledged and sometimes adhered to. Order and discipline have their place.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/05-the-hierophant.png" alt="The Hierophant" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">V.</span> The Hierophant</h5>
+									<p>The Hierophant represents spiritual learning through tradition and structure. The Fool seeks teachers who have walked the path before, learning about spirituality through external cultures, societies, and established wisdom.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/06-the-lovers.png" alt="The Lovers" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">VI.</span> The Lovers</h5>
+									<p>With The Lovers, The Fool learns about relationships, choices, and the yearning to become part of a partnership. This card represents the deep human need for connection and the decisions that come with love.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/07-the-chariot.png" alt="The Chariot" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">VII.</span> The Chariot</h5>
+									<p>The Chariot represents The Fool's crowning achievement so far—the vigorous ego. A proud, commanding figure rides victoriously through the world, having gained control and direction through willpower and determination.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Stage 3: Inner Development -->
+						<div class="journey-stage">
+							<h4>🌟 Inner Development: Trials & Wisdom (Cards 8-14)</h4>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/08-strength.png" alt="Strength" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">VIII.</span> Strength</h5>
+									<p>The Fool is pressed to develop courage and inner resolve. Strength is not about force but about the gentle power of compassion and the heart's ability to keep going despite setbacks.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/09-the-hermit.png" alt="The Hermit" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">IX.</span> The Hermit</h5>
+									<p>The Hermit calls The Fool to a time of introspection and solitude. By withdrawing from the world, The Fool seeks inner wisdom and the light of understanding that can only be found within.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/10-wheel-of-fortune.png" alt="Wheel of Fortune" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">X.</span> Wheel of Fortune</h5>
+									<p>The Wheel of Fortune teaches The Fool about cycles, fate, and the ever-turning nature of life. What goes up must come down, and change is the only constant.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/11-justice.png" alt="Justice" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XI.</span> Justice</h5>
+									<p>Justice brings lessons of balance, fairness, and consequences. The Fool learns that every action has a reaction, and truth must be faced with clarity and objectivity.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/12-the-hanged-man.png" alt="The Hanged Man" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XII.</span> The Hanged Man</h5>
+									<p>The Hanged Man represents surrender and seeing the world from a completely new perspective. By letting go and suspending action, The Fool gains profound insights that cannot be achieved through movement alone.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/13-death.png" alt="Death" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XIII.</span> Death</h5>
+									<p>Death is not about physical ending but profound transformation. Something old must die for something new to emerge. The Fool learns to release what no longer serves and embrace the rebirth that follows.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/14-temperance.png" alt="Temperance" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XIV.</span> Temperance</h5>
+									<p>Temperance embodies The Fool's new understanding—a deeper spiritual wisdom where emotions are regulated and a middle path is forged between extremes. Balance and moderation become sacred practices.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Stage 4: Spiritual Awakening -->
+						<div class="journey-stage">
+							<h4>✨ Spiritual Awakening: Shadow & Light (Cards 15-21)</h4>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/15-the-devil.png" alt="The Devil" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XV.</span> The Devil</h5>
+									<p>The Devil reveals The Fool's hidden blind spots and shadow self. This card speaks to unconscious urges, addictions, and attachments that bind us. Facing the Devil means confronting our deepest fears and dependencies.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/16-the-tower.png" alt="The Tower" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XVI.</span> The Tower</h5>
+									<p>Released by the shock and awe of The Tower, a lightning bolt from heaven strikes, and the walls of The Fool's constructed world crumble. This necessary destruction clears away false foundations, making room for authentic growth.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/17-the-star.png" alt="The Star" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XVII.</span> The Star</h5>
+									<p>The Star is one of the most magical and hopeful moments on The Fool's journey. After the devastation of The Tower, healing begins. Hope is renewed, healthy ideas are planted, and divine assistance flows freely from heaven. This is the card of pure faith and inspiration.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/18-the-moon.png" alt="The Moon" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XVIII.</span> The Moon</h5>
+									<p>The Moon brings The Fool face-to-face with illusions, fears, and the mysterious realm of the subconscious. Not everything is as it seems, and The Fool must navigate the uncertain terrain of dreams and shadows.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/19-the-sun.png" alt="The Sun" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XIX.</span> The Sun</h5>
+									<p>The Sun rises with the promise of homecoming and return. This is pure joy, clarity, vitality, and success. After the darkness of The Moon, The Sun brings warmth, celebration, and the simple truth of existence.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/20-judgement.png" alt="Judgement" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XX.</span> Judgement</h5>
+									<p>Judgement is the moment of revelation and reckoning. The Fool completes the final inner work, addresses anything left unsaid or undone, and experiences a profound awakening. This is rebirth on a spiritual level.</p>
+								</div>
+							</div>
+
+							<div class="card-item">
+								<img src="decks/images/major_arcana/21-the-world.png" alt="The World" class="card-image">
+								<div class="card-content">
+									<h5><span class="card-number">XXI.</span> The World</h5>
+									<p>The Fool has mastered The World and completed the journey. With countless lessons learned, this chapter closes with a sense of wholeness, accomplishment, and integration. Yet The World also hints at the cycle yet to come—for life is an endless spiral of growth and transformation.</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Cyclical Nature -->
+						<div class="cyclical-note">
+							<h4>🔄 The Eternal Cycle</h4>
+							<p>The journey is not truly an ending but a completion that leads to a new beginning. The World represents mastery of this cycle, while simultaneously preparing us for the next turn of the spiral. Life is an endless circle—a continuous opportunity to learn, grow, and evolve through experience. Every ending is a new beginning, and The Fool's journey begins again, now enriched with wisdom and understanding.</p>
+						</div>
+
+					</div>
+
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="https://www.instagram.com/my.tarot.today/" target="_blank" rel="noopener noreferrer" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; My Tarot Today. All rights reserved.</li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+		// Translation data
+		const translations = {
+			en: {
+				title: "The Fool's Journey",
+				subtitle: "A timeless story of transformation through the Major Arcana",
+				introTitle: "The Journey Begins",
+				introText: "The Fool's Journey is a powerful metaphor for the journey through life itself. Each of the 22 Major Arcana cards represents a stage on this journey—an experience that we must embrace to realize our wholeness. From the innocent beginnings of The Fool to the completion and mastery of The World, this is a story of spiritual awakening, personal transformation, and the eternal cycle of growth.",
+				stage1Title: "🌅 The Beginning: Innocence & Discovery",
+				stage2Title: "📚 Early Learning: The Conscious & Unconscious (Cards 1-7)",
+				stage3Title: "🌟 Inner Development: Trials & Wisdom (Cards 8-14)",
+				stage4Title: "✨ Spiritual Awakening: Shadow & Light (Cards 15-21)",
+				cyclicalTitle: "🔄 The Eternal Cycle",
+				cyclicalText: "The journey is not truly an ending but a completion that leads to a new beginning. The World represents mastery of this cycle, while simultaneously preparing us for the next turn of the spiral. Life is an endless circle—a continuous opportunity to learn, grow, and evolve through experience. Every ending is a new beginning, and The Fool's journey begins again, now enriched with wisdom and understanding.",
+				cards: {
+					fool: "The journey begins with The Fool, a card of new beginnings and infinite potential. Standing at the edge of a cliff, The Fool represents each of us as we begin our journey of life. Filled with excitement, inspiration, and freedom, The Fool is naive and inexperienced—unaware of the dangers ahead, yet full of good intentions and boundless enthusiasm. This is the spark of pure potential before experience shapes us.",
+					magician: "The Fool first encounters The Magician, who represents infinite potential and the power to manifest our deepest desires. With all the tools of the elements before him, The Magician teaches conscious action and the realization that we have everything we need to create our reality.",
+					highPriestess: "The High Priestess appears when The Fool begins to discover the physical and spiritual world on a deeper level. She is the gatekeeper of intuition, teaching the balance between the seen and unseen, the conscious and unconscious mind.",
+					empress: "The Empress represents the world of nature, abundance, and sensation. She teaches The Fool about nurturing, creativity, and the fertile ground from which all life springs forth.",
+					emperor: "The authoritative father figure of The Emperor shows The Fool that there are rules, structures, and patterns in the world that must be acknowledged and sometimes adhered to. Order and discipline have their place.",
+					hierophant: "The Hierophant represents spiritual learning through tradition and structure. The Fool seeks teachers who have walked the path before, learning about spirituality through external cultures, societies, and established wisdom.",
+					lovers: "With The Lovers, The Fool learns about relationships, choices, and the yearning to become part of a partnership. This card represents the deep human need for connection and the decisions that come with love.",
+					chariot: "The Chariot represents The Fool's crowning achievement so far—the vigorous ego. A proud, commanding figure rides victoriously through the world, having gained control and direction through willpower and determination.",
+					strength: "The Fool is pressed to develop courage and inner resolve. Strength is not about force but about the gentle power of compassion and the heart's ability to keep going despite setbacks.",
+					hermit: "The Hermit calls The Fool to a time of introspection and solitude. By withdrawing from the world, The Fool seeks inner wisdom and the light of understanding that can only be found within.",
+					wheel: "The Wheel of Fortune teaches The Fool about cycles, fate, and the ever-turning nature of life. What goes up must come down, and change is the only constant.",
+					justice: "Justice brings lessons of balance, fairness, and consequences. The Fool learns that every action has a reaction, and truth must be faced with clarity and objectivity.",
+					hanged: "The Hanged Man represents surrender and seeing the world from a completely new perspective. By letting go and suspending action, The Fool gains profound insights that cannot be achieved through movement alone.",
+					death: "Death is not about physical ending but profound transformation. Something old must die for something new to emerge. The Fool learns to release what no longer serves and embrace the rebirth that follows.",
+					temperance: "Temperance embodies The Fool's new understanding—a deeper spiritual wisdom where emotions are regulated and a middle path is forged between extremes. Balance and moderation become sacred practices.",
+					devil: "The Devil reveals The Fool's hidden blind spots and shadow self. This card speaks to unconscious urges, addictions, and attachments that bind us. Facing the Devil means confronting our deepest fears and dependencies.",
+					tower: "Released by the shock and awe of The Tower, a lightning bolt from heaven strikes, and the walls of The Fool's constructed world crumble. This necessary destruction clears away false foundations, making room for authentic growth.",
+					star: "The Star is one of the most magical and hopeful moments on The Fool's journey. After the devastation of The Tower, healing begins. Hope is renewed, healthy ideas are planted, and divine assistance flows freely from heaven. This is the card of pure faith and inspiration.",
+					moon: "The Moon brings The Fool face-to-face with illusions, fears, and the mysterious realm of the subconscious. Not everything is as it seems, and The Fool must navigate the uncertain terrain of dreams and shadows.",
+					sun: "The Sun rises with the promise of homecoming and return. This is pure joy, clarity, vitality, and success. After the darkness of The Moon, The Sun brings warmth, celebration, and the simple truth of existence.",
+					judgement: "Judgement is the moment of revelation and reckoning. The Fool completes the final inner work, addresses anything left unsaid or undone, and experiences a profound awakening. This is rebirth on a spiritual level.",
+					world: "The Fool has mastered The World and completed the journey. With countless lessons learned, this chapter closes with a sense of wholeness, accomplishment, and integration. Yet The World also hints at the cycle yet to come—for life is an endless spiral of growth and transformation."
+				}
+			},
+			fr: {
+				title: "Le Voyage du Fou",
+				subtitle: "Une histoire intemporelle de transformation à travers les Arcanes Majeurs",
+				introTitle: "Le Voyage Commence",
+				introText: "Le Voyage du Fou est une puissante métaphore du voyage à travers la vie elle-même. Chacune des 22 cartes des Arcanes Majeurs représente une étape de ce voyage—une expérience que nous devons embrasser pour réaliser notre plénitude. Des débuts innocents du Fou à l'achèvement et la maîtrise du Monde, c'est une histoire d'éveil spirituel, de transformation personnelle et du cycle éternel de croissance.",
+				stage1Title: "🌅 Le Commencement : Innocence et Découverte",
+				stage2Title: "📚 Apprentissage Précoce : Le Conscient et l'Inconscient (Cartes 1-7)",
+				stage3Title: "🌟 Développement Intérieur : Épreuves et Sagesse (Cartes 8-14)",
+				stage4Title: "✨ Éveil Spirituel : Ombre et Lumière (Cartes 15-21)",
+				cyclicalTitle: "🔄 Le Cycle Éternel",
+				cyclicalText: "Le voyage n'est pas vraiment une fin mais un achèvement qui mène à un nouveau commencement. Le Monde représente la maîtrise de ce cycle, tout en nous préparant au prochain tour de la spirale. La vie est un cercle sans fin—une opportunité continue d'apprendre, de grandir et d'évoluer à travers l'expérience. Chaque fin est un nouveau commencement, et le voyage du Fou recommence, maintenant enrichi de sagesse et de compréhension.",
+				cards: {
+					fool: "Le voyage commence avec Le Fou, une carte de nouveaux départs et de potentiel infini. Debout au bord d'une falaise, Le Fou représente chacun de nous alors que nous commençons notre voyage de vie. Rempli d'excitation, d'inspiration et de liberté, Le Fou est naïf et inexpérimenté—inconscient des dangers à venir, mais plein de bonnes intentions et d'enthousiasme sans limites. C'est l'étincelle du pur potentiel avant que l'expérience ne nous façonne.",
+					magician: "Le Fou rencontre d'abord Le Magicien, qui représente le potentiel infini et le pouvoir de manifester nos désirs les plus profonds. Avec tous les outils des éléments devant lui, Le Magicien enseigne l'action consciente et la réalisation que nous avons tout ce dont nous avons besoin pour créer notre réalité.",
+					highPriestess: "La Grande Prêtresse apparaît lorsque Le Fou commence à découvrir le monde physique et spirituel à un niveau plus profond. Elle est la gardienne de l'intuition, enseignant l'équilibre entre le visible et l'invisible, l'esprit conscient et inconscient.",
+					empress: "L'Impératrice représente le monde de la nature, de l'abondance et de la sensation. Elle enseigne au Fou la nurturance, la créativité et le terrain fertile d'où jaillit toute vie.",
+					emperor: "La figure paternelle autoritaire de L'Empereur montre au Fou qu'il existe des règles, des structures et des modèles dans le monde qui doivent être reconnus et parfois respectés. L'ordre et la discipline ont leur place.",
+					hierophant: "Le Hiérophante représente l'apprentissage spirituel à travers la tradition et la structure. Le Fou cherche des enseignants qui ont parcouru le chemin avant lui, apprenant la spiritualité à travers les cultures, sociétés et sagesses établies externes.",
+					lovers: "Avec Les Amoureux, Le Fou apprend les relations, les choix et le désir de faire partie d'un partenariat. Cette carte représente le besoin humain profond de connexion et les décisions qui viennent avec l'amour.",
+					chariot: "Le Chariot représente la plus grande réussite du Fou jusqu'à présent—l'ego vigoureux. Une figure fière et commandante traverse le monde victorieusement, ayant obtenu le contrôle et la direction par la volonté et la détermination.",
+					strength: "Le Fou est pressé de développer le courage et la résolution intérieure. La Force ne concerne pas la force brute mais le pouvoir doux de la compassion et la capacité du cœur à continuer malgré les revers.",
+					hermit: "L'Ermite appelle Le Fou à un moment d'introspection et de solitude. En se retirant du monde, Le Fou cherche la sagesse intérieure et la lumière de la compréhension qui ne peut être trouvée qu'à l'intérieur.",
+					wheel: "La Roue de Fortune enseigne au Fou les cycles, le destin et la nature toujours changeante de la vie. Ce qui monte doit descendre, et le changement est la seule constante.",
+					justice: "La Justice apporte des leçons d'équilibre, d'équité et de conséquences. Le Fou apprend que chaque action a une réaction, et la vérité doit être affrontée avec clarté et objectivité.",
+					hanged: "Le Pendu représente l'abandon et la vision du monde sous un angle complètement nouveau. En lâchant prise et en suspendant l'action, Le Fou obtient des aperçus profonds qui ne peuvent être atteints par le mouvement seul.",
+					death: "La Mort ne concerne pas la fin physique mais la transformation profonde. Quelque chose d'ancien doit mourir pour que quelque chose de nouveau émerge. Le Fou apprend à libérer ce qui ne sert plus et à embrasser la renaissance qui suit.",
+					temperance: "Tempérance incarne la nouvelle compréhension du Fou—une sagesse spirituelle plus profonde où les émotions sont régulées et un chemin du milieu est forgé entre les extrêmes. L'équilibre et la modération deviennent des pratiques sacrées.",
+					devil: "Le Diable révèle les angles morts cachés du Fou et son moi obscur. Cette carte parle des pulsions inconscientes, des addictions et des attachements qui nous lient. Faire face au Diable signifie confronter nos peurs et dépendances les plus profondes.",
+					tower: "Libéré par le choc et l'émerveillement de La Tour, un éclair du ciel frappe, et les murs du monde construit du Fou s'effondrent. Cette destruction nécessaire dégage les fausses fondations, faisant place à une croissance authentique.",
+					star: "L'Étoile est l'un des moments les plus magiques et pleins d'espoir du voyage du Fou. Après la dévastation de La Tour, la guérison commence. L'espoir est renouvelé, des idées saines sont plantées, et l'assistance divine coule librement du ciel. C'est la carte de la foi pure et de l'inspiration.",
+					moon: "La Lune amène Le Fou face à face avec les illusions, les peurs et le royaume mystérieux du subconscient. Tout n'est pas ce qu'il semble être, et Le Fou doit naviguer dans le terrain incertain des rêves et des ombres.",
+					sun: "Le Soleil se lève avec la promesse du retour à la maison et du retour. C'est la joie pure, la clarté, la vitalité et le succès. Après l'obscurité de La Lune, Le Soleil apporte chaleur, célébration et la simple vérité de l'existence.",
+					judgement: "Le Jugement est le moment de révélation et de règlement de comptes. Le Fou complète le travail intérieur final, traite tout ce qui n'a pas été dit ou fait, et vit un éveil profond. C'est la renaissance sur un niveau spirituel.",
+					world: "Le Fou a maîtrisé Le Monde et complété le voyage. Avec d'innombrables leçons apprises, ce chapitre se ferme avec un sentiment de plénitude, d'accomplissement et d'intégration. Pourtant, Le Monde fait également allusion au cycle à venir—car la vie est une spirale sans fin de croissance et de transformation."
+				}
+			},
+			es: {
+				title: "El Viaje del Loco",
+				subtitle: "Una historia atemporal de transformación a través de los Arcanos Mayores",
+				introTitle: "El Viaje Comienza",
+				introText: "El Viaje del Loco es una poderosa metáfora del viaje a través de la vida misma. Cada una de las 22 cartas de los Arcanos Mayores representa una etapa en este viaje—una experiencia que debemos abrazar para realizar nuestra totalidad. Desde los comienzos inocentes del Loco hasta la finalización y maestría del Mundo, esta es una historia de despertar espiritual, transformación personal y el ciclo eterno de crecimiento.",
+				stage1Title: "🌅 El Comienzo: Inocencia y Descubrimiento",
+				stage2Title: "📚 Aprendizaje Temprano: Lo Consciente y lo Inconsciente (Cartas 1-7)",
+				stage3Title: "🌟 Desarrollo Interior: Pruebas y Sabiduría (Cartas 8-14)",
+				stage4Title: "✨ Despertar Espiritual: Sombra y Luz (Cartas 15-21)",
+				cyclicalTitle: "🔄 El Ciclo Eterno",
+				cyclicalText: "El viaje no es verdaderamente un final sino una finalización que conduce a un nuevo comienzo. El Mundo representa el dominio de este ciclo, mientras simultáneamente nos prepara para el próximo giro de la espiral. La vida es un círculo sin fin—una oportunidad continua de aprender, crecer y evolucionar a través de la experiencia. Cada final es un nuevo comienzo, y el viaje del Loco comienza de nuevo, ahora enriquecido con sabiduría y comprensión.",
+				cards: {
+					fool: "El viaje comienza con El Loco, una carta de nuevos comienzos y potencial infinito. Parado al borde de un acantilado, El Loco representa a cada uno de nosotros al comenzar nuestro viaje de vida. Lleno de emoción, inspiración y libertad, El Loco es ingenuo e inexperto—inconsciente de los peligros por delante, pero lleno de buenas intenciones y entusiasmo sin límites. Esta es la chispa de puro potencial antes de que la experiencia nos moldee.",
+					magician: "El Loco primero encuentra al Mago, quien representa el potencial infinito y el poder de manifestar nuestros deseos más profundos. Con todas las herramientas de los elementos ante él, El Mago enseña la acción consciente y la realización de que tenemos todo lo que necesitamos para crear nuestra realidad.",
+					highPriestess: "La Suma Sacerdotisa aparece cuando El Loco comienza a descubrir el mundo físico y espiritual a un nivel más profundo. Ella es la guardiana de la intuición, enseñando el equilibrio entre lo visto y lo invisible, la mente consciente e inconsciente.",
+					empress: "La Emperatriz representa el mundo de la naturaleza, la abundancia y la sensación. Ella enseña al Loco sobre el cuidado, la creatividad y el terreno fértil del cual brota toda la vida.",
+					emperor: "La figura paterna autoritaria del Emperador muestra al Loco que hay reglas, estructuras y patrones en el mundo que deben ser reconocidos y a veces respetados. El orden y la disciplina tienen su lugar.",
+					hierophant: "El Hierofante representa el aprendizaje espiritual a través de la tradición y la estructura. El Loco busca maestros que han caminado el camino antes, aprendiendo sobre espiritualidad a través de culturas, sociedades y sabiduría establecida externa.",
+					lovers: "Con Los Enamorados, El Loco aprende sobre relaciones, elecciones y el anhelo de convertirse en parte de una asociación. Esta carta representa la profunda necesidad humana de conexión y las decisiones que vienen con el amor.",
+					chariot: "El Carro representa el mayor logro del Loco hasta ahora—el ego vigoroso. Una figura orgullosa y comandante cabalga victoriosamente por el mundo, habiendo obtenido control y dirección a través de la fuerza de voluntad y la determinación.",
+					strength: "El Loco se ve obligado a desarrollar coraje y resolución interior. La Fuerza no se trata de la fuerza bruta sino del poder gentil de la compasión y la capacidad del corazón para seguir adelante a pesar de los reveses.",
+					hermit: "El Ermitaño llama al Loco a un momento de introspección y soledad. Al retirarse del mundo, El Loco busca la sabiduría interior y la luz de la comprensión que solo se puede encontrar dentro.",
+					wheel: "La Rueda de la Fortuna enseña al Loco sobre ciclos, destino y la naturaleza siempre cambiante de la vida. Lo que sube debe bajar, y el cambio es la única constante.",
+					justice: "La Justicia trae lecciones de equilibrio, equidad y consecuencias. El Loco aprende que cada acción tiene una reacción, y la verdad debe ser enfrentada con claridad y objetividad.",
+					hanged: "El Colgado representa la rendición y ver el mundo desde una perspectiva completamente nueva. Al soltar y suspender la acción, El Loco obtiene percepciones profundas que no se pueden lograr solo a través del movimiento.",
+					death: "La Muerte no se trata de un final físico sino de una transformación profunda. Algo viejo debe morir para que algo nuevo emerja. El Loco aprende a liberar lo que ya no sirve y abrazar el renacimiento que sigue.",
+					temperance: "La Templanza encarna la nueva comprensión del Loco—una sabiduría espiritual más profunda donde las emociones están reguladas y se forja un camino medio entre los extremos. El equilibrio y la moderación se convierten en prácticas sagradas.",
+					devil: "El Diablo revela los puntos ciegos ocultos del Loco y su yo en la sombra. Esta carta habla de impulsos inconscientes, adicciones y apegos que nos atan. Enfrentar al Diablo significa confrontar nuestros miedos y dependencias más profundos.",
+					tower: "Liberado por el shock y el asombro de La Torre, un rayo del cielo golpea, y las paredes del mundo construido del Loco se derrumban. Esta destrucción necesaria despeja cimientos falsos, haciendo espacio para un crecimiento auténtico.",
+					star: "La Estrella es uno de los momentos más mágicos y llenos de esperanza en el viaje del Loco. Después de la devastación de La Torre, comienza la curación. La esperanza se renueva, se plantan ideas saludables y la asistencia divina fluye libremente desde el cielo. Esta es la carta de fe pura e inspiración.",
+					moon: "La Luna trae al Loco cara a cara con ilusiones, miedos y el reino misterioso del subconsciente. No todo es lo que parece, y El Loco debe navegar el terreno incierto de sueños y sombras.",
+					sun: "El Sol se levanta con la promesa de regreso a casa y retorno. Esto es alegría pura, claridad, vitalidad y éxito. Después de la oscuridad de La Luna, El Sol trae calor, celebración y la simple verdad de la existencia.",
+					judgement: "El Juicio es el momento de revelación y ajuste de cuentas. El Loco completa el trabajo interior final, aborda todo lo que no se ha dicho o hecho, y experimenta un despertar profundo. Esto es renacimiento en un nivel espiritual.",
+					world: "El Loco ha dominado El Mundo y completado el viaje. Con innumerables lecciones aprendidas, este capítulo se cierra con un sentido de plenitud, logro e integración. Sin embargo, El Mundo también insinúa el ciclo por venir—porque la vida es una espiral sin fin de crecimiento y transformación."
+				}
+			},
+			zh: {
+				title: "愚者之旅",
+				subtitle: "通过大阿卡纳的永恒转变故事",
+				introTitle: "旅程开始",
+				introText: "愚者之旅是生命旅程本身的有力隐喻。22张大阿卡纳牌中的每一张都代表这段旅程中的一个阶段——我们必须拥抱的经历，以实现我们的完整性。从愚者的天真开始到世界的完成和掌握，这是一个关于精神觉醒、个人转变和永恒成长周期的故事。",
+				stage1Title: "🌅 开始：天真与发现",
+				stage2Title: "📚 早期学习：意识与潜意识（牌1-7）",
+				stage3Title: "🌟 内在发展：考验与智慧（牌8-14）",
+				stage4Title: "✨ 精神觉醒：阴影与光明（牌15-21）",
+				cyclicalTitle: "🔄 永恒循环",
+				cyclicalText: "旅程不是真正的结束，而是通向新开始的完成。世界代表这个循环的掌握，同时为螺旋的下一次转动做准备。生命是一个无尽的圆圈——通过经验不断学习、成长和进化的机会。每个结束都是一个新的开始，愚者的旅程再次开始，现在充满了智慧和理解。",
+				cards: {
+					fool: "旅程从愚者开始，这是一张代表新开始和无限潜力的牌。站在悬崖边上，愚者代表我们每个人开始生命旅程时的样子。充满兴奋、灵感和自由，愚者天真而缺乏经验——不知道前方的危险，但充满善意和无限的热情。这是经验塑造我们之前纯粹潜力的火花。",
+					magician: "愚者首先遇到魔术师，他代表无限的潜力和实现我们最深切愿望的力量。拥有所有元素的工具，魔术师教导有意识的行动和认识到我们拥有创造现实所需的一切。",
+					highPriestess: "当愚者开始在更深层次上发现物质和精神世界时，女祭司出现了。她是直觉的守门人，教导看得见和看不见、有意识和无意识心灵之间的平衡。",
+					empress: "皇后代表自然、丰富和感觉的世界。她教导愚者关于培育、创造力和所有生命涌现的肥沃土壤。",
+					emperor: "皇帝的权威父亲形象向愚者展示，世界上有必须承认并有时遵守的规则、结构和模式。秩序和纪律有其位置。",
+					hierophant: "教皇代表通过传统和结构进行的精神学习。愚者寻找走过这条路的老师，通过外部文化、社会和既定智慧学习精神性。",
+					lovers: "通过恋人，愚者学习关系、选择和成为伙伴关系一部分的渴望。这张牌代表人类对联系的深刻需求以及伴随爱情而来的决定。",
+					chariot: "战车代表愚者迄今为止最大的成就——充满活力的自我。一个骄傲、威严的人物胜利地驾驶着穿越世界，通过意志力和决心获得了控制和方向。",
+					strength: "愚者被迫发展勇气和内在决心。力量不是关于武力，而是关于同情心的温柔力量和心脏在挫折中继续前进的能力。",
+					hermit: "隐士召唤愚者进入内省和独处的时刻。通过退出世界，愚者寻求只能在内心找到的内在智慧和理解之光。",
+					wheel: "命运之轮教导愚者关于循环、命运和生命不断变化的本质。上升的必然下降，变化是唯一的常数。",
+					justice: "正义带来平衡、公平和后果的教训。愚者学到每个行动都有反应，必须以清晰和客观面对真相。",
+					hanged: "倒吊人代表臣服和从全新的角度看世界。通过放手和暂停行动，愚者获得仅通过运动无法实现的深刻洞察。",
+					death: "死亡不是关于物理结束，而是深刻的转变。旧的东西必须死去，新的东西才能出现。愚者学会释放不再有用的东西，拥抱随之而来的重生。",
+					temperance: "节制体现了愚者的新理解——一种更深的精神智慧，情绪受到调节，在极端之间建立中间道路。平衡和节制成为神圣的实践。",
+					devil: "恶魔揭示了愚者隐藏的盲点和阴暗面。这张牌讲述束缚我们的无意识冲动、成瘾和依恋。面对恶魔意味着面对我们最深的恐惧和依赖。",
+					tower: "在塔的震惊和敬畏中得到释放，天空中的闪电击中，愚者构建的世界的墙壁崩溃。这种必要的破坏清除了虚假的基础，为真正的成长腾出空间。",
+					star: "星星是愚者旅程中最神奇和充满希望的时刻之一。在塔的毁灭之后，治愈开始。希望得到更新，种下健康的想法，神圣的帮助从天堂自由流动。这是纯粹信仰和灵感的牌。",
+					moon: "月亮让愚者面对幻觉、恐惧和潜意识的神秘领域。并非一切都如表面所示，愚者必须在梦想和阴影的不确定地形中航行。",
+					sun: "太阳升起，承诺回家和归来。这是纯粹的快乐、清晰、活力和成功。在月亮的黑暗之后，太阳带来温暖、庆祝和存在的简单真理。",
+					judgement: "审判是启示和清算的时刻。愚者完成最后的内在工作，处理所有未说或未做的事情，并经历深刻的觉醒。这是精神层面的重生。",
+					world: "愚者已经掌握了世界并完成了旅程。学到了无数的教训，这一章以完整、成就和整合的感觉结束。然而，世界也暗示即将到来的循环——因为生命是成长和转变的无尽螺旋。"
+				}
+			},
+			ja: {
+				title: "愚者の旅",
+				subtitle: "大アルカナを通じた変容の永遠の物語",
+				introTitle: "旅の始まり",
+				introText: "愚者の旅は、人生の旅そのものの強力な隠喩です。22枚の大アルカナカードのそれぞれが、この旅の段階を表しています—私たちが完全性を実現するために受け入れなければならない経験です。愚者の無邪気な始まりから世界の完成と習得まで、これは精神的覚醒、個人的変容、そして成長の永遠のサイクルの物語です。",
+				stage1Title: "🌅 始まり：無邪気さと発見",
+				stage2Title: "📚 初期学習：意識と無意識（カード1-7）",
+				stage3Title: "🌟 内面の発達：試練と知恵（カード8-14）",
+				stage4Title: "✨ 精神的覚醒：影と光（カード15-21）",
+				cyclicalTitle: "🔄 永遠のサイクル",
+				cyclicalText: "旅は真の終わりではなく、新しい始まりにつながる完成です。世界はこのサイクルの習得を表し、同時にスパイラルの次のターンに備えます。人生は終わりのない円です—経験を通じて学び、成長し、進化し続ける機会です。すべての終わりは新しい始まりであり、愚者の旅は再び始まります。今や知恵と理解に満ちています。",
+				cards: {
+					fool: "旅は愚者から始まります。これは新しい始まりと無限の可能性を表すカードです。崖の端に立って、愚者は私たち一人一人が人生の旅を始めるときの姿を表しています。興奮、インスピレーション、自由に満ちて、愚者は素朴で経験不足です—前方の危険に気づいていませんが、善意と無限の熱意に満ちています。これは経験が私たちを形作る前の純粋な可能性の火花です。",
+					magician: "愚者は最初に魔術師に出会います。彼は無限の可能性と私たちの最も深い願望を実現する力を表しています。彼の前にすべての要素のツールを持って、魔術師は意識的な行動と、私たちが現実を創造するために必要なすべてを持っているという認識を教えます。",
+					highPriestess: "愚者がより深いレベルで物理的および精神的な世界を発見し始めると、女教皇が現れます。彼女は直感の門番であり、見えるものと見えないもの、意識と無意識の心の間のバランスを教えます。",
+					empress: "女帝は自然、豊かさ、感覚の世界を表します。彼女は愚者に育成、創造性、そしてすべての生命が湧き出る肥沃な土壌について教えます。",
+					emperor: "皇帝の権威ある父親像は、愚者に世界には認識し、時には従わなければならない規則、構造、パターンがあることを示します。秩序と規律には場所があります。",
+					hierophant: "法王は伝統と構造を通じた精神的学習を表します。愚者は道を歩んだ教師を探し、外部の文化、社会、確立された知恵を通じて精神性について学びます。",
+					lovers: "恋人たちとともに、愚者は関係、選択、そしてパートナーシップの一部になりたいという憧れについて学びます。このカードは、つながりへの深い人間の必要性と愛に伴う決定を表しています。",
+					chariot: "戦車は愚者のこれまでの最大の成果—活発な自我を表しています。誇り高く指揮する人物が意志の力と決意を通じて制御と方向を得て、勝利して世界を駆け巡ります。",
+					strength: "愚者は勇気と内面の決意を発展させるよう迫られます。力は力ではなく、思いやりの優しい力と、挫折にもかかわらず続ける心の能力についてです。",
+					hermit: "隠者は愚者に内省と孤独の時間を呼びかけます。世界から引きこもることで、愚者は内なる知恵と内部でのみ見つけることができる理解の光を求めます。",
+					wheel: "運命の輪は愚者にサイクル、運命、そして人生の常に変化する性質について教えます。上昇するものは下降しなければならず、変化は唯一の定数です。",
+					justice: "正義はバランス、公平性、結果の教訓をもたらします。愚者はすべての行動に反応があり、真実は明確さと客観性をもって直面しなければならないことを学びます。",
+					hanged: "吊された男は降伏と完全に新しい視点から世界を見ることを表します。手放し、行動を停止することで、愚者は動きだけでは達成できない深い洞察を得ます。",
+					death: "死は物理的な終わりではなく、深い変容についてです。新しいものが現れるためには、古いものが死ななければなりません。愚者はもはや役に立たないものを解放し、それに続く再生を受け入れることを学びます。",
+					temperance: "節制は愚者の新しい理解を体現しています—感情が調整され、極端の間に中間の道が築かれるより深い精神的知恵。バランスと節制は神聖な実践になります。",
+					devil: "悪魔は愚者の隠された盲点と影の自己を明らかにします。このカードは私たちを縛る無意識の衝動、中毒、愛着について語ります。悪魔に直面することは、私たちの最も深い恐怖と依存に立ち向かうことを意味します。",
+					tower: "塔の衝撃と畏怖によって解放され、天からの稲妻が襲い、愚者が構築した世界の壁が崩れます。この必要な破壊は偽りの基盤を一掃し、本物の成長の余地を作ります。",
+					star: "星は愚者の旅で最も魔法的で希望に満ちた瞬間の一つです。塔の荒廃の後、癒しが始まります。希望が更新され、健康的なアイデアが植えられ、神聖な援助が天から自由に流れます。これは純粋な信仰とインスピレーションのカードです。",
+					moon: "月は愚者を幻想、恐怖、そして潜在意識の神秘的な領域と向き合わせます。すべてが見た目通りではなく、愚者は夢と影の不確かな地形を航行しなければなりません。",
+					sun: "太陽は帰郷と帰還の約束とともに昇ります。これは純粋な喜び、明快さ、活力、成功です。月の暗闇の後、太陽は暖かさ、祝福、そして存在の単純な真実をもたらします。",
+					judgement: "審判は啓示と清算の瞬間です。愚者は最後の内面の仕事を完了し、未解決または未完了のことすべてに対処し、深い目覚めを経験します。これは精神的レベルでの再生です。",
+					world: "愚者は世界をマスターし、旅を完了しました。無数の教訓を学んで、この章は完全性、達成感、統合の感覚で閉じられます。しかし、世界はまた来るべきサイクルをほのめかしています—なぜなら人生は成長と変容の終わりのないスパイラルだからです。"
+				}
+			},
+			ko: {
+				title: "바보의 여정",
+				subtitle: "메이저 아르카나를 통한 변화의 영원한 이야기",
+				introTitle: "여정의 시작",
+				introText: "바보의 여정은 삶의 여정 그 자체에 대한 강력한 은유입니다. 22장의 메이저 아르카나 카드 각각은 이 여정의 한 단계를 나타냅니다—우리의 완전성을 실현하기 위해 받아들여야 하는 경험입니다. 바보의 순수한 시작부터 세계의 완성과 숙달까지, 이것은 영적 각성, 개인적 변화, 그리고 성장의 영원한 순환에 대한 이야기입니다.",
+				stage1Title: "🌅 시작: 순수함과 발견",
+				stage2Title: "📚 초기 학습: 의식과 무의식 (카드 1-7)",
+				stage3Title: "🌟 내면 발달: 시련과 지혜 (카드 8-14)",
+				stage4Title: "✨ 영적 각성: 그림자와 빛 (카드 15-21)",
+				cyclicalTitle: "🔄 영원한 순환",
+				cyclicalText: "여정은 진정한 끝이 아니라 새로운 시작으로 이어지는 완성입니다. 세계는 이 순환의 숙달을 나타내며, 동시에 나선의 다음 회전을 준비합니다. 삶은 끝없는 원입니다—경험을 통해 배우고, 성장하고, 진화하는 지속적인 기회입니다. 모든 끝은 새로운 시작이며, 바보의 여정은 이제 지혜와 이해로 풍성해져 다시 시작됩니다.",
+				cards: {
+					fool: "여정은 바보로 시작됩니다. 이것은 새로운 시작과 무한한 잠재력을 나타내는 카드입니다. 절벽 가장자리에 서서, 바보는 우리 각자가 인생 여정을 시작할 때의 모습을 나타냅니다. 흥분, 영감, 자유로 가득 차 있으며, 바보는 순진하고 경험이 없습니다—앞에 있는 위험을 알지 못하지만 좋은 의도와 무한한 열정으로 가득 차 있습니다. 이것은 경험이 우리를 형성하기 전 순수한 잠재력의 불꽃입니다.",
+					magician: "바보는 처음으로 마법사를 만납니다. 그는 무한한 잠재력과 우리의 가장 깊은 욕망을 실현하는 힘을 나타냅니다. 그 앞에 모든 요소의 도구를 가지고, 마법사는 의식적인 행동과 우리가 현실을 창조하는 데 필요한 모든 것을 가지고 있다는 깨달음을 가르칩니다.",
+					highPriestess: "바보가 더 깊은 수준에서 물리적이고 영적인 세계를 발견하기 시작하면 여사제가 나타납니다. 그녀는 직관의 문지기이며, 보이는 것과 보이지 않는 것, 의식과 무의식 사이의 균형을 가르칩니다.",
+					empress: "여제는 자연, 풍요, 감각의 세계를 나타냅니다. 그녀는 바보에게 양육, 창의성, 그리고 모든 생명이 솟아나는 비옥한 땅에 대해 가르칩니다.",
+					emperor: "황제의 권위 있는 아버지 형상은 바보에게 세상에는 인정하고 때로는 준수해야 하는 규칙, 구조, 패턴이 있다는 것을 보여줍니다. 질서와 규율에는 자리가 있습니다.",
+					hierophant: "교황은 전통과 구조를 통한 영적 학습을 나타냅니다. 바보는 앞서 걸었던 교사를 찾아 외부 문화, 사회, 확립된 지혜를 통해 영성에 대해 배웁니다.",
+					lovers: "연인들과 함께, 바보는 관계, 선택, 그리고 파트너십의 일부가 되고자 하는 열망에 대해 배웁니다. 이 카드는 연결에 대한 깊은 인간의 필요성과 사랑과 함께 오는 결정을 나타냅니다.",
+					chariot: "전차는 지금까지 바보의 최고 성취—활발한 자아를 나타냅니다. 자랑스럽고 지휘하는 인물이 의지력과 결단력을 통해 통제와 방향을 얻어 승리하여 세상을 질주합니다.",
+					strength: "바보는 용기와 내면의 결의를 개발하도록 압박받습니다. 힘은 무력이 아니라 연민의 부드러운 힘과 좌절에도 불구하고 계속 나아가는 마음의 능력에 관한 것입니다.",
+					hermit: "은둔자는 바보에게 성찰과 고독의 시간을 부릅니다. 세상에서 물러남으로써, 바보는 내면에서만 찾을 수 있는 내면의 지혜와 이해의 빛을 찾습니다.",
+					wheel: "운명의 바퀴는 바보에게 순환, 운명, 그리고 삶의 끊임없이 변화하는 본성에 대해 가르칩니다. 올라가는 것은 내려와야 하며, 변화는 유일한 상수입니다.",
+					justice: "정의는 균형, 공정성, 결과의 교훈을 가져옵니다. 바보는 모든 행동에는 반응이 있으며, 진실은 명확성과 객관성으로 직면해야 한다는 것을 배웁니다.",
+					hanged: "매달린 사람은 항복과 완전히 새로운 관점에서 세상을 보는 것을 나타냅니다. 놓아주고 행동을 중단함으로써, 바보는 움직임만으로는 달성할 수 없는 심오한 통찰을 얻습니다.",
+					death: "죽음은 육체적 종말이 아니라 심오한 변화에 관한 것입니다. 새로운 것이 나타나기 위해서는 오래된 것이 죽어야 합니다. 바보는 더 이상 도움이 되지 않는 것을 놓아주고 그 뒤에 오는 재탄생을 받아들이는 법을 배웁니다.",
+					temperance: "절제는 바보의 새로운 이해를 구현합니다—감정이 조절되고 극단 사이에 중간 길이 만들어지는 더 깊은 영적 지혜. 균형과 절제는 신성한 실천이 됩니다.",
+					devil: "악마는 바보의 숨겨진 맹점과 그림자 자아를 드러냅니다. 이 카드는 우리를 묶는 무의식적 충동, 중독, 집착에 대해 말합니다. 악마에 직면하는 것은 우리의 가장 깊은 두려움과 의존성에 맞서는 것을 의미합니다.",
+					tower: "탑의 충격과 경외감으로 해방되어, 하늘에서 번개가 치고, 바보가 건설한 세계의 벽이 무너집니다. 이 필요한 파괴는 잘못된 기초를 제거하여 진정한 성장을 위한 공간을 만듭니다.",
+					star: "별은 바보의 여정에서 가장 마법적이고 희망찬 순간 중 하나입니다. 탑의 황폐화 후, 치유가 시작됩니다. 희망이 새로워지고 건강한 아이디어가 심어지며 신성한 도움이 하늘에서 자유롭게 흘러나옵니다. 이것은 순수한 믿음과 영감의 카드입니다.",
+					moon: "달은 바보를 환상, 두려움, 그리고 잠재의식의 신비로운 영역과 직면하게 합니다. 모든 것이 보이는 것이 아니며, 바보는 꿈과 그림자의 불확실한 지형을 탐색해야 합니다.",
+					sun: "태양은 귀향과 귀환의 약속과 함께 떠오릅니다. 이것은 순수한 기쁨, 명료함, 활력, 성공입니다. 달의 어둠 이후, 태양은 따뜻함, 축하, 그리고 존재의 단순한 진실을 가져옵니다.",
+					judgement: "심판은 계시와 청산의 순간입니다. 바보는 최종 내면 작업을 완료하고, 말하지 않았거나 하지 않은 모든 것을 처리하며, 심오한 각성을 경험합니다. 이것은 영적 수준에서의 재탄생입니다.",
+					world: "바보는 세계를 마스터하고 여정을 완료했습니다. 무수한 교훈을 배우고, 이 장은 완전함, 성취, 통합의 감각으로 닫힙니다. 그러나 세계는 또한 다가올 순환을 암시합니다—왜냐하면 삶은 성장과 변화의 끝없는 나선이기 때문입니다."
+				}
+			}
+		};
+
+		let currentLanguage = 'en';
+
+		function changeLanguage() {
+			currentLanguage = document.getElementById('language-select').value;
+			localStorage.setItem('tarotLanguage', currentLanguage);
+			updateUILanguage();
+		}
+
+		function updateUILanguage() {
+			const trans = translations[currentLanguage];
+
+			// Update title and subtitle
+			document.getElementById('title').textContent = trans.title;
+			document.querySelector('#banner p').textContent = trans.subtitle;
+
+			// Update intro section
+			document.querySelector('.story-intro h3').textContent = trans.introTitle;
+			document.querySelector('.story-intro p').textContent = trans.introText;
+
+			// Update stage titles
+			const stageTitles = document.querySelectorAll('.journey-stage h4');
+			stageTitles[0].textContent = trans.stage1Title;
+			stageTitles[1].textContent = trans.stage2Title;
+			stageTitles[2].textContent = trans.stage3Title;
+			stageTitles[3].textContent = trans.stage4Title;
+
+			// Update cyclical section
+			document.querySelector('.cyclical-note h4').textContent = trans.cyclicalTitle;
+			document.querySelector('.cyclical-note p').textContent = trans.cyclicalText;
+
+			// Update card descriptions
+			const cardDescriptions = document.querySelectorAll('.card-content p');
+			const cardKeys = ['fool', 'magician', 'highPriestess', 'empress', 'emperor', 'hierophant', 'lovers', 'chariot',
+							  'strength', 'hermit', 'wheel', 'justice', 'hanged', 'death', 'temperance',
+							  'devil', 'tower', 'star', 'moon', 'sun', 'judgement', 'world'];
+
+			cardDescriptions.forEach((desc, index) => {
+				if (cardKeys[index] && trans.cards[cardKeys[index]]) {
+					desc.textContent = trans.cards[cardKeys[index]];
+				}
+			});
+		}
+
+		// Load saved language preference on page load
+		window.onload = function() {
+			currentLanguage = localStorage.getItem('tarotLanguage') || 'en';
+			document.getElementById('language-select').value = currentLanguage;
+			updateUILanguage();
+		};
+		</script>
+	</body>
+</html>
