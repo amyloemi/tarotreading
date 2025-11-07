@@ -1195,17 +1195,8 @@
 			};
 			const deckId = deckIdMap[deckType] || 'rider-waite';
 
-			// Get all cards - use old data for Miro/Picasso due to complex filenames
-			let allCards = [];
-			if (deckType === 'rider') {
-				allCards = DeckLoader.getAllCards();
-			} else if (deckType === 'artistic') {
-				allCards = DeckLoader.getAllCards();
-			} else if (deckType === 'miro') {
-				allCards = miroData.getAllCards();
-			} else if (deckType === 'picasso') {
-				allCards = picassoData.getAllCards();
-			}
+			// Get all cards from unified DeckLoader
+			const allCards = DeckLoader.getAllCards();
 
 			// Get deck name from translations
 			let deckName = '';
@@ -1247,47 +1238,19 @@
 					const cardThumbnail = document.createElement('div');
 					cardThumbnail.className = 'card-thumbnail';
 
-					let fullResPath = '';
+					// Use unified DeckLoader for all decks
+					const picture = DeckLoader.createResponsiveImage(deckId, card, {
+						thumbnail: true,
+						loading: 'lazy',
+						className: ''
+					});
 
-					// Use unified DeckLoader for Rider-Waite and Artistic
-					if (deckType === 'rider' || deckType === 'artistic') {
-						const picture = DeckLoader.createResponsiveImage(deckId, card, {
-							thumbnail: true,
-							loading: 'lazy',
-							className: ''
-						});
-						cardThumbnail.appendChild(picture);
-						fullResPath = DeckLoader.getImagePath(deckId, card);
-					} else {
-						// Use old rendering method for Miro and Picasso
-						let imagePath = '';
-						if (deckType === 'miro') {
-							imagePath = miroData.renderCard(card);
-						} else if (deckType === 'picasso') {
-							imagePath = picassoData.renderCard(card);
-						}
+					cardThumbnail.appendChild(picture);
 
-						// Check if thumbnails exist
-						const thumbnailPath = imagePath.replace(/\/(miro|picasso)-tarot-cards\//, '/$1-tarot-cards-thumbnails/').replace(/\.png$/, '.webp');
-
-						const picture = document.createElement('picture');
-						const sourceWebp = document.createElement('source');
-						sourceWebp.srcset = thumbnailPath;
-						sourceWebp.type = 'image/webp';
-						picture.appendChild(sourceWebp);
-
-						const img = document.createElement('img');
-						img.src = thumbnailPath.replace('.webp', '.jpg');
-						img.alt = card.name;
-						img.loading = 'lazy';
-						img.decoding = 'async';
-						picture.appendChild(img);
-
-						cardThumbnail.appendChild(picture);
-						fullResPath = imagePath;
-					}
-
+					// Get full resolution path for lightbox
+					const fullResPath = DeckLoader.getImagePath(deckId, card);
 					cardThumbnail.onclick = () => enlargeCard(fullResPath, card.name);
+
 					fragment.appendChild(cardThumbnail);
 				});
 

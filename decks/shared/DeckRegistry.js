@@ -47,8 +47,8 @@ const DECK_REGISTRY = {
                 minor: ''   // Flat structure
             },
             thumbnailFormats: ['webp', 'jpg'],
-            // Miro has special filename format with roman numerals
-            useCompleteFilename: true  // Don't construct filename, use from old data
+            // Miro deck numbering starts at 01 (not 00)
+            numberingOffset: 1
         },
         'picasso': {
             id: 'picasso',
@@ -61,7 +61,9 @@ const DECK_REGISTRY = {
                 major: '',  // Flat structure
                 minor: ''   // Flat structure
             },
-            thumbnailFormats: ['webp', 'jpg']
+            thumbnailFormats: ['webp', 'jpg'],
+            // Picasso deck numbering starts at 01 (not 00)
+            numberingOffset: 1
         }
     },
 
