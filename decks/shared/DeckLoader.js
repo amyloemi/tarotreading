@@ -6,6 +6,42 @@
 
 class DeckLoader {
     /**
+     * Calculate the file number for a card based on deck's suit order
+     * @param {object} deck - Deck configuration
+     * @param {object} card - Card object
+     * @returns {number} File number for the card
+     */
+    static getCardFileNumber(deck, card) {
+        let cardNumber = card.id;
+
+        // For minor arcana with custom suit order, recalculate based on suit position
+        if (card.type === 'minor' && deck.suitOrder && card.suit) {
+            // Standard registry order: cups, pentacles, swords, wands
+            const standardOrder = ['cups', 'pentacles', 'swords', 'wands'];
+            const customOrder = deck.suitOrder;
+
+            // Find positions
+            const standardSuitIndex = standardOrder.indexOf(card.suit);
+            const customSuitIndex = customOrder.indexOf(card.suit);
+
+            if (standardSuitIndex !== -1 && customSuitIndex !== -1) {
+                // Calculate card's rank within suit (0-13)
+                const cardRankInSuit = card.id - 22 - (standardSuitIndex * 14);
+
+                // Recalculate card number based on custom suit position
+                cardNumber = 22 + (customSuitIndex * 14) + cardRankInSuit;
+            }
+        }
+
+        // Apply numbering offset if specified
+        if (deck.numberingOffset) {
+            cardNumber += deck.numberingOffset;
+        }
+
+        return cardNumber;
+    }
+
+    /**
      * Get image path for any card from any deck
      * @param {string} deckId - Deck identifier (e.g., 'rider-waite')
      * @param {object} card - Card object from registry (must have type and suit properties)
@@ -21,11 +57,8 @@ class DeckLoader {
 
         const basePath = PathResolver.resolve('decks', deck.folder);
 
-        // Build card number (handle deck-specific numbering)
-        let cardNumber = card.id;
-        if (deck.numberingOffset) {
-            cardNumber += deck.numberingOffset;
-        }
+        // Build card number (handle deck-specific numbering and suit order)
+        const cardNumber = this.getCardFileNumber(deck, card);
         const paddedNumber = String(cardNumber).padStart(2, '0');
 
         // Determine folder path
@@ -77,11 +110,8 @@ class DeckLoader {
 
         const basePath = PathResolver.resolve('decks', deck.thumbnailFolder || 'thumbnails');
 
-        // Build card number
-        let cardNumber = card.id;
-        if (deck.numberingOffset) {
-            cardNumber += deck.numberingOffset;
-        }
+        // Build card number (handle deck-specific numbering and suit order)
+        const cardNumber = this.getCardFileNumber(deck, card);
         const paddedNumber = String(cardNumber).padStart(2, '0');
 
         // Determine folder path (same structure as images)

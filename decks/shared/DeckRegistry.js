@@ -33,7 +33,9 @@ const DECK_REGISTRY = {
             },
             thumbnailFormats: ['webp', 'jpg'],
             // NOTE: Artistic deck numbering starts at 01 (not 00)
-            numberingOffset: 1
+            numberingOffset: 1,
+            // Artistic deck has different suit order: wands, cups, swords, pentacles
+            suitOrder: ['wands', 'cups', 'swords', 'pentacles']
         },
         'miro': {
             id: 'miro',
@@ -48,7 +50,9 @@ const DECK_REGISTRY = {
             },
             thumbnailFormats: ['webp', 'jpg'],
             // Miro deck numbering starts at 01 (not 00)
-            numberingOffset: 1
+            numberingOffset: 1,
+            // Miro deck has different suit order: wands, cups, swords, pentacles
+            suitOrder: ['wands', 'cups', 'swords', 'pentacles']
         },
         'picasso': {
             id: 'picasso',
@@ -63,7 +67,9 @@ const DECK_REGISTRY = {
             },
             thumbnailFormats: ['webp', 'jpg'],
             // Picasso deck numbering starts at 01 (not 00)
-            numberingOffset: 1
+            numberingOffset: 1,
+            // Picasso deck has different suit order: wands, cups, swords, pentacles
+            suitOrder: ['wands', 'cups', 'swords', 'pentacles']
         }
     },
 
