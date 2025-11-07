@@ -980,9 +980,15 @@
 			return text;
 		}
 
-		function selectDeck(deckType) {
+		async function selectDeck(deckType) {
 			console.log('Selected deck:', deckType);
 			currentDeck = deckType;
+
+			// Ensure readings are loaded before drawing
+			if (!readingsData[deckType]) {
+				console.log('Waiting for readings to load...');
+				await loadReadings();
+			}
 
 			// Hide deck selection with animation
 			const deckSelection = document.getElementById('deck-selection');
@@ -1042,7 +1048,9 @@
 			}
 
 			// Return the appropriate orientation reading
-			return isReversed ? questionReading.reversed : questionReading.upright;
+			const reading = isReversed ? questionReading.reversed : questionReading.upright;
+			console.log('✓ Using JSON reading for:', cardName, '/', question, '/', isReversed ? 'reversed' : 'upright');
+			return reading;
 		}
 
 		async function drawCard() {
