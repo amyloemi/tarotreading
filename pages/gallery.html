@@ -1194,38 +1194,56 @@
 			const trans = translations[currentLanguage];
 			galleryTitle.textContent = `${trans.allCards} - ${deckName}`;
 
-			// Render all cards
-			allCards.forEach(card => {
-				const cardThumbnail = document.createElement('div');
-				cardThumbnail.className = 'card-thumbnail';
+			// Render cards in batches for better performance
+			const BATCH_SIZE = 20; // Render 20 cards at a time
+			let currentIndex = 0;
 
-				const img = document.createElement('img');
+			function renderNextBatch() {
+				const endIndex = Math.min(currentIndex + BATCH_SIZE, allCards.length);
+				const batch = allCards.slice(currentIndex, endIndex);
 
-				// Handle different data structures
-				if (deckType === 'rider') {
-					// Rider-Waite uses getImagePath function
-					img.src = riderWaiteData.getImagePath(card);
-				} else if (deckType === 'artistic') {
-					// Artistic uses renderCard function
-					img.src = artisticData.renderCard(card);
-				} else if (deckType === 'miro') {
-					// Miró uses renderCard function
-					img.src = miroData.renderCard(card);
-				} else if (deckType === 'picasso') {
-					// Picasso uses renderCard function
-					img.src = picassoData.renderCard(card);
+				batch.forEach(card => {
+					const cardThumbnail = document.createElement('div');
+					cardThumbnail.className = 'card-thumbnail';
+
+					const img = document.createElement('img');
+
+					// Handle different data structures
+					if (deckType === 'rider') {
+						// Rider-Waite uses getImagePath function
+						img.src = riderWaiteData.getImagePath(card);
+					} else if (deckType === 'artistic') {
+						// Artistic uses renderCard function
+						img.src = artisticData.renderCard(card);
+					} else if (deckType === 'miro') {
+						// Miró uses renderCard function
+						img.src = miroData.renderCard(card);
+					} else if (deckType === 'picasso') {
+						// Picasso uses renderCard function
+						img.src = picassoData.renderCard(card);
+					}
+
+					img.alt = card.name;
+					img.loading = 'lazy';
+
+					cardThumbnail.appendChild(img);
+
+					const imagePath = img.src;
+					cardThumbnail.onclick = () => enlargeCard(imagePath, card.name);
+
+					cardGrid.appendChild(cardThumbnail);
+				});
+
+				currentIndex = endIndex;
+
+				// If there are more cards, render them after a short delay
+				if (currentIndex < allCards.length) {
+					requestAnimationFrame(renderNextBatch);
 				}
+			}
 
-				img.alt = card.name;
-				img.loading = 'lazy';
-
-				cardThumbnail.appendChild(img);
-
-				const imagePath = img.src;
-				cardThumbnail.onclick = () => enlargeCard(imagePath, card.name);
-
-				cardGrid.appendChild(cardThumbnail);
-			});
+			// Start rendering the first batch
+			renderNextBatch();
 
 			// Show gallery
 			gallery.classList.add('visible');

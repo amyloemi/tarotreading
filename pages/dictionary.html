@@ -491,11 +491,13 @@
 		<!-- Load card data -->
 		<script src="../decks/rider-waite-data.js"></script>
 		<script src="../decks/card-descriptions.js"></script>
-		<script src="../decks/card-keywords-translations.js"></script>
 
 		<script>
 		// Current language
 		let currentLanguage = localStorage.getItem('tarotLanguage') || 'en';
+
+		// Track which sections have been rendered (for lazy loading)
+		const renderedSections = new Set();
 
 		// Translations object (will be populated with comprehensive translations)
 		const translations = {
@@ -574,6 +576,12 @@
 
 			header.classList.toggle('collapsed');
 			content.classList.toggle('collapsed');
+
+			// Lazy load: render cards only when section is expanded
+			if (!header.classList.contains('collapsed') && !renderedSections.has(sectionId)) {
+				renderSectionCards(sectionId);
+				renderedSections.add(sectionId);
+			}
 		}
 
 		// Change language
@@ -595,15 +603,17 @@
 				}
 			});
 
-			// Re-render cards with new language
-			renderAllCards();
+			// Re-render only visible (already rendered) sections with new language
+			renderedSections.forEach(sectionId => {
+				renderSectionCards(sectionId);
+			});
 		}
 
-		// Render all cards
-		function renderAllCards() {
+		// Render specific section cards (for lazy loading)
+		function renderSectionCards(sectionId) {
 			// Ensure rider-waite data is loaded
 			if (typeof riderWaiteData === 'undefined') {
-				setTimeout(renderAllCards, 100);
+				setTimeout(() => renderSectionCards(sectionId), 100);
 				return;
 			}
 
@@ -612,20 +622,21 @@
 				riderWaiteData.generateMinorCards();
 			}
 
-			// Render major arcana
-			renderCardGrid('major', riderWaiteData.cards.major);
+			if (sectionId === 'major') {
+				renderCardGrid('major', riderWaiteData.cards.major);
+			} else {
+				const suitCards = riderWaiteData.cards.minor.filter(c => c.suit === sectionId);
+				renderCardGrid(sectionId, suitCards);
+			}
+		}
 
-			// Render minor arcana by suit
-			const suits = {
-				wands: riderWaiteData.cards.minor.filter(c => c.suit === 'wands'),
-				cups: riderWaiteData.cards.minor.filter(c => c.suit === 'cups'),
-				swords: riderWaiteData.cards.minor.filter(c => c.suit === 'swords'),
-				pentacles: riderWaiteData.cards.minor.filter(c => c.suit === 'pentacles')
-			};
-
-			Object.keys(suits).forEach(suit => {
-				renderCardGrid(suit, suits[suit]);
-			});
+		// Render all cards (deprecated - now using lazy loading)
+		function renderAllCards() {
+			// Only render major arcana initially (it's expanded by default)
+			if (!renderedSections.has('major')) {
+				renderSectionCards('major');
+				renderedSections.add('major');
+			}
 		}
 
 		// Render card grid for a specific section
@@ -691,7 +702,7 @@
 
 			cardDiv.innerHTML = `
 				<div class="card-image">
-					<img src="${imagePath}" alt="${escapeHtml(card.name)}">
+					<img src="${imagePath}" alt="${escapeHtml(card.name)}" loading="lazy">
 					<div class="card-overlay">
 						<div class="overlay-description">${safeDescription}</div>
 					</div>
