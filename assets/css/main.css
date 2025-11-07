@@ -3257,7 +3257,7 @@
 
 	#footer {
 		background: #f0f0f0;
-		padding: 4em 0 6em 0;
+		padding: 2em 0 3em 0;
 		text-align: center;
 	}
 
@@ -3277,7 +3277,7 @@
 			color: #999;
 			font-size: 0.9em;
 			line-height: 1em;
-			margin: 2em 0 0 0;
+			margin: 1em 0 0 0;
 			padding: 0;
 			text-align: center;
 		}
@@ -3776,7 +3776,7 @@
 		/* Footer */
 
 			#footer {
-				padding: 4em 0;
+				padding: 2em 0;
 			}
 
 				#footer .copyright li {
