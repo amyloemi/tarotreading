@@ -12,7 +12,10 @@
       "Bash(bash:*)",
       "Bash(python3:*)",
       "Bash(git ls-tree:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(open:*)",
+      "Bash(node tests/test-registry.js:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

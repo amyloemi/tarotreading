@@ -44,7 +44,9 @@ class DeckLoader {
         if (folder) parts.push(folder);
         parts.push(filename);
 
-        return parts.join('/');
+        const finalPath = parts.join('/');
+        console.log(`DeckLoader.getImagePath(${deckId}, card#${card.id}):`, finalPath);
+        return finalPath;
     }
 
     /**

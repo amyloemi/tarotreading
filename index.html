@@ -1169,29 +1169,35 @@
 
 		// Get reading from JSON based on card, question, and orientation
 		function getReadingFromJSON(deckType, cardName, question, isReversed) {
+			console.log('🔍 getReadingFromJSON called with:', { deckType, cardName, question, isReversed });
+
 			const data = readingsData[deckType];
 			if (!data || !data.readings) {
-				console.error('No readings data for deck:', deckType);
+				console.error('❌ No readings data for deck:', deckType, '| Available:', Object.keys(readingsData));
 				return null;
 			}
+
+			console.log('✓ Found deck data, has', data.readings.length, 'card readings');
 
 			// Find the card in the readings
 			const cardReading = data.readings.find(r => r.card_name === cardName);
 			if (!cardReading || !cardReading.questions) {
-				console.error('No reading found for card:', cardName);
+				console.error('❌ No reading found for card:', cardName, '| Available cards:', data.readings.slice(0, 3).map(r => r.card_name));
 				return null;
 			}
+
+			console.log('✓ Found card reading for:', cardName);
 
 			// Get the specific question reading
 			const questionReading = cardReading.questions[question];
 			if (!questionReading) {
-				console.error('No reading found for question:', question);
+				console.error('❌ No reading found for question:', question, '| Available:', Object.keys(cardReading.questions));
 				return null;
 			}
 
 			// Return the appropriate orientation reading
 			const reading = isReversed ? questionReading.reversed : questionReading.upright;
-			console.log('✓ Using JSON reading for:', cardName, '/', question, '/', isReversed ? 'reversed' : 'upright');
+			console.log('✅ Using JSON reading for:', cardName, '/', question, '/', isReversed ? 'reversed' : 'upright');
 			return reading;
 		}
 
@@ -1308,10 +1314,16 @@
 			}
 
 			// Convert old Rider-Waite format to new format
+			// card.file = "00-the-fool.png" → filename should be just "the-fool" (without number and extension)
+			const fileWithoutExt = card.file ? card.file.replace('.png', '') : '';
+			const filenameParts = fileWithoutExt.split('-');
+			// Remove the number prefix (e.g., "00-the-fool" → "the-fool")
+			const filenameWithoutNumber = filenameParts.slice(1).join('-');
+
 			const converted = {
 				id: card.number || 0,
 				name: card.name,
-				filename: card.file ? card.file.replace('.png', '') : '',
+				filename: filenameWithoutNumber, // "the-fool" (DeckLoader will add number back)
 				type: card.number < 22 ? 'major' : 'minor'
 			};
 
@@ -1324,6 +1336,7 @@
 				else if (filename.includes('wands')) converted.suit = 'wands';
 			}
 
+			console.log('Converted card:', card.file, '→', converted);
 			return converted;
 		}
 
