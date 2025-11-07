@@ -273,6 +273,7 @@
 				width: 100%;
 				transition: none;
 				text-align: center;
+				line-height: 1.3;
 			}
 
 			#question-text.swipe-out-right {
@@ -663,6 +664,16 @@
 			/* Mobile responsive */
 
 			@media (max-width: 768px) {
+				#question-container {
+					min-height: 70px;
+					padding: 0 10px;
+				}
+
+				#question-text {
+					font-size: 1.8em;
+					line-height: 1.4;
+				}
+
 				.deck-options {
 					grid-template-columns: repeat(3, 1fr);
 					gap: 10px;
