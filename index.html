@@ -319,14 +319,33 @@
 			}
 
 			/* Custom styles for tarot reading */
+			#card-container {
+				display: flex;
+				gap: 40px;
+				align-items: flex-start;
+			}
+
+			.card-left-side {
+				flex: 0 0 400px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.card-right-side {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+
 			.card-image-container {
 				text-align: center;
-				margin: 40px 0;
+				margin: 0;
 				cursor: pointer;
 			}
 
 			.card-image-container img {
-				max-width: 350px;
+				max-width: 400px;
 				width: 100%;
 				border-radius: 15px;
 				box-shadow: 0 15px 50px rgba(0,0,0,0.5);
@@ -349,7 +368,7 @@
 			/* SVG and geometric card containers */
 			.card-image-container svg,
 			.card-image-container .card-art {
-				max-width: 350px;
+				max-width: 400px;
 				width: 100%;
 				border-radius: 15px;
 				box-shadow: 0 15px 50px rgba(0,0,0,0.5);
@@ -362,35 +381,35 @@
 				overflow: hidden;
 			}
 
+			.card-name-container {
+				display: flex;
+				align-items: baseline;
+				gap: 15px;
+				margin: 20px 0 20px 0;
+			}
+
 			.card-name {
 				font-size: 2.5em;
 				color: #4c5c96;
-				margin: 30px 0 10px 0;
-				font-weight: bold;
+				font-weight: normal;
 				text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+				font-family: 'Apple Chancery', cursive, serif;
 			}
 
 			.card-orientation {
 				font-size: 1.2em;
 				color: #717171;
 				font-style: italic;
-				margin-bottom: 30px;
 			}
 
 			.card-reading {
-				background: rgba(255, 255, 255, 0.15);
-				backdrop-filter: blur(10px);
 				padding: 35px;
-				border-radius: 15px;
-				border: none;
 				font-size: 1.15em;
-				line-height: 2;
+				line-height: 1.8;
 				color: #1a1a1a;
 				margin: 30px 0;
 				display: none;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-				font-family: Calibri, 'Trebuchet MS', sans-serif;
-				text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+				text-align: left;
 			}
 
 			.card-reading.revealed {
@@ -533,46 +552,6 @@
 				letter-spacing: 1px;
 			}
 
-			/* Action buttons */
-			#action-buttons {
-				display: flex;
-				gap: 20px;
-				justify-content: center;
-				margin-top: 30px;
-			}
-
-			.btn-primary, .btn-secondary {
-				padding: 12px 30px;
-				border-radius: 25px;
-				font-size: 1em;
-				cursor: pointer;
-				transition: all 0.3s ease;
-				border: none;
-				font-weight: 600;
-			}
-
-			.btn-primary {
-				background: rgba(0, 0, 0, 0.6);
-				backdrop-filter: blur(10px);
-				color: #d4af37;
-				border: 2px solid #d4af37;
-			}
-
-			.btn-primary:hover {
-				background: rgba(0, 0, 0, 0.8);
-				transform: scale(1.05);
-			}
-
-			.btn-secondary {
-				background: rgba(255, 255, 255, 0.9);
-				color: #2c3e50;
-				border: 2px solid #2c3e50;
-			}
-
-			.btn-secondary:hover {
-				background: white;
-				transform: scale(1.05);
-			}
 
 			/* Mobile responsive */
 
@@ -598,6 +577,32 @@
 
 				.deck-preview {
 					margin-bottom: 10px;
+				}
+
+				#card-container {
+					flex-direction: column;
+					gap: 20px;
+				}
+
+				.card-left-side {
+					flex: none;
+					width: 100%;
+				}
+
+				.card-right-side {
+					flex: none;
+					width: 100%;
+				}
+
+				.card-image-container img,
+				.card-image-container svg,
+				.card-image-container .card-art {
+					max-width: 300px;
+				}
+
+				.card-name-container {
+					justify-content: center;
+					flex-wrap: wrap;
 				}
 
 				#action-buttons {
@@ -680,24 +685,32 @@
 
 					<!-- Card Display (initially hidden) -->
 					<section class="box special hidden" id="card-container">
-						<div class="tap-hint" id="tap-hint" onclick="revealReading()" data-translate="clickToReveal">✨ Click to reveal your reading ✨</div>
-
-						<div class="card-image-container" id="card-image-container" onclick="revealReading()">
-							<!-- Card will be rendered here -->
+						<!-- Left side: Card image -->
+						<div class="card-left-side">
+							<div class="card-image-container" id="card-image-container" onclick="revealReading()">
+								<!-- Card will be rendered here -->
+							</div>
 						</div>
 
-						<div class="card-name" id="card-name"></div>
-						<div class="card-orientation" id="card-orientation"></div>
+						<!-- Right side: Button, card name, orientation, and reading -->
+						<div class="card-right-side">
+							<div class="tap-hint" id="tap-hint" onclick="revealReading()" data-translate="clickToReveal">✨ Click to reveal your reading ✨</div>
 
-						<div class="card-reading" id="card-reading"></div>
+							<div class="card-name-container">
+								<div class="card-name" id="card-name"></div>
+								<div class="card-orientation" id="card-orientation"></div>
+							</div>
 
-						<div id="action-buttons" style="display: none;">
-							<button class="btn-primary" onclick="drawCard()">
-								<span data-translate="drawAnother">Draw Another Card</span>
-							</button>
-							<button class="btn-secondary" onclick="returnToDeckSelection()">
-								<span data-translate="changeDeck">Choose Different Deck</span>
-							</button>
+							<div class="card-reading" id="card-reading"></div>
+
+							<div id="action-buttons" style="display: none;">
+								<button class="btn-primary" onclick="drawCard()">
+									<span data-translate="drawAnother">Draw Another Card</span>
+								</button>
+								<button class="btn-secondary" onclick="returnToDeckSelection()">
+									<span data-translate="changeDeck">Choose Different Deck</span>
+								</button>
+							</div>
 						</div>
 					</section>
 
@@ -736,6 +749,9 @@
 				title: "Card of Today",
 				subtitle: "Select one to begin your reading",
 				chooseYourDeck: "Select one to begin your reading",
+				question1: "Where should I focus my intention today?",
+				question2: "What does this relationship need right now?",
+				question3: "Am I on the right track?",
 					riderWaite: "Rider-Waite Classic",
 					artistic: "Artistic Tarot",
 					miro: "Miró Surrealism",
@@ -749,6 +765,9 @@
 				title: "Carte du Jour",
 				subtitle: "Sélectionnez-en un pour commencer votre lecture",
 				chooseYourDeck: "Sélectionnez-en un pour commencer votre lecture",
+				question1: "Où devrais-je concentrer mon intention aujourd'hui?",
+				question2: "De quoi cette relation a-t-elle besoin maintenant?",
+				question3: "Suis-je sur la bonne voie?",
 					riderWaite: "Rider-Waite Classique",
 					artistic: "Tarot Artistique",
 					miro: "Surréalisme de Miró",
@@ -762,6 +781,9 @@
 				title: "Carta del Día",
 				subtitle: "Selecciona uno para comenzar tu lectura",
 				chooseYourDeck: "Selecciona uno para comenzar tu lectura",
+				question1: "¿Dónde debería enfocar mi intención hoy?",
+				question2: "¿Qué necesita esta relación ahora mismo?",
+				question3: "¿Estoy en el camino correcto?",
 					riderWaite: "Rider-Waite Clásico",
 					artistic: "Tarot Artístico",
 					miro: "Surrealismo de Miró",
@@ -775,6 +797,9 @@
 				title: "今日塔罗牌",
 				subtitle: "选择一个开始您的阅读",
 				chooseYourDeck: "选择一个开始您的阅读",
+				question1: "今天我应该把注意力集中在哪里？",
+				question2: "这段关系现在需要什么？",
+				question3: "我走在正确的道路上吗？",
 					riderWaite: "经典莱德伟特",
 					artistic: "艺术塔罗",
 					miro: "米罗超现实",
@@ -788,6 +813,9 @@
 				title: "今日のカード",
 				subtitle: "リーディングを始めるには1つ選択してください",
 				chooseYourDeck: "リーディングを始めるには1つ選択してください",
+				question1: "今日はどこに意識を向けるべきですか？",
+				question2: "この関係は今何を必要としていますか？",
+				question3: "私は正しい道を歩んでいますか？",
 					riderWaite: "ライダーウェイトクラシック",
 					artistic: "アーティスティックタロット",
 					miro: "ミロシュルレアリズム",
@@ -801,6 +829,9 @@
 				title: "오늘의 카드",
 				subtitle: "리딩을 시작하려면 하나를 선택하세요",
 				chooseYourDeck: "리딩을 시작하려면 하나를 선택하세요",
+				question1: "오늘 어디에 의도를 집중해야 할까요?",
+				question2: "이 관계는 지금 무엇이 필요할까요?",
+				question3: "나는 올바른 길을 가고 있나요?",
 				deckSubtitle: "리딩을 위한 예술 스타일 선택",
 				riderWaite: "라이더 웨이트 클래식",
 					artistic: "아티스틱 타로",
@@ -860,8 +891,12 @@
 			// After animation completes, change text and swipe in
 			setTimeout(() => {
 				currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
-				currentQuestion = questions[currentQuestionIndex];
-				questionText.textContent = currentQuestion;
+				currentQuestion = questions[currentQuestionIndex]; // Keep English for reading lookup
+
+				// Display translated question
+				const trans = translations[currentLanguage];
+				const questionKey = `question${currentQuestionIndex + 1}`;
+				questionText.textContent = trans[questionKey];
 
 				// Remove swipe out and add swipe in
 				questionText.classList.remove('swipe-out-right');
@@ -977,6 +1012,15 @@
 			// Hide card display
 			document.getElementById('card-container').classList.add('hidden');
 
+			// Clear card content immediately
+			document.getElementById('card-image-container').innerHTML = '';
+			document.getElementById('card-name').textContent = '';
+			document.getElementById('card-orientation').textContent = '';
+			document.getElementById('card-reading').textContent = '';
+			document.getElementById('card-reading').classList.remove('revealed');
+			document.getElementById('tap-hint').classList.remove('hidden');
+			document.getElementById('action-buttons').style.display = 'none';
+
 			// Show deck selection
 			const deckSelection = document.getElementById('deck-selection');
 			deckSelection.style.display = 'block';
@@ -1025,6 +1069,12 @@
 			const cardName = document.getElementById('card-name');
 			const cardOrientation = document.getElementById('card-orientation');
 			const cardReading = document.getElementById('card-reading');
+
+			// Clear previous content immediately
+			cardImageContainer.innerHTML = '';
+			cardName.textContent = '';
+			cardOrientation.textContent = '';
+			cardReading.textContent = '';
 
 			// Get all cards from the selected deck
 			let allCards = [];
@@ -1150,6 +1200,10 @@
 			// Update all translatable elements
 			document.getElementById('card-of-today').textContent = trans.title;
 			document.getElementById('subtitle').textContent = trans.subtitle;
+
+			// Update question text to translated version
+			const questionKey = `question${currentQuestionIndex + 1}`;
+			document.getElementById('question-text').textContent = trans[questionKey];
 
 			const elements = document.querySelectorAll('[data-translate]');
 			elements.forEach(el => {
