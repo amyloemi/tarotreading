@@ -1,0 +1,22 @@
+<svg width="300" height="500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="300" height="500" fill="#4c5c96" rx="10"/>
+
+    <!-- Border decoration -->
+    <rect x="10" y="10" width="280" height="480" fill="none" stroke="#d4af37" stroke-width="2" rx="8"/>
+    <rect x="20" y="20" width="260" height="460" fill="none" stroke="#d4af37" stroke-width="1" rx="6"/>
+
+    <!-- Center icon -->
+    <text x="150" y="270" text-anchor="middle" fill="#d4af37" font-size="80" font-family="Arial">
+        🔮
+    </text>
+
+    <!-- Message text -->
+    <text x="150" y="320" text-anchor="middle" fill="white" font-size="18" font-family="Arial, sans-serif" font-weight="bold">
+        Card Not Found
+    </text>
+
+    <!-- Pattern decoration -->
+    <circle cx="150" cy="100" r="40" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.3"/>
+    <circle cx="150" cy="400" r="40" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.3"/>
+</svg>
