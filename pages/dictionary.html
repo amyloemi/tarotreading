@@ -488,7 +488,12 @@
 		<script src="../assets/js/util.js"></script>
 		<script src="../assets/js/main.js"></script>
 
-		<!-- Load card data -->
+		<!-- Load unified deck system -->
+		<script src="../decks/shared/DeckRegistry.js"></script>
+		<script src="../decks/shared/PathResolver.js"></script>
+		<script src="../decks/shared/DeckLoader.js"></script>
+
+		<!-- Load card data (keeping rider-waite-data for meanings until fully migrated) -->
 		<script src="../decks/rider-waite-data.js"></script>
 		<script src="../decks/card-descriptions.js"></script>
 
@@ -629,21 +634,20 @@
 
 		// Render specific section cards (for lazy loading)
 		function renderSectionCards(sectionId) {
-			// Ensure rider-waite data is loaded
-			if (typeof riderWaiteData === 'undefined') {
+			// Ensure DeckLoader is loaded
+			if (typeof DeckLoader === 'undefined') {
 				setTimeout(() => renderSectionCards(sectionId), 100);
 				return;
 			}
 
-			// Generate minor cards if not already done
-			if (riderWaiteData.cards.minor.length === 0) {
-				riderWaiteData.generateMinorCards();
-			}
+			// Get all cards from unified loader
+			const allCards = DeckLoader.getAllCards();
 
 			if (sectionId === 'major') {
-				renderCardGrid('major', riderWaiteData.cards.major);
+				const majorCards = allCards.filter(c => c.type === 'major');
+				renderCardGrid('major', majorCards);
 			} else {
-				const suitCards = riderWaiteData.cards.minor.filter(c => c.suit === sectionId);
+				const suitCards = allCards.filter(c => c.type === 'minor' && c.suit === sectionId);
 				renderCardGrid(sectionId, suitCards);
 			}
 		}
@@ -693,9 +697,6 @@
 			cardDiv.dataset.suit = suitId;
 			cardDiv.dataset.index = index;
 
-			// Get image path
-			const imagePath = riderWaiteData.getImagePath(card);
-
 			// Get card meanings
 			const meaning = getCardMeaning(card.name);
 
@@ -720,7 +721,6 @@
 
 			cardDiv.innerHTML = `
 				<div class="card-image">
-					<img src="${imagePath}" alt="${escapeHtml(card.name)}" loading="lazy">
 					<div class="card-overlay">
 						<div class="overlay-description">${safeDescription}</div>
 					</div>
@@ -736,11 +736,23 @@
 				</div>
 			`;
 
-			// Add click handler for mobile
-			const cardImage = cardDiv.querySelector('.card-image');
-			const overlay = cardDiv.querySelector('.card-overlay');
+			// Use unified loader with thumbnails for better performance
+			const cardImageDiv = cardDiv.querySelector('.card-image');
+			const picture = DeckLoader.createResponsiveImage('rider-waite', card, {
+				thumbnail: true,
+				loading: 'lazy'
+			});
 
-			cardImage.addEventListener('click', function(e) {
+			// Add error handler
+			const img = picture.querySelector('img');
+			DeckLoader.addErrorHandler(img);
+
+			// Insert picture before overlay
+			const overlay = cardImageDiv.querySelector('.card-overlay');
+			cardImageDiv.insertBefore(picture, overlay);
+
+			// Add click handler for mobile
+			cardImageDiv.addEventListener('click', function(e) {
 				e.stopPropagation();
 				// Toggle overlay on mobile/touch devices
 				overlay.classList.toggle('active');
