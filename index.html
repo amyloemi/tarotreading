@@ -287,14 +287,6 @@
 				background: #f0f0f0;
 			}
 
-			.deck-preview.geometric {
-				overflow: hidden !important;
-			}
-
-			.deck-preview .geometric {
-				position: absolute;
-			}
-
 			.deck-preview img {
 				width: 100%;
 				height: 100%;
@@ -329,32 +321,6 @@
 			.hidden {
 				display: none !important;
 			}
-
-			/* Geometric styles from artistic-deck */
-			.geometric { position: absolute; transition: all 0.3s ease; }
-			.circle { border-radius: 50%; }
-			.rotate { animation: rotate 20s linear infinite; }
-			.pulse { animation: pulse 3s ease-in-out infinite; }
-			.float { animation: float 6s ease-in-out infinite; }
-
-			@keyframes rotate {
-				from { transform: rotate(0deg); }
-				to { transform: rotate(360deg); }
-			}
-
-			@keyframes pulse {
-				0%, 100% { opacity: 0.6; transform: scale(1); }
-				50% { opacity: 1; transform: scale(1.1); }
-			}
-
-			@keyframes float {
-				0%, 100% { transform: translateY(0px); }
-				50% { transform: translateY(-20px); }
-			}
-
-			/* Gradient backgrounds for artistic cards */
-			.magician-art { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-			.star-art { background: linear-gradient(135deg, #434343 0%, #000000 100%); }
 
 			/* Custom styles for tarot reading */
 			.card-image-container {
@@ -534,26 +500,6 @@
 					opacity: 1;
 					box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
 				}
-			}
-
-			.loading-spinner {
-				display: none;
-				width: 60px;
-				height: 60px;
-				border: 5px solid rgba(76, 92, 150, 0.2);
-				border-top: 5px solid #4c5c96;
-				border-radius: 50%;
-				animation: spin 1s linear infinite;
-				margin: 30px auto;
-			}
-
-			.loading-spinner.visible {
-				display: block;
-			}
-
-			@keyframes spin {
-				0% { transform: rotate(0deg); }
-				100% { transform: rotate(360deg); }
 			}
 
 			.box.special {
@@ -737,8 +683,6 @@
 					<section class="box special hidden" id="card-container">
 						<div class="tap-hint" id="tap-hint" onclick="revealReading()" data-translate="clickToReveal">✨ Click to reveal your reading ✨</div>
 
-						<div class="loading-spinner" id="loading-spinner"></div>
-
 						<div class="card-image-container" id="card-image-container" onclick="revealReading()">
 							<!-- Card will be rendered here -->
 						</div>
@@ -903,7 +847,6 @@
 		let currentDeck = null;
 		let currentCard = null;
 		let currentIsReversed = false;
-		let currentReading = '';
 		let currentQuestionIndex = 0;
 		const questions = [
 			"Where should I focus my intention today?",
@@ -1149,7 +1092,6 @@
 			// Store current card info
 			currentCard = selectedCard;
 			currentIsReversed = isReversed;
-			currentReading = reading;
 
 			// Render card based on deck type
 			if (currentDeck === 'rider') {
