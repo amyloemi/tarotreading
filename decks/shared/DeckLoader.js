@@ -42,6 +42,34 @@ class DeckLoader {
     }
 
     /**
+     * Transform word-form filenames to numeric form for Rider-Waite minor arcana
+     * @param {string} filename - Filename to transform
+     * @returns {string} Transformed filename
+     */
+    static transformRiderWaiteFilename(filename) {
+        const wordToNumber = {
+            'two': '2',
+            'three': '3',
+            'four': '4',
+            'five': '5',
+            'six': '6',
+            'seven': '7',
+            'eight': '8',
+            'nine': '9',
+            'ten': '10'
+        };
+
+        // Check if filename starts with a word number
+        for (const [word, number] of Object.entries(wordToNumber)) {
+            if (filename.startsWith(word + '-')) {
+                return filename.replace(word + '-', number + '-');
+            }
+        }
+
+        return filename;
+    }
+
+    /**
      * Get image path for any card from any deck
      * @param {string} deckId - Deck identifier (e.g., 'rider-waite')
      * @param {object} card - Card object from registry (must have type and suit properties)
@@ -74,8 +102,9 @@ class DeckLoader {
         if (deckId === 'rider-waite') {
             // Rider-Waite: Complex naming
             if (card.type === 'minor') {
-                // Minor: filename is complete (e.g., "7-of-cups.png")
-                filename = `${card.filename}.${deck.imageFormat}`;
+                // Minor: Transform word form to numeric (two-of-cups → 2-of-cups)
+                const transformedFilename = this.transformRiderWaiteFilename(card.filename);
+                filename = `${transformedFilename}.${deck.imageFormat}`;
             } else {
                 // Major: prepend number (e.g., "00-the-fool.png")
                 filename = `${paddedNumber}-${card.filename}.${deck.imageFormat}`;
@@ -133,8 +162,9 @@ class DeckLoader {
         if (deckId === 'rider-waite') {
             // Rider-Waite: Complex naming
             if (card.type === 'minor') {
-                // Minor: filename is complete (e.g., "7-of-cups.webp")
-                filename = `${card.filename}.${format}`;
+                // Minor: Transform word form to numeric (two-of-cups → 2-of-cups)
+                const transformedFilename = this.transformRiderWaiteFilename(card.filename);
+                filename = `${transformedFilename}.${format}`;
             } else {
                 // Major: prepend number (e.g., "00-the-fool.webp")
                 filename = `${paddedNumber}-${card.filename}.${format}`;
