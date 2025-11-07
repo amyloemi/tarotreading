@@ -306,9 +306,11 @@
 				border-radius: 10px;
 				overflow: hidden;
 				cursor: pointer;
-				transition: all 0.3s ease;
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
 				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-				background: white;
+				background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+				will-change: transform;
+				content-visibility: auto;
 			}
 
 			.card-thumbnail:hover {
@@ -321,6 +323,7 @@
 				height: 100%;
 				object-fit: cover;
 				display: block;
+				background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
 			}
 
 			/* Lightbox Styles */
@@ -1195,12 +1198,24 @@
 			galleryTitle.textContent = `${trans.allCards} - ${deckName}`;
 
 			// Render cards in batches for better performance
-			const BATCH_SIZE = 20; // Render 20 cards at a time
+			// Calculate intelligent initial batch size based on viewport
+			const viewportHeight = window.innerHeight;
+			const cardHeight = 300; // Approximate card height in pixels
+			const cardsPerRow = window.innerWidth > 1024 ? 6 : (window.innerWidth > 768 ? 4 : 3);
+			const visibleRows = Math.ceil(viewportHeight / cardHeight) + 1; // +1 for buffer
+			const INITIAL_BATCH_SIZE = Math.max(12, visibleRows * cardsPerRow); // At least 12 cards
+			const PROGRESSIVE_BATCH_SIZE = 30; // Larger batches for subsequent loads
+
 			let currentIndex = 0;
+			let isFirstBatch = true;
 
 			function renderNextBatch() {
-				const endIndex = Math.min(currentIndex + BATCH_SIZE, allCards.length);
+				const batchSize = isFirstBatch ? INITIAL_BATCH_SIZE : PROGRESSIVE_BATCH_SIZE;
+				const endIndex = Math.min(currentIndex + batchSize, allCards.length);
 				const batch = allCards.slice(currentIndex, endIndex);
+
+				// Use DocumentFragment for better performance
+				const fragment = document.createDocumentFragment();
 
 				batch.forEach(card => {
 					const cardThumbnail = document.createElement('div');
@@ -1225,20 +1240,24 @@
 
 					img.alt = card.name;
 					img.loading = 'lazy';
+					img.decoding = 'async';
 
 					cardThumbnail.appendChild(img);
 
 					const imagePath = img.src;
 					cardThumbnail.onclick = () => enlargeCard(imagePath, card.name);
 
-					cardGrid.appendChild(cardThumbnail);
+					fragment.appendChild(cardThumbnail);
 				});
 
+				// Batch DOM update
+				cardGrid.appendChild(fragment);
 				currentIndex = endIndex;
+				isFirstBatch = false;
 
 				// If there are more cards, render them after a short delay
 				if (currentIndex < allCards.length) {
-					requestAnimationFrame(renderNextBatch);
+					setTimeout(renderNextBatch, 0);
 				}
 			}
 
