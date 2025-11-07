@@ -83,7 +83,7 @@
 				color: #333 !important;
 			}
 
-			/* Language dropdown */
+			/* Language dropdown text color and alignment */
 			#language-select {
 				color: #333;
 			}
@@ -117,28 +117,29 @@
 			}
 
 			.section-header {
-				background: linear-gradient(135deg, #9370DB 0%, #d4af37 100%);
+				background: white;
 				padding: 20px 30px;
 				cursor: pointer;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				transition: all 0.3s ease;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 			}
 
 			.section-header:hover {
-				background: linear-gradient(135deg, #8060CB 0%, #c49f27 100%);
+				background: white;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 			}
 
 			.section-header h3 {
-				color: white;
+				color: #4c5c96;
 				margin: 0;
 				font-size: 1.5em;
-				text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 			}
 
 			.section-toggle {
-				color: white;
+				color: #4c5c96;
 				font-size: 1.5em;
 				transition: transform 0.3s ease;
 			}
@@ -170,7 +171,7 @@
 			/* Individual card */
 			.tarot-card {
 				position: relative;
-				width: 270px;
+				width: 280px;
 				background: white;
 				border-radius: 10px;
 				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -204,15 +205,37 @@
 			}
 
 			.card-name {
-				font-weight: bold;
+				font-family: 'Apple Chancery', cursive, serif;
+				font-weight: normal;
 				font-size: 1.6em;
 				color: #4c5c96;
 				margin-bottom: 14px;
+				text-align: center;
 			}
 
 			.card-keywords {
 				font-size: 0.9em;
 				line-height: 1.6;
+			}
+
+			.keyword-label {
+				font-size: 0.75em;
+				font-weight: bold;
+				letter-spacing: 0.5px;
+				margin-top: 8px;
+				margin-bottom: 4px;
+			}
+
+			.keyword-label:first-child {
+				margin-top: 0;
+			}
+
+			.keyword-upright-label {
+				color: #4a7c59;
+			}
+
+			.keyword-reversed-label {
+				color: #c44536;
 			}
 
 			.keyword-upright {
@@ -259,9 +282,9 @@
 
 			.overlay-description {
 				color: #ffffff;
-				font-size: 1em;
+				font-size: 0.95em;
 				line-height: 1.6;
-				text-align: center;
+				text-align: left;
 				max-height: 100%;
 				overflow-y: auto;
 			}
@@ -327,6 +350,10 @@
 				}
 			}
 
+			#header.alt {
+				background: transparent !important;
+			}
+
 			#header {
 				background: rgba(255, 255, 255, 0.95);
 				backdrop-filter: blur(10px);
@@ -338,11 +365,11 @@
 			}
 		</style>
 	</head>
-	<body class="is-preload">
+	<body class="landing is-preload">
 		<div id="page-wrapper">
 
 			<!-- Header -->
-			<header id="header">
+			<header id="header" class="alt">
 				<h1><a href="../index.html">🔮 My Tarot Today</a></h1>
 				<nav id="nav">
 					<ul>
@@ -653,8 +680,10 @@
 				<div class="card-info">
 					<div class="card-name">${displayName}</div>
 					<div class="card-keywords">
-						<span class="keyword-upright">⬆ ${meaning ? truncateText(meaning.upright, 25) : ''}</span>
-						<span class="keyword-reversed">⬇ ${meaning ? truncateText(meaning.reversed, 25) : ''}</span>
+						<div class="keyword-label keyword-upright-label">UPRIGHT</div>
+						<span class="keyword-upright">${meaning ? meaning.upright : ''}</span>
+						<div class="keyword-label keyword-reversed-label">REVERSED</div>
+						<span class="keyword-reversed">${meaning ? meaning.reversed : ''}</span>
 					</div>
 				</div>
 			`;
