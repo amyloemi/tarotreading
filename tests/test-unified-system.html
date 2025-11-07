@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Unified System Test</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        h1 { color: #00ffff; }
+        .test {
+            margin: 10px 0;
+            padding: 5px;
+            border-left: 3px solid #444;
+            padding-left: 10px;
+        }
+        .pass {
+            border-left-color: #00ff00;
+            color: #00ff00;
+        }
+        .fail {
+            border-left-color: #ff0000;
+            color: #ff0000;
+        }
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background: #2a2a2a;
+            border: 2px solid #00ff00;
+        }
+        .card-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            padding: 10px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+        .card-preview img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .section {
+            margin-top: 30px;
+            padding: 15px;
+            background: #2a2a2a;
+            border-left: 4px solid #00ffff;
+        }
+        code {
+            background: #000;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #ffff00;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Phase 1: Unified System Integration Test</h1>
+    <p>Testing DeckRegistry, PathResolver, and DeckLoader...</p>
+
+    <div id="results"></div>
+    <div id="preview" class="section" style="display: none;">
+        <h2>Visual Test: Card Images</h2>
+        <div id="preview-grid"></div>
+    </div>
+
+    <script src="../decks/shared/DeckRegistry.js"></script>
+    <script src="../decks/shared/PathResolver.js"></script>
+    <script src="../decks/shared/DeckLoader.js"></script>
+    <script>
+        const results = document.getElementById('results');
+        const preview = document.getElementById('preview');
+        const previewGrid = document.getElementById('preview-grid');
+        let passCount = 0;
+        let failCount = 0;
+
+        function test(name, fn) {
+            try {
+                const result = fn();
+                results.innerHTML += `<div class="test pass">✓ ${name}</div>`;
+                if (result) {
+                    results.innerHTML += `<div style="margin-left: 20px; color: #888;">  ${result}</div>`;
+                }
+                passCount++;
+                return true;
+            } catch (err) {
+                results.innerHTML += `<div class="test fail">✗ ${name}<br>  Error: ${err.message}</div>`;
+                failCount++;
+                return false;
+            }
+        }
+
+        // ===== PHASE 1: REGISTRY TESTS =====
+        results.innerHTML += '<div class="section"><h2>📚 DeckRegistry Tests</h2>';
+
+        test('DeckRegistry object exists', () => {
+            if (!DECK_REGISTRY) throw new Error('DECK_REGISTRY not found');
+            return `Found ${Object.keys(DECK_REGISTRY.decks).length} decks`;
+        });
+
+        test('All 4 decks present', () => {
+            const expectedDecks = ['rider-waite', 'artistic', 'miro', 'picasso'];
+            for (const deckId of expectedDecks) {
+                if (!DECK_REGISTRY.decks[deckId]) {
+                    throw new Error(`Deck ${deckId} not found`);
+                }
+            }
+            return 'rider-waite, artistic, miro, picasso';
+        });
+
+        test('Each deck has required properties', () => {
+            for (const [id, deck] of Object.entries(DECK_REGISTRY.decks)) {
+                if (!deck.name) throw new Error(`Deck ${id} missing name`);
+                if (!deck.folder) throw new Error(`Deck ${id} missing folder`);
+                if (deck.hasThumbnails === undefined) throw new Error(`Deck ${id} missing hasThumbnails`);
+            }
+            return 'All decks have name, folder, hasThumbnails';
+        });
+
+        test('Card catalog has 78 cards total', () => {
+            const majorCount = DECK_REGISTRY.cards.major.length;
+            const minorCount = Object.values(DECK_REGISTRY.cards.minor)
+                .reduce((sum, suit) => sum + suit.length, 0);
+            const total = majorCount + minorCount;
+
+            if (total !== 78) throw new Error(`Expected 78 cards, got ${total}`);
+            return `22 major + 56 minor = 78 cards`;
+        });
+
+        test('Major Arcana: 22 cards (0-21)', () => {
+            const major = DECK_REGISTRY.cards.major;
+            if (major.length !== 22) throw new Error(`Expected 22, got ${major.length}`);
+            if (major[0].id !== 0) throw new Error('First card should be ID 0 (The Fool)');
+            if (major[21].id !== 21) throw new Error('Last card should be ID 21 (The World)');
+            return `${major[0].name} (0) to ${major[21].name} (21)`;
+        });
+
+        test('Minor Arcana: 56 cards (22-77)', () => {
+            const suits = Object.keys(DECK_REGISTRY.cards.minor);
+            if (suits.length !== 4) throw new Error('Expected 4 suits');
+
+            for (const suit of suits) {
+                const cards = DECK_REGISTRY.cards.minor[suit];
+                if (cards.length !== 14) throw new Error(`${suit} should have 14 cards`);
+            }
+            return `4 suits × 14 cards = 56 cards`;
+        });
+
+        results.innerHTML += '</div>';
+
+        // ===== PHASE 2: PATH RESOLVER TESTS =====
+        results.innerHTML += '<div class="section"><h2>🗺️ PathResolver Tests</h2>';
+
+        test('PathResolver class exists', () => {
+            if (!PathResolver) throw new Error('PathResolver not found');
+            return 'PathResolver loaded';
+        });
+
+        test('getBasePath() returns string', () => {
+            const basePath = PathResolver.getBasePath();
+            if (typeof basePath !== 'string') throw new Error('basePath is not a string');
+            return `Base path: "${basePath}" (${basePath === '' ? 'root level' : 'subfolder'})`;
+        });
+
+        test('resolve() joins paths correctly', () => {
+            const path = PathResolver.resolve('decks', 'images', 'test.png');
+            if (!path.includes('decks') || !path.includes('images') || !path.includes('test.png')) {
+                throw new Error('Path not joined correctly');
+            }
+            return `Resolved: <code>${path}</code>`;
+        });
+
+        test('isInSubfolder() returns boolean', () => {
+            const inSub = PathResolver.isInSubfolder();
+            if (typeof inSub !== 'boolean') throw new Error('isInSubfolder not returning boolean');
+            return `In subfolder: ${inSub}`;
+        });
+
+        test('getCurrentPage() returns filename', () => {
+            const page = PathResolver.getCurrentPage();
+            if (!page) throw new Error('getCurrentPage returned empty');
+            return `Current page: <code>${page}</code>`;
+        });
+
+        results.innerHTML += '</div>';
+
+        // ===== PHASE 3: DECK LOADER TESTS =====
+        results.innerHTML += '<div class="section"><h2>🎴 DeckLoader Tests</h2>';
+
+        test('DeckLoader class exists', () => {
+            if (!DeckLoader) throw new Error('DeckLoader not found');
+            return 'DeckLoader loaded';
+        });
+
+        test('getAllCards() returns 78 cards', () => {
+            const allCards = DeckLoader.getAllCards();
+            if (allCards.length !== 78) throw new Error(`Expected 78 cards, got ${allCards.length}`);
+            return `Retrieved all ${allCards.length} cards`;
+        });
+
+        test('getAllCards() includes type property', () => {
+            const allCards = DeckLoader.getAllCards();
+            const withoutType = allCards.filter(c => !c.type);
+            if (withoutType.length > 0) throw new Error(`${withoutType.length} cards missing type property`);
+            return 'All cards have type: major or minor';
+        });
+
+        test('getCardByName() finds "The Fool"', () => {
+            const fool = DeckLoader.getCardByName('The Fool');
+            if (!fool) throw new Error('The Fool not found');
+            if (fool.id !== 0) throw new Error('The Fool should have ID 0');
+            return `Found: ${fool.name} (ID: ${fool.id})`;
+        });
+
+        test('getCardById() finds card 21 (The World)', () => {
+            const world = DeckLoader.getCardById(21);
+            if (!world) throw new Error('Card ID 21 not found');
+            if (world.name !== 'The World') throw new Error('Card 21 should be The World');
+            return `Found: ${world.name}`;
+        });
+
+        // Test path generation for each deck
+        const fool = DeckLoader.getCardByName('The Fool');
+
+        test('Generate path for Rider-Waite deck', () => {
+            const path = DeckLoader.getImagePath('rider-waite', fool);
+            if (!path) throw new Error('No path generated');
+            if (!path.includes('major_arcana')) throw new Error('Path should include major_arcana folder');
+            return `<code>${path}</code>`;
+        });
+
+        test('Generate path for Artistic deck', () => {
+            const path = DeckLoader.getImagePath('artistic', fool);
+            if (!path) throw new Error('No path generated');
+            if (!path.includes('artistic-tarot-cards')) throw new Error('Path should include artistic-tarot-cards');
+            // Artistic deck starts at 01 (not 00) due to numberingOffset
+            if (!path.includes('01-the-fool')) throw new Error('Artistic deck numbering should start at 01');
+            return `<code>${path}</code>`;
+        });
+
+        test('Generate path for Miro deck', () => {
+            const path = DeckLoader.getImagePath('miro', fool);
+            if (!path) throw new Error('No path generated');
+            if (!path.includes('miro-tarot-cards')) throw new Error('Path should include miro-tarot-cards');
+            return `<code>${path}</code>`;
+        });
+
+        test('Generate path for Picasso deck', () => {
+            const path = DeckLoader.getImagePath('picasso', fool);
+            if (!path) throw new Error('No path generated');
+            if (!path.includes('picasso-tarot-cards')) throw new Error('Path should include picasso-tarot-cards');
+            return `<code>${path}</code>`;
+        });
+
+        test('getThumbnailPath() for Rider-Waite', () => {
+            const path = DeckLoader.getThumbnailPath('rider-waite', fool, 'webp');
+            if (!path) throw new Error('No thumbnail path generated');
+            if (!path.includes('images-thumbnails')) throw new Error('Should use thumbnail folder');
+            if (!path.includes('.webp')) throw new Error('Should have .webp extension');
+            return `<code>${path}</code>`;
+        });
+
+        test('createResponsiveImage() creates picture element', () => {
+            const picture = DeckLoader.createResponsiveImage('rider-waite', fool, {
+                thumbnail: true,
+                loading: 'lazy'
+            });
+            if (!(picture instanceof HTMLPictureElement)) throw new Error('Not a picture element');
+
+            const img = picture.querySelector('img');
+            if (!img) throw new Error('No img element inside picture');
+            if (img.alt !== fool.name) throw new Error('Alt text incorrect');
+
+            return `Created &lt;picture&gt; with alt="${img.alt}"`;
+        });
+
+        results.innerHTML += '</div>';
+
+        // ===== SUMMARY =====
+        const total = passCount + failCount;
+        const passPercent = Math.round((passCount / total) * 100);
+
+        results.innerHTML += `
+            <div class="summary">
+                <h2>📊 Test Summary</h2>
+                <p><strong>Total Tests:</strong> ${total}</p>
+                <p><strong>Passed:</strong> <span style="color: #00ff00;">${passCount}</span></p>
+                <p><strong>Failed:</strong> <span style="color: #ff0000;">${failCount}</span></p>
+                <p><strong>Success Rate:</strong> ${passPercent}%</p>
+                ${failCount === 0
+                    ? '<p style="font-size: 24px; color: #00ff00;">✅ ALL TESTS PASSED! Phase 1 Complete!</p>'
+                    : '<p style="font-size: 24px; color: #ff0000;">❌ SOME TESTS FAILED. Review errors above.</p>'}
+            </div>
+        `;
+
+        // ===== VISUAL TEST =====
+        if (failCount === 0) {
+            preview.style.display = 'block';
+
+            const decks = ['rider-waite', 'artistic', 'miro', 'picasso'];
+            const testCard = fool;
+
+            previewGrid.innerHTML = '<p>Loading card images from each deck...</p>';
+
+            decks.forEach(deckId => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card-preview';
+
+                const deckName = DECK_REGISTRY.decks[deckId].name;
+                const picture = DeckLoader.createResponsiveImage(deckId, testCard, {
+                    thumbnail: true,
+                    loading: 'eager'
+                });
+
+                const img = picture.querySelector('img');
+                img.onerror = () => {
+                    cardDiv.style.borderColor = '#ff0000';
+                    cardDiv.innerHTML += '<p style="color: #ff0000;">❌ Failed to load</p>';
+                };
+
+                img.onload = () => {
+                    cardDiv.style.borderColor = '#00ff00';
+                };
+
+                cardDiv.innerHTML = `<h3>${deckName}</h3>`;
+                cardDiv.appendChild(picture);
+                cardDiv.innerHTML += `<p>${testCard.name}</p>`;
+                cardDiv.innerHTML += `<p style="font-size: 10px; color: #888;">${img.src.split('/').pop()}</p>`;
+
+                previewGrid.appendChild(cardDiv);
+            });
+        }
+    </script>
+</body>
+</html>
