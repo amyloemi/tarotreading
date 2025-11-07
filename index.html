@@ -1359,7 +1359,7 @@
 
 			// Use DeckLoader to create responsive image with thumbnails
 			const picture = DeckLoader.createResponsiveImage(deckId, convertedCard, {
-				thumbnail: false,  // Use full-size for main card display
+				thumbnail: true,   // Use optimized thumbnails (40-50KB vs 700KB!)
 				loading: 'eager',  // Load immediately (not lazy)
 				className: isReversed ? 'reversed' : ''
 			});
