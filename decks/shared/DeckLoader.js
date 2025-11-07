@@ -36,8 +36,17 @@ class DeckLoader {
             folder = deck.structure.minor.replace('{suit}', card.suit);
         }
 
-        // Build filename (format: "00-the-fool.png")
-        const filename = `${paddedNumber}-${card.filename}.${deck.imageFormat}`;
+        // Build filename
+        // For Rider-Waite minor arcana, filename already includes number (e.g., "7-of-cups")
+        // For major arcana, we need to prepend number (e.g., "00-" + "the-fool")
+        let filename;
+        if (deckId === 'rider-waite' && card.type === 'minor') {
+            // Rider-Waite minor: filename is complete (e.g., "7-of-cups.png")
+            filename = `${card.filename}.${deck.imageFormat}`;
+        } else {
+            // All others: prepend number (e.g., "00-the-fool.png")
+            filename = `${paddedNumber}-${card.filename}.${deck.imageFormat}`;
+        }
 
         // Combine parts
         const parts = [basePath];
@@ -60,6 +69,7 @@ class DeckLoader {
         const deck = DECK_REGISTRY.decks[deckId];
         if (!deck || !deck.hasThumbnails) {
             // Fallback to full size if no thumbnails
+            console.log(`No thumbnails for ${deckId}, using full-size`);
             return this.getImagePath(deckId, card);
         }
 
@@ -80,15 +90,25 @@ class DeckLoader {
             folder = deck.structure.minor.replace('{suit}', card.suit);
         }
 
-        // Build filename with new format
-        const filename = `${paddedNumber}-${card.filename}.${format}`;
+        // Build filename
+        // For Rider-Waite minor arcana, filename already includes number (e.g., "7-of-cups")
+        let filename;
+        if (deckId === 'rider-waite' && card.type === 'minor') {
+            // Rider-Waite minor: filename is complete (e.g., "7-of-cups.webp")
+            filename = `${card.filename}.${format}`;
+        } else {
+            // All others: prepend number (e.g., "00-the-fool.webp")
+            filename = `${paddedNumber}-${card.filename}.${format}`;
+        }
 
         // Combine parts
         const parts = [basePath];
         if (folder) parts.push(folder);
         parts.push(filename);
 
-        return parts.join('/');
+        const finalPath = parts.join('/');
+        console.log(`DeckLoader.getThumbnailPath(${deckId}, card#${card.id}, ${format}):`, finalPath);
+        return finalPath;
     }
 
     /**

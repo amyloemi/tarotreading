@@ -1314,26 +1314,43 @@
 			}
 
 			// Convert old Rider-Waite format to new format
-			// card.file = "00-the-fool.png" → filename should be just "the-fool" (without number and extension)
 			const fileWithoutExt = card.file ? card.file.replace('.png', '') : '';
-			const filenameParts = fileWithoutExt.split('-');
-			// Remove the number prefix (e.g., "00-the-fool" → "the-fool")
-			const filenameWithoutNumber = filenameParts.slice(1).join('-');
+
+			// Determine card type
+			const cardType = (card.number !== undefined && card.number < 22) ? 'major' : 'minor';
+
+			let filenameWithoutNumber;
+
+			if (cardType === 'major') {
+				// Major arcana: "00-the-fool" → "the-fool"
+				const parts = fileWithoutExt.split('-');
+				filenameWithoutNumber = parts.slice(1).join('-');
+			} else {
+				// Minor arcana: file is already in format "7-of-cups", just use as-is
+				// DeckLoader won't prepend a number for these
+				filenameWithoutNumber = fileWithoutExt;
+			}
 
 			const converted = {
 				id: card.number || 0,
 				name: card.name,
-				filename: filenameWithoutNumber, // "the-fool" (DeckLoader will add number back)
-				type: card.number < 22 ? 'major' : 'minor'
+				filename: filenameWithoutNumber,
+				type: cardType
 			};
 
-			// For minor arcana, extract suit from filename or existing data
+			// For minor arcana, extract suit from filename or card.suit
 			if (converted.type === 'minor') {
-				const filename = card.file || '';
-				if (filename.includes('cups')) converted.suit = 'cups';
-				else if (filename.includes('pentacles')) converted.suit = 'pentacles';
-				else if (filename.includes('swords')) converted.suit = 'swords';
-				else if (filename.includes('wands')) converted.suit = 'wands';
+				// Use existing suit if available
+				if (card.suit) {
+					converted.suit = card.suit;
+				} else {
+					// Extract from filename
+					const filename = card.file || '';
+					if (filename.includes('cups')) converted.suit = 'cups';
+					else if (filename.includes('pentacles')) converted.suit = 'pentacles';
+					else if (filename.includes('swords')) converted.suit = 'swords';
+					else if (filename.includes('wands')) converted.suit = 'wands';
+				}
 			}
 
 			console.log('Converted card:', card.file, '→', converted);

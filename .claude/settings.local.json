@@ -15,7 +15,8 @@
       "Bash(git restore:*)",
       "Bash(open:*)",
       "Bash(node tests/test-registry.js:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
