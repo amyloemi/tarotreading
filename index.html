@@ -513,10 +513,6 @@
 				backdrop-filter: blur(10px);
 			}
 
-			.box.special.features {
-				background: rgba(255, 255, 255, 0.9);
-			}
-
 			#footer {
 				background: rgba(0, 0, 0, 0.8);
 				backdrop-filter: blur(10px);
@@ -699,34 +695,6 @@
 							<button class="btn-secondary" onclick="returnToDeckSelection()">
 								<span data-translate="changeDeck">Choose Different Deck</span>
 							</button>
-						</div>
-					</section>
-
-					<!-- Features section -->
-					<section class="box special features" id="features-section">
-						<div class="features-row">
-							<section>
-								<span class="icon solid major fa-palette accent2"></span>
-								<h3>Three Artistic Styles</h3>
-								<p>Choose between classic Rider-Waite, modern geometric, or surrealist Miró interpretations</p>
-							</section>
-							<section>
-								<span class="icon solid major fa-moon accent3"></span>
-								<h3>Complete 78-Card Deck</h3>
-								<p>Full tarot experience with both Major and Minor Arcana in each artistic style</p>
-							</section>
-						</div>
-						<div class="features-row">
-							<section>
-								<span class="icon solid major fa-globe accent4"></span>
-								<h3>Multi-Language</h3>
-								<p>Available in English, French, Spanish, Chinese, Japanese, and Korean</p>
-							</section>
-							<section>
-								<span class="icon solid major fa-heart accent5"></span>
-								<h3>Daily Guidance</h3>
-								<p>Authentic readings with personalized interpretations for your day</p>
-							</section>
 						</div>
 					</section>
 
@@ -992,14 +960,11 @@
 
 			// Hide deck selection with animation
 			const deckSelection = document.getElementById('deck-selection');
-			const featuresSection = document.getElementById('features-section');
 			deckSelection.classList.add('fade-out');
-			featuresSection.classList.add('fade-out');
 
 			// After animation, show card display and auto-draw
 			setTimeout(() => {
 				deckSelection.style.display = 'none';
-				featuresSection.style.display = 'none';
 				document.getElementById('card-container').classList.remove('hidden');
 				drawCard(); // Auto-draw first card
 			}, 500);
@@ -1011,11 +976,8 @@
 
 			// Show deck selection
 			const deckSelection = document.getElementById('deck-selection');
-			const featuresSection = document.getElementById('features-section');
 			deckSelection.style.display = 'block';
 			deckSelection.classList.remove('fade-out');
-			featuresSection.style.display = 'block';
-			featuresSection.classList.remove('fade-out');
 
 			// Reset
 			currentDeck = null;
