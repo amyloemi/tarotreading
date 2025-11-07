@@ -226,7 +226,7 @@ class DeckLoader {
      * @param {HTMLImageElement} imgElement - Image element
      * @param {string} placeholderPath - Path to placeholder image
      */
-    static addErrorHandler(imgElement, placeholderPath = 'images/card-back.png') {
+    static addErrorHandler(imgElement, placeholderPath = 'images/card-back.svg') {
         imgElement.onerror = () => {
             const fallback = PathResolver.resolve(placeholderPath);
             imgElement.src = fallback;
