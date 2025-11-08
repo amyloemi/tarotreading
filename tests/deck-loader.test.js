@@ -140,13 +140,13 @@ registryTests.test('Rider-Waite deck should have correct configuration', functio
     this.assertEqual(rw.name, 'Rider-Waite Classic');
     this.assertEqual(rw.folder, 'images');
     this.assertEqual(rw.thumbnailFolder, 'images-thumbnails');
-    this.assertTrue(rw.structure.hasMajorArcanaFolder, 'Should use major arcana folder');
-    this.assertTrue(rw.structure.hasMinorArcanaFolder, 'Should use minor arcana folder');
+    this.assertEqual(rw.structure.major, 'major_arcana', 'Should use major_arcana folder');
+    this.assertEqual(rw.structure.minor, 'minor_arcana/{suit}', 'Should use minor_arcana/{suit} structure');
 });
 
 registryTests.test('Artistic deck should have wands-first suit order', function() {
     const artistic = DECK_REGISTRY.decks['artistic'];
-    this.assertEqual(artistic.structure.suitOrder[0], 'wands', 'Wands should be first suit');
+    this.assertEqual(artistic.suitOrder[0], 'wands', 'Wands should be first suit');
 });
 
 registryTests.test('Picasso deck should have numbering offset', function() {

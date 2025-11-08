@@ -203,7 +203,13 @@
             const rw = DECK_REGISTRY.decks['rider-waite'];
             this.assertEqual(rw.name, 'Rider-Waite Classic');
             this.assertEqual(rw.folder, 'images');
-            this.assertTrue(rw.structure.hasMajorArcanaFolder, 'Should use major arcana folder');
+            this.assertEqual(rw.structure.major, 'major_arcana', 'Should use major_arcana folder');
+            this.assertEqual(rw.structure.minor, 'minor_arcana/{suit}', 'Should use minor_arcana/{suit} structure');
+        });
+
+        registryTests.test('Artistic deck should have wands-first suit order', function() {
+            const artistic = DECK_REGISTRY.decks['artistic'];
+            this.assertEqual(artistic.suitOrder[0], 'wands', 'Wands should be first suit');
         });
 
         registryTests.test('Card catalog should have 22 major arcana', function() {
