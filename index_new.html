@@ -1574,6 +1574,10 @@
 
 			// Debug: Check for any extra card elements in DOM
 			const domCards = container.querySelectorAll('.anim-card');
+			const cardBacks = container.querySelectorAll('.anim-card-back');
+			const cardFaces = container.querySelectorAll('.anim-card-face');
+			console.log('Display row - Cards:', domCards.length, 'Backs:', cardBacks.length, 'Faces:', cardFaces.length);
+
 			if (domCards.length !== animCards.length) {
 				console.warn('Card count mismatch! animCards:', animCards.length, 'DOM cards:', domCards.length);
 				// Remove any extra cards that aren't in animCards array
