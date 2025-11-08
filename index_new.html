@@ -1128,6 +1128,18 @@
 		<!-- Load unified card meanings -->
 		<script src="decks/data/card-meanings-loader.js"></script>
 
+		<!-- Mobile Debug Console (Eruda) - Remove in production -->
+		<script>
+			// Enable Eruda console on mobile for debugging
+			// Add ?debug to URL to show console overlay
+			if (window.location.search.includes('debug') || /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+				const script = document.createElement('script');
+				script.src = 'https://cdn.jsdelivr.net/npm/eruda';
+				script.onload = function() { eruda.init(); };
+				document.body.appendChild(script);
+			}
+		</script>
+
 		<script>
 		// Language translations
 		const translations = {
