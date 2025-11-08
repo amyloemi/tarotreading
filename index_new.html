@@ -2380,27 +2380,6 @@
 			}
 		}
 
-		// Make functions globally accessible for inline onclick handlers
-		// Assign immediately when script loads, not waiting for window.onload
-		window.selectDeck = async function(deckType) {
-			return selectDeck(deckType);
-		};
-		window.cycleQuestion = function() {
-			return cycleQuestion();
-		};
-		window.changeLanguage = function() {
-			return changeLanguage();
-		};
-		window.changeMobileLanguage = function() {
-			return changeMobileLanguage();
-		};
-		window.drawAnotherCard = function() {
-			return drawAnotherCard();
-		};
-		window.returnToDeckSelection = function() {
-			return returnToDeckSelection();
-		};
-
 		// Initialize
 		window.onload = function() {
 			loadReadings();
