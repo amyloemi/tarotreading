@@ -1946,6 +1946,25 @@
 			const cardsAfterFade = container.querySelectorAll('.anim-card');
 			console.log('📊 Cards in DOM after fade (before removal):', cardsAfterFade.length);
 
+			// Check which cards are still visible (opacity > 0)
+			const visibleCards = [];
+			cardsAfterFade.forEach((card, idx) => {
+				const opacity = parseFloat(window.getComputedStyle(card).opacity);
+				const visibility = window.getComputedStyle(card).visibility;
+				const display = window.getComputedStyle(card).display;
+				if (opacity > 0.1 || visibility === 'visible' && display !== 'none') {
+					visibleCards.push({
+						index: idx,
+						element: card,
+						opacity: opacity,
+						visibility: visibility,
+						display: display,
+						isSelected: card === selectedCard
+					});
+				}
+			});
+			console.log('👁️ Visible cards:', visibleCards.length, visibleCards);
+
 			// Immediately hide and remove unpicked cards to prevent visual artifacts
 			unpickedCards.forEach(card => {
 				card.style.visibility = 'hidden'; // Hide from rendering
