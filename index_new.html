@@ -1825,14 +1825,15 @@
 				await sleep(20);
 			}
 
-			await sleep(500);
-
-			// Remove unpicked cards from DOM to prevent visual artifacts
+			// Immediately hide and remove unpicked cards to prevent visual artifacts
 			unpickedCards.forEach(card => {
+				card.style.display = 'none'; // Hide immediately
 				if (card.parentNode) {
 					card.parentNode.removeChild(card);
 				}
 			});
+
+			await sleep(500);
 
 			// Allow overflow so card won't be clipped when scaled up
 			animArea.classList.add('allow-overflow');
