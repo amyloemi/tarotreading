@@ -137,7 +137,7 @@ registryTests.test('All required decks should exist', function() {
 
 registryTests.test('Rider-Waite deck should have correct configuration', function() {
     const rw = DECK_REGISTRY.decks['rider-waite'];
-    this.assertEqual(rw.name, 'Rider-Waite Tarot');
+    this.assertEqual(rw.name, 'Rider-Waite Classic');
     this.assertEqual(rw.folder, 'images');
     this.assertEqual(rw.thumbnailFolder, 'images-thumbnails');
     this.assertTrue(rw.structure.hasMajorArcanaFolder, 'Should use major arcana folder');
