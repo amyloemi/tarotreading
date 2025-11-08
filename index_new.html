@@ -1142,18 +1142,6 @@
 		<!-- Load unified card meanings -->
 		<script src="decks/data/card-meanings-loader.js"></script>
 
-		<!-- Mobile Debug Console (Eruda) - Remove in production -->
-		<script>
-			// Enable Eruda console on mobile for debugging
-			// Add ?debug to URL to show console overlay
-			if (window.location.search.includes('debug') || /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
-				const script = document.createElement('script');
-				script.src = 'https://cdn.jsdelivr.net/npm/eruda';
-				script.onload = function() { eruda.init(); };
-				document.body.appendChild(script);
-			}
-		</script>
-
 		<script>
 		// Language translations
 		const translations = {
@@ -1275,7 +1263,6 @@
 		let selectedCardElement = null;
 		let selectedCardScale = 1;
 		let selectedCardTopPosition = 0;
-		let debugPaused = false;
 
 		// Load reading JSON files
 		async function loadReadings() {
@@ -1403,32 +1390,8 @@
 
 		// ===== SHUFFLE ANIMATION FUNCTIONS =====
 
-		async function sleep(ms) {
-			await new Promise(resolve => setTimeout(resolve, ms));
-			// Check for debug pause
-			while (debugPaused) {
-				await new Promise(resolve => setTimeout(resolve, 100));
-			}
-		}
-
-		// Debug pause toggle - tap anywhere on animation area to pause/resume
-		function toggleDebugPause() {
-			debugPaused = !debugPaused;
-			const instruction = document.getElementById('shuffle-instruction');
-			if (instruction) {
-				if (debugPaused) {
-					instruction.textContent = '⏸️ PAUSED - Tap to Resume';
-					instruction.style.backgroundColor = 'rgba(255, 0, 0, 0.8)';
-					instruction.style.padding = '10px 20px';
-					instruction.style.borderRadius = '10px';
-				} else {
-					instruction.textContent = 'Shuffling the cards...';
-					instruction.style.backgroundColor = '';
-					instruction.style.padding = '';
-					instruction.style.borderRadius = '';
-				}
-			}
-			console.log('Debug pause:', debugPaused);
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
 		}
 
 		function setInstruction(text) {
@@ -1545,9 +1508,6 @@
 				container.appendChild(card);
 				animCards.push(card);
 			}
-
-			// Debug: Log actual number of card elements in DOM
-			console.log('Created cards:', animCards.length, 'DOM cards:', container.querySelectorAll('.anim-card').length);
 		}
 
 		async function riffleShuffleAnimation(speed = 'normal') {
@@ -1611,23 +1571,6 @@
 			const containerWidth = containerRect.width;
 			const containerHeight = containerRect.height;
 
-			// Debug: Check for any extra card elements in DOM
-			const domCards = container.querySelectorAll('.anim-card');
-			const cardBacks = container.querySelectorAll('.anim-card-back');
-			const cardFaces = container.querySelectorAll('.anim-card-face');
-			console.log('Display row - Cards:', domCards.length, 'Backs:', cardBacks.length, 'Faces:', cardFaces.length);
-
-			if (domCards.length !== animCards.length) {
-				console.warn('Card count mismatch! animCards:', animCards.length, 'DOM cards:', domCards.length);
-				// Remove any extra cards that aren't in animCards array
-				domCards.forEach(domCard => {
-					if (!animCards.includes(domCard)) {
-						console.warn('Removing orphaned card element');
-						domCard.remove();
-					}
-				});
-			}
-
 			const margin = 80;
 			const totalWidth = containerWidth - margin * 2;
 			const spacing = Math.min(50, totalWidth / animCards.length);
@@ -1663,14 +1606,6 @@
 			canPickCard = false;
 
 			setInstruction('Shuffling the cards...');
-
-			// Add pause toggle to instruction text
-			const instruction = document.getElementById('shuffle-instruction');
-			if (instruction && !instruction.hasAttribute('data-pause-added')) {
-				instruction.addEventListener('click', toggleDebugPause);
-				instruction.setAttribute('data-pause-added', 'true');
-				instruction.style.cursor = 'pointer';
-			}
 
 			// Mark all cards as shuffling
 			animCards.forEach(card => card.classList.add('shuffling'));
@@ -1927,12 +1862,6 @@
 
 			// Fade out non-selected cards completely
 			const unpickedCards = animCards.filter(card => card !== selectedCard);
-			console.log('🎯 Fading out', unpickedCards.length, 'unpicked cards');
-
-			// Check DOM BEFORE fade-out starts
-			const container = document.getElementById('animation-area');
-			const cardsBeforeFade = container.querySelectorAll('.anim-card');
-			console.log('📊 Cards in DOM before fade:', cardsBeforeFade.length);
 
 			for (let i = 0; i < unpickedCards.length; i++) {
 				// Immediately hide cards completely to prevent rendering artifacts
@@ -1944,29 +1873,6 @@
 				await sleep(20);
 			}
 
-			// Check DOM AFTER fade-out, BEFORE removal
-			const cardsAfterFade = container.querySelectorAll('.anim-card');
-			console.log('📊 Cards in DOM after fade (before removal):', cardsAfterFade.length);
-
-			// Check which cards are still visible (opacity > 0)
-			const visibleCards = [];
-			cardsAfterFade.forEach((card, idx) => {
-				const opacity = parseFloat(window.getComputedStyle(card).opacity);
-				const visibility = window.getComputedStyle(card).visibility;
-				const display = window.getComputedStyle(card).display;
-				if (opacity > 0.1 || visibility === 'visible' && display !== 'none') {
-					visibleCards.push({
-						index: idx,
-						element: card,
-						opacity: opacity,
-						visibility: visibility,
-						display: display,
-						isSelected: card === selectedCard
-					});
-				}
-			});
-			console.log('👁️ Visible cards:', visibleCards.length, visibleCards);
-
 			// Immediately hide and remove unpicked cards to prevent visual artifacts
 			unpickedCards.forEach(card => {
 				card.style.visibility = 'hidden'; // Hide from rendering
@@ -1976,18 +1882,6 @@
 					card.parentNode.removeChild(card);
 				}
 			});
-
-			// Check DOM AFTER removal
-			const cardsAfterRemoval = container.querySelectorAll('.anim-card');
-			console.log('✅ Cards in DOM after removal:', cardsAfterRemoval.length, '(should be 1)');
-
-			if (cardsAfterRemoval.length > 1) {
-				console.warn('⚠️⚠️ EXTRA CARDS DETECTED! Expected 1, found', cardsAfterRemoval.length);
-				cardsAfterRemoval.forEach((card, idx) => {
-					const isSelected = card === selectedCard;
-					console.warn(`Card #${idx}: ${isSelected ? '✓ SELECTED' : '❌ EXTRA'}`, card);
-				});
-			}
 
 			await sleep(500);
 
@@ -2231,9 +2125,6 @@
 		}
 
 		function returnToDeckSelection() {
-			// Reset debug pause
-			debugPaused = false;
-
 			// Remove reading box
 			const readingBox = document.getElementById('reading-box');
 			if (readingBox) {
@@ -2291,9 +2182,6 @@
 		}
 
 		function drawAnotherCard() {
-			// Reset debug pause
-			debugPaused = false;
-
 			// Remove reading box
 			const readingBox = document.getElementById('reading-box');
 			if (readingBox) {
