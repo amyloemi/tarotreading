@@ -1973,14 +1973,6 @@
 				selectedCard.classList.add('flipped');
 			}
 
-			// Scroll to top on mobile to show the flipped card
-			const isMobile = window.innerWidth <= 768;
-			if (isMobile) {
-				// Scroll animation area to top of viewport
-				const animArea = document.getElementById('animation-area');
-				animArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}
-
 			await sleep(800);
 
 			// Get reading text using the randomly selected card
