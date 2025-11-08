@@ -1918,8 +1918,13 @@
 				animArea.style.minHeight = `${estimatedHeight}px`;
 			}
 
-			// Position card using new function
-			selectedCard.style.boxShadow = '0 15px 60px rgba(0, 0, 0, 0.5)';
+			// Position card using new function with enhanced depth shadow
+			selectedCard.style.boxShadow = `
+				0 20px 60px rgba(0, 0, 0, 0.4),
+				0 10px 30px rgba(0, 0, 0, 0.3),
+				0 5px 15px rgba(0, 0, 0, 0.2),
+				0 0 0 1px rgba(255, 255, 255, 0.1)
+			`;
 			selectedCard.style.zIndex = 1000;
 			selectedCard.style.transition = 'all 0.8s ease';
 			positionCardAndReadingBox();
