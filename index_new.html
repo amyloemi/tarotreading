@@ -1794,6 +1794,11 @@
 			isAnimating = true;
 			canPickCard = false;
 
+			// Randomly select actual card from all 78 cards at moment of click
+			const allTarotCards = DeckLoader.getAllCards();
+			const randomIndex = Math.floor(Math.random() * allTarotCards.length);
+			const actualCard = allTarotCards[randomIndex];
+
 			// Store selected card globally
 			selectedCardElement = selectedCard;
 
@@ -1876,6 +1881,20 @@
 
 			await sleep(800);
 
+			// Update card face to show the randomly selected card
+			const deckIdMap = {
+				'rider': 'rider-waite',
+				'artistic': 'artistic',
+				'miro': 'miro'
+			};
+			const deckId = deckIdMap[currentDeck] || 'rider-waite';
+			const cardFace = selectedCard.querySelector('.anim-card-face img');
+			if (cardFace) {
+				const actualImagePath = DeckLoader.getImagePath(deckId, actualCard, true); // Use thumbnail
+				cardFace.src = actualImagePath;
+				cardFace.alt = actualCard.name;
+			}
+
 			// Flip the card to show front
 			if (isReversed) {
 				selectedCard.classList.add('reversed');
@@ -1885,13 +1904,13 @@
 
 			await sleep(800);
 
-			// Get reading text
-			let readingEnglish = getReadingFromJSON(currentDeck, tarotCard.name, currentQuestion, isReversed);
+			// Get reading text using the randomly selected card
+			let readingEnglish = getReadingFromJSON(currentDeck, actualCard.name, currentQuestion, isReversed);
 
 			if (!readingEnglish) {
-				const meaning = getCardMeaning(tarotCard.name);
+				const meaning = getCardMeaning(actualCard.name);
 				if (meaning) {
-					readingEnglish = await generateDailyAdvice(tarotCard.name, meaning, isReversed, 'en');
+					readingEnglish = await generateDailyAdvice(actualCard.name, meaning, isReversed, 'en');
 				}
 			}
 
@@ -1902,11 +1921,11 @@
 			}
 
 			// Store current card info
-			currentCard = tarotCard;
+			currentCard = actualCard;
 			currentIsReversed = isReversed;
 
 			// Create and show reading box
-			showReadingBox(tarotCard, isReversed, reading);
+			showReadingBox(actualCard, isReversed, reading);
 
 			isAnimating = false;
 		}
