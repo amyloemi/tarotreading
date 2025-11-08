@@ -1275,6 +1275,7 @@
 		let selectedCardElement = null;
 		let selectedCardScale = 1;
 		let selectedCardTopPosition = 0;
+		let debugPaused = false;
 
 		// Load reading JSON files
 		async function loadReadings() {
@@ -1402,8 +1403,32 @@
 
 		// ===== SHUFFLE ANIMATION FUNCTIONS =====
 
-		function sleep(ms) {
-			return new Promise(resolve => setTimeout(resolve, ms));
+		async function sleep(ms) {
+			await new Promise(resolve => setTimeout(resolve, ms));
+			// Check for debug pause
+			while (debugPaused) {
+				await new Promise(resolve => setTimeout(resolve, 100));
+			}
+		}
+
+		// Debug pause toggle - tap anywhere on animation area to pause/resume
+		function toggleDebugPause() {
+			debugPaused = !debugPaused;
+			const instruction = document.getElementById('shuffle-instruction');
+			if (instruction) {
+				if (debugPaused) {
+					instruction.textContent = '⏸️ PAUSED - Tap to Resume';
+					instruction.style.backgroundColor = 'rgba(255, 0, 0, 0.8)';
+					instruction.style.padding = '10px 20px';
+					instruction.style.borderRadius = '10px';
+				} else {
+					instruction.textContent = 'Shuffling the cards...';
+					instruction.style.backgroundColor = '';
+					instruction.style.padding = '';
+					instruction.style.borderRadius = '';
+				}
+			}
+			console.log('Debug pause:', debugPaused);
 		}
 
 		function setInstruction(text) {
@@ -1638,6 +1663,14 @@
 			canPickCard = false;
 
 			setInstruction('Shuffling the cards...');
+
+			// Add pause toggle to instruction text
+			const instruction = document.getElementById('shuffle-instruction');
+			if (instruction && !instruction.hasAttribute('data-pause-added')) {
+				instruction.addEventListener('click', toggleDebugPause);
+				instruction.setAttribute('data-pause-added', 'true');
+				instruction.style.cursor = 'pointer';
+			}
 
 			// Mark all cards as shuffling
 			animCards.forEach(card => card.classList.add('shuffling'));
@@ -2137,6 +2170,9 @@
 		}
 
 		function returnToDeckSelection() {
+			// Reset debug pause
+			debugPaused = false;
+
 			// Remove reading box
 			const readingBox = document.getElementById('reading-box');
 			if (readingBox) {
@@ -2194,6 +2230,9 @@
 		}
 
 		function drawAnotherCard() {
+			// Reset debug pause
+			debugPaused = false;
+
 			// Remove reading box
 			const readingBox = document.getElementById('reading-box');
 			if (readingBox) {
