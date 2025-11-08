@@ -1881,7 +1881,7 @@
 
 			await sleep(800);
 
-			// Update card face to show the randomly selected card
+			// Update card face to show the randomly selected card and wait for it to load
 			const deckIdMap = {
 				'rider': 'rider-waite',
 				'artistic': 'artistic',
@@ -1891,8 +1891,23 @@
 			const cardFace = selectedCard.querySelector('.anim-card-face img');
 			if (cardFace) {
 				const actualImagePath = DeckLoader.getImagePath(deckId, actualCard, true); // Use thumbnail
-				cardFace.src = actualImagePath;
-				cardFace.alt = actualCard.name;
+
+				// Preload the image before changing src to prevent flicker
+				await new Promise((resolve) => {
+					const tempImg = new Image();
+					tempImg.onload = () => {
+						cardFace.src = actualImagePath;
+						cardFace.alt = actualCard.name;
+						resolve();
+					};
+					tempImg.onerror = () => {
+						// If image fails to load, still update but don't wait
+						cardFace.src = actualImagePath;
+						cardFace.alt = actualCard.name;
+						resolve();
+					};
+					tempImg.src = actualImagePath;
+				});
 			}
 
 			// Flip the card to show front
