@@ -1935,6 +1935,16 @@
 			selectedCard.style.transition = 'all 0.8s ease';
 			positionCardAndReadingBox();
 
+			// Scroll card to top on mobile after it reaches destination
+			const isMobile = window.innerWidth <= 768;
+			if (isMobile) {
+				// Wait a bit for positioning to settle, then scroll
+				setTimeout(() => {
+					const animArea = document.getElementById('animation-area');
+					animArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}, 400); // Start scroll midway through the 800ms animation
+			}
+
 			await sleep(800);
 
 			// Update card face to show the randomly selected card and wait for it to load
