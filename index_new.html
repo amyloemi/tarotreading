@@ -1824,6 +1824,8 @@
 			// Fade out non-selected cards completely
 			const unpickedCards = animCards.filter(card => card !== selectedCard);
 			for (let i = 0; i < unpickedCards.length; i++) {
+				// Disable transition first to prevent ghost images
+				unpickedCards[i].style.transition = 'none';
 				unpickedCards[i].style.opacity = '0';
 				unpickedCards[i].style.transform = 'translate(-50%, -50%) scale(0.3)'; // Scale down only, no rotation
 				await sleep(20);
@@ -1831,7 +1833,9 @@
 
 			// Immediately hide and remove unpicked cards to prevent visual artifacts
 			unpickedCards.forEach(card => {
+				card.style.visibility = 'hidden'; // Hide from rendering
 				card.style.display = 'none'; // Hide immediately
+				card.style.pointerEvents = 'none'; // Disable all interaction
 				if (card.parentNode) {
 					card.parentNode.removeChild(card);
 				}
