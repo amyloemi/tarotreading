@@ -1679,8 +1679,9 @@
 			await riffleShuffleAnimation('fast');
 			await sleep(400);
 
-			// Phase 2: Infinity Symbol Spread
+			// Phase 2: Infinity Symbol Spread (simplified on mobile to prevent rendering artifacts)
 			const spreadInterval = 1000 / animCards.length;
+			const isMobile = window.innerWidth <= 768;
 
 			for (let i = 0; i < animCards.length; i++) {
 				const progress = i / (animCards.length - 1);
@@ -1711,18 +1712,26 @@
 				const rotationSpeed = 360 + (progress * 720);
 				const rotation = t * (180 / Math.PI) + rotationSpeed;
 
-				const tiltX = sinT * 15;
-				const tiltY = cosT * 10;
-
 				const scale = 0.8 + (progress * 0.4);
 
 				animCards[i].style.left = `${x}px`;
 				animCards[i].style.top = `${y}px`;
-				animCards[i].style.transform = `translate(-50%, -50%)
-					rotate(${rotation}deg)
-					rotateX(${tiltX}deg)
-					rotateY(${tiltY}deg)
-					scale(${scale})`;
+
+				// Simplified transform for mobile to prevent GPU rendering artifacts
+				if (isMobile) {
+					animCards[i].style.transform = `translate(-50%, -50%)
+						rotate(${rotation}deg)
+						scale(${scale})`;
+				} else {
+					const tiltX = sinT * 15;
+					const tiltY = cosT * 10;
+					animCards[i].style.transform = `translate(-50%, -50%)
+						rotate(${rotation}deg)
+						rotateX(${tiltX}deg)
+						rotateY(${tiltY}deg)
+						scale(${scale})`;
+				}
+
 				animCards[i].style.opacity = 0.7 + (progress * 0.3);
 
 				await sleep(spreadInterval);
@@ -1730,19 +1739,27 @@
 
 			await sleep(800);
 
-			// Phase 3: Gather to center
+			// Phase 3: Gather to center (simplified on mobile)
 			const gatherInterval = 20;
 
 			for (let i = animCards.length - 1; i >= 0; i--) {
 				animCards[i].style.left = '50%';
 				animCards[i].style.top = '50%';
 
-				const tumbleX = (i % 3 - 1) * 180;
-				const tumbleY = (i % 2) * 360;
-				animCards[i].style.transform = `translate(-50%, -50%)
-					rotateY(${720 + tumbleY}deg)
-					rotateX(${tumbleX}deg)
-					scale(1)`;
+				// Simplified transform for mobile to prevent GPU rendering artifacts
+				if (isMobile) {
+					const rotation = (i % 4) * 90; // Simple rotation variation
+					animCards[i].style.transform = `translate(-50%, -50%)
+						rotate(${rotation}deg)
+						scale(1)`;
+				} else {
+					const tumbleX = (i % 3 - 1) * 180;
+					const tumbleY = (i % 2) * 360;
+					animCards[i].style.transform = `translate(-50%, -50%)
+						rotateY(${720 + tumbleY}deg)
+						rotateX(${tumbleX}deg)
+						scale(1)`;
+				}
 
 				animCards[i].style.opacity = '1';
 				animCards[i].style.zIndex = animCards.length - i;
