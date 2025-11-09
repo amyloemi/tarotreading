@@ -1150,11 +1150,9 @@
 		function selectDeck(deckType) {
 			currentDeck = deckType;
 
-			// Hide deck selection and features
+			// Hide deck selection
 			const deckSelection = document.getElementById('deck-selection');
-			const featuresSection = document.getElementById('features-section');
 			deckSelection.style.display = 'none';
-			featuresSection.style.display = 'none';
 
 			// Show card gallery
 			showCardGallery(deckType);
@@ -1408,9 +1406,7 @@
 
 			// Show deck selection
 			const deckSelection = document.getElementById('deck-selection');
-			const featuresSection = document.getElementById('features-section');
 			deckSelection.style.display = 'block';
-			featuresSection.style.display = 'block';
 
 			// Reset
 			currentDeck = null;

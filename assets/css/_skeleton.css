@@ -187,6 +187,67 @@
 	}
 }
 
+/* Dictionary Page - Card Grid Skeleton */
+.skeleton-dictionary-card {
+	width: 100%;
+	background: rgba(0, 0, 0, 0.3);
+	border: 2px solid rgba(212, 175, 55, 0.3);
+	border-radius: 12px;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.skeleton-dictionary-card .skeleton-image {
+	width: 100%;
+	aspect-ratio: 2/3;
+	background: rgba(147, 112, 219, 0.2);
+	border-radius: 8px;
+}
+
+.skeleton-dictionary-card .skeleton-name {
+	width: 70%;
+	height: 20px;
+	background: rgba(147, 112, 219, 0.2);
+	border-radius: 4px;
+	margin: 0 auto;
+}
+
+.skeleton-dictionary-card .skeleton-keywords {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+}
+
+.skeleton-dictionary-card .skeleton-keyword {
+	width: 60px;
+	height: 16px;
+	background: rgba(147, 112, 219, 0.15);
+	border-radius: 4px;
+}
+
+.skeleton-dictionary-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	padding: 20px;
+}
+
+@media (max-width: 768px) {
+	.skeleton-dictionary-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 15px;
+	}
+}
+
+@media (max-width: 480px) {
+	.skeleton-dictionary-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+	}
+}
+
 /* ============================================
    UTILITY CLASSES
    ============================================ */
