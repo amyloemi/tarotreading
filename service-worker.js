@@ -4,7 +4,7 @@
  * Version: 1.0.0
  */
 
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.1.0';
 const CACHE_NAME = `my-tarot-today-${CACHE_VERSION}`;
 
 // Core assets to cache immediately on install
@@ -15,6 +15,11 @@ const CORE_ASSETS = [
   '/pages/gallery.html',
   '/pages/journey.html',
   '/assets/css/main.css',
+  '/assets/js/translations.js',
+  '/assets/js/card-logic.js',
+  '/assets/js/animations.js',
+  '/assets/js/ui-helpers.js',
+  '/assets/js/app.js',
   '/decks/shared/DeckLoader.js',
   '/decks/shared/CardDatabase.js',
   '/images/backgrounds/tarot-background.jpg',
