@@ -1,2 +1,12 @@
 # Local documentation - never push to GitHub
 README.md
+
+# Backup files
+*.backup
+*.skel-backup
+*.before-*
+
+# Build and conversion tools
+convert-to-webp.sh
+convert_webp.py
+*.log

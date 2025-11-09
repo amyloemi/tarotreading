@@ -1,31 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nAdd mobile language selector to dictionary and journey pages\n\n- Add language dropdown to mobile navigation panel for dictionary.html\n- Add language dropdown to mobile navigation panel for journey.html\n- Sync mobile and desktop language selectors bidirectionally\n- Match styling and behavior with existing implementation in index.html and gallery.html\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git push)",
-      "Bash(git commit:*)",
-      "Bash(sed:*)",
-      "Bash(chmod:*)",
-      "Bash(node generate-thumbnails.js:*)",
-      "Bash(./generate-thumbnails.sh:*)",
-      "Bash(bash:*)",
-      "Bash(python3:*)",
-      "Bash(git ls-tree:*)",
-      "Bash(git restore:*)",
-      "Bash(open:*)",
-      "Bash(node tests/test-registry.js:*)",
-      "Bash(cat:*)",
-      "Bash(curl:*)",
-      "Bash(jobs)",
-      "Bash(npm install:*)",
-      "Bash(node scripts/optimize-all-decks.js:*)",
-      "Bash(git push:*)",
-      "Bash(git revert:*)",
+      "Bash(for class in skeleton-keywords skeleton-keyword skeleton-name skeleton-preview skeleton-subtitle skeleton-title skeleton-heading)",
+      "Bash(for file in index.html pages/dictionary.html pages/gallery.html pages/journey.html pages/user-space.html)",
+      "Bash(do)",
+      "Bash(done)",
+      "Bash(tree:*)",
       "Bash(find:*)",
-      "Bash(awk:*)",
-      "WebSearch",
-      "WebFetch(domain:www.uxpin.com)"
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
