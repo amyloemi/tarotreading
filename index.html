@@ -2574,92 +2574,93 @@
 
 			console.log('Page loaded. Please select a deck to begin.');
 
-		// ============================================
-		// Skeleton Screen Loader (HIGH PRIORITY UX)
-		// ============================================
-		// Show skeleton screens while deck images load
-		// Reduces perceived load time by 20-30%
+			// ============================================
+			// Skeleton Screen Loader (HIGH PRIORITY UX)
+			// ============================================
+			// Show skeleton screens while deck images load
+			// Reduces perceived load time by 20-30%
 
-		(function initSkeletonLoader() {
-			const deckSkeleton = document.getElementById('deck-skeleton');
-			const deckOptions = document.querySelector('.deck-options');
+			(function initSkeletonLoader() {
+				const deckSkeleton = document.getElementById('deck-skeleton');
+				const deckOptions = document.querySelector('.deck-options');
 
-			if (!deckSkeleton || !deckOptions) return;
+				if (!deckSkeleton || !deckOptions) return;
 
-			// Get all deck card images
-			const deckImages = deckOptions.querySelectorAll('.deck-preview img');
-			let loadedImages = 0;
-			const totalImages = deckImages.length;
-			let skeletonShown = false;
+				// Get all deck card images
+				const deckImages = deckOptions.querySelectorAll('.deck-preview img');
+				let loadedImages = 0;
+				const totalImages = deckImages.length;
+				let skeletonShown = false;
 
-			// Function to show skeleton
-			function showSkeleton() {
-				if (skeletonShown) return;
-				skeletonShown = true;
-				deckSkeleton.style.display = 'grid';
-				deckOptions.style.opacity = '0';
-				deckOptions.style.pointerEvents = 'none'; // Disable clicks while loading
-			}
+				// Function to show skeleton
+				function showSkeleton() {
+					if (skeletonShown) return;
+					skeletonShown = true;
+					deckSkeleton.style.display = 'grid';
+					deckOptions.style.opacity = '0';
+					deckOptions.style.pointerEvents = 'none'; // Disable clicks while loading
+				}
 
-			// Function to hide skeleton and show actual content
-			function hideSkeletonShowContent() {
-				// Fade out skeleton
-				deckSkeleton.style.transition = 'opacity 0.3s ease-out';
-				deckSkeleton.style.opacity = '0';
+				// Function to hide skeleton and show actual content
+				function hideSkeletonShowContent() {
+					// Fade out skeleton
+					deckSkeleton.style.transition = 'opacity 0.3s ease-out';
+					deckSkeleton.style.opacity = '0';
 
-				// Fade in actual deck cards
-				deckOptions.style.transition = 'opacity 0.3s ease-in';
-				deckOptions.style.opacity = '1';
-				deckOptions.style.pointerEvents = 'auto'; // Re-enable clicks
+					// Fade in actual deck cards
+					deckOptions.style.transition = 'opacity 0.3s ease-in';
+					deckOptions.style.opacity = '1';
+					deckOptions.style.pointerEvents = 'auto'; // Re-enable clicks
 
-				// Remove skeleton from DOM after animation
-				setTimeout(() => {
-					deckSkeleton.style.display = 'none';
-					deckSkeleton.setAttribute('aria-hidden', 'true');
-				}, 300);
-			}
+					// Remove skeleton from DOM after animation
+					setTimeout(() => {
+						deckSkeleton.style.display = 'none';
+						deckSkeleton.setAttribute('aria-hidden', 'true');
+					}, 300);
+				}
 
-			// Check if all images are loaded
-			function checkAllImagesLoaded() {
-				loadedImages++;
-				if (loadedImages === totalImages) {
-					if (skeletonShown) {
-						hideSkeletonShowContent();
-					} else {
-						// Images loaded instantly from cache - no skeleton needed
-						deckOptions.style.opacity = '1';
-						deckOptions.style.pointerEvents = 'auto';
+				// Check if all images are loaded
+				function checkAllImagesLoaded() {
+					loadedImages++;
+					if (loadedImages === totalImages) {
+						if (skeletonShown) {
+							hideSkeletonShowContent();
+						} else {
+							// Images loaded instantly from cache - no skeleton needed
+							deckOptions.style.opacity = '1';
+							deckOptions.style.pointerEvents = 'auto';
+						}
 					}
 				}
-			}
 
-			// Set up image load listeners
-			deckImages.forEach((img) => {
-				if (img.complete) {
-					// Image already loaded from cache
-					checkAllImagesLoaded();
-				} else {
-					// Wait for image to load
-					img.addEventListener('load', checkAllImagesLoaded);
-					img.addEventListener('error', checkAllImagesLoaded); // Hide skeleton even on error
-				}
-			});
+				// Set up image load listeners
+				deckImages.forEach((img) => {
+					if (img.complete) {
+						// Image already loaded from cache
+						checkAllImagesLoaded();
+					} else {
+						// Wait for image to load
+						img.addEventListener('load', checkAllImagesLoaded);
+						img.addEventListener('error', checkAllImagesLoaded); // Hide skeleton even on error
+					}
+				});
 
-			// Only show skeleton if images haven't loaded within 100ms
-			setTimeout(() => {
-				if (loadedImages < totalImages) {
-					showSkeleton();
-				}
-			}, 100);
+				// Only show skeleton if images haven't loaded within 100ms
+				setTimeout(() => {
+					if (loadedImages < totalImages) {
+						showSkeleton();
+					}
+				}, 100);
 
-			// Fallback: hide skeleton after 2 seconds if images don't load
-			setTimeout(() => {
-				if (skeletonShown && deckSkeleton.style.display !== 'none') {
-					console.warn('Skeleton loader timeout - hiding skeleton');
-					hideSkeletonShowContent();
-				}
-			}, 2000);
-		})();
+				// Fallback: hide skeleton after 2 seconds if images don't load
+				setTimeout(() => {
+					if (skeletonShown && deckSkeleton.style.display !== 'none') {
+						console.warn('Skeleton loader timeout - hiding skeleton');
+						hideSkeletonShowContent();
+					}
+				}, 2000);
+			})();
+		};
 		</script>
 
 		<!-- Locale Formatter -->
