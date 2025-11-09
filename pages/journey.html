@@ -873,6 +873,7 @@
 		};
 
 		// Dynamically replace hardcoded card images with DeckLoader-generated responsive images
+		// Using Intersection Observer for lazy loading (MEDIUM PRIORITY FIX)
 		document.addEventListener('DOMContentLoaded', function() {
 			// Wait for DeckLoader to be available
 			if (typeof DeckLoader === 'undefined') {
@@ -883,40 +884,59 @@
 			// Get all card images
 			const cardImages = document.querySelectorAll('.card-item img.card-image');
 
-			cardImages.forEach(img => {
-				// Extract card number from the src path
-				// Example: ../decks/images/major_arcana/00-the-fool.png
-				const src = img.src;
-				const match = src.match(/(\d{2})-/);
+			// Create an Intersection Observer for lazy loading
+			const imageObserver = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						const img = entry.target;
 
-				if (match) {
-					const cardNumber = parseInt(match[1]);
+						// Extract card number from the src path
+						// Example: ../decks/images/major_arcana/00-the-fool.png
+						const src = img.src;
+						const match = src.match(/(\d{2})-/);
 
-					// Get the card from DeckRegistry
-					const card = DECK_REGISTRY.cards.major[cardNumber];
+						if (match) {
+							const cardNumber = parseInt(match[1]);
 
-					if (card) {
-						// Add type property for DeckLoader
-						const cardWithType = { ...card, type: 'major' };
+							// Get the card from DeckRegistry
+							const card = DECK_REGISTRY.cards.major[cardNumber];
 
-						// Create responsive image using DeckLoader
-						const picture = DeckLoader.createResponsiveImage('rider-waite', cardWithType, {
-							thumbnail: true,
-							loading: 'lazy'
-						});
+							if (card) {
+								// Add type property for DeckLoader
+								const cardWithType = { ...card, type: 'major' };
 
-						// Copy classes and attributes
-						const newImg = picture.querySelector('img');
-						newImg.className = img.className;
-						newImg.alt = img.alt;
+								// Create responsive image using DeckLoader
+								const picture = DeckLoader.createResponsiveImage('rider-waite', cardWithType, {
+									thumbnail: true,
+									loading: 'lazy'
+								});
 
-						// Add error handler
-						DeckLoader.addErrorHandler(newImg);
+								// Copy classes and attributes
+								const newImg = picture.querySelector('img');
+								newImg.className = img.className;
+								newImg.alt = img.alt;
 
-						// Replace the old img with the new picture element
-						img.parentNode.replaceChild(picture, img);
+								// Add error handler
+								DeckLoader.addErrorHandler(newImg);
+
+								// Replace the old img with the new picture element
+								img.parentNode.replaceChild(picture, img);
+							}
+						}
+
+						// Stop observing this image
+						observer.unobserve(img);
 					}
-				}
+				});
+			}, {
+				// Load images when they're 200px from entering the viewport
+				rootMargin: '200px 0px',
+				threshold: 0.01
+			});
+
+			// Observe all card images
+			cardImages.forEach(img => {
+				imageObserver.observe(img);
 			});
 		});
 		</script>

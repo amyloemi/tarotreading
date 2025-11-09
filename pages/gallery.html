@@ -382,6 +382,10 @@
 				max-height: 90vh;
 				border-radius: 15px;
 				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+				/* Support for pinch-to-zoom (MEDIUM PRIORITY FIX) */
+				transform-origin: center center;
+				transition: transform 0.3s ease;
+				touch-action: none;
 			}
 
 			.lightbox-close {
@@ -1302,7 +1306,13 @@
 
 		function closeLightbox() {
 			const lightbox = document.getElementById('lightbox');
+			const lightboxImg = document.getElementById('lightbox-img');
+
 			lightbox.classList.remove('visible');
+
+			// Reset zoom when closing (MEDIUM PRIORITY FIX)
+			lightboxImg.style.transform = 'scale(1)';
+			currentScale = 1;
 
 			// Remove keyboard event listener
 			document.removeEventListener('keydown', handleLightboxKeydown);
@@ -1312,6 +1322,80 @@
 			if (event.key === 'Escape') {
 				closeLightbox();
 			}
+		}
+
+		// Pinch-to-zoom functionality for lightbox (MEDIUM PRIORITY FIX)
+		let currentScale = 1;
+		let initialDistance = 0;
+
+		function initializePinchZoom() {
+			const lightboxImg = document.getElementById('lightbox-img');
+
+			if (!lightboxImg) return;
+
+			// Touch event handlers for pinch-to-zoom
+			let touches = [];
+
+			lightboxImg.addEventListener('touchstart', (e) => {
+				touches = Array.from(e.touches);
+
+				if (touches.length === 2) {
+					e.preventDefault();
+					initialDistance = getDistance(touches[0], touches[1]);
+				}
+			}, { passive: false });
+
+			lightboxImg.addEventListener('touchmove', (e) => {
+				touches = Array.from(e.touches);
+
+				if (touches.length === 2) {
+					e.preventDefault();
+
+					const currentDistance = getDistance(touches[0], touches[1]);
+					const scale = currentDistance / initialDistance;
+
+					// Apply zoom with limits (min 1x, max 4x)
+					currentScale = Math.max(1, Math.min(4, currentScale * scale));
+					lightboxImg.style.transform = `scale(${currentScale})`;
+					lightboxImg.style.transition = 'none'; // Disable transition during pinch
+
+					initialDistance = currentDistance;
+				}
+			}, { passive: false });
+
+			lightboxImg.addEventListener('touchend', (e) => {
+				if (e.touches.length < 2) {
+					lightboxImg.style.transition = 'transform 0.3s ease'; // Re-enable smooth transition
+				}
+			}, { passive: true });
+
+			// Double-tap to reset zoom
+			let lastTapTime = 0;
+			lightboxImg.addEventListener('touchend', (e) => {
+				const currentTime = new Date().getTime();
+				const tapGap = currentTime - lastTapTime;
+
+				if (tapGap < 300 && tapGap > 0 && e.touches.length === 0) {
+					// Double tap detected
+					if (currentScale > 1) {
+						// Reset zoom
+						currentScale = 1;
+						lightboxImg.style.transform = 'scale(1)';
+					} else {
+						// Zoom in to 2x
+						currentScale = 2;
+						lightboxImg.style.transform = 'scale(2)';
+					}
+				}
+
+				lastTapTime = currentTime;
+			}, { passive: true });
+		}
+
+		function getDistance(touch1, touch2) {
+			const dx = touch1.clientX - touch2.clientX;
+			const dy = touch1.clientY - touch2.clientY;
+			return Math.sqrt(dx * dx + dy * dy);
 		}
 
 		function filterDecks() {
@@ -1573,6 +1657,9 @@
 			document.getElementById('language-select').value = currentLanguage;
 
 			updateUILanguage();
+
+			// Initialize pinch-to-zoom for lightbox images (MEDIUM PRIORITY FIX)
+			initializePinchZoom();
 
 			console.log('Page loaded. Please select a deck to begin.');
 		};

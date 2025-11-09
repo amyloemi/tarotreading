@@ -311,6 +311,15 @@
 				animation: swipeInLeft 0.4s ease forwards;
 			}
 
+			/* New animations for backward swipe (MEDIUM PRIORITY FIX) */
+			#question-text.swipe-out-left {
+				animation: swipeOutLeft 0.4s ease forwards;
+			}
+
+			#question-text.swipe-in-right {
+				animation: swipeInRight 0.4s ease forwards;
+			}
+
 			@keyframes swipeOutRight {
 				to {
 					transform: translateX(100%);
@@ -321,6 +330,24 @@
 			@keyframes swipeInLeft {
 				from {
 					transform: translateX(-100%);
+					opacity: 0;
+				}
+				to {
+					transform: translateX(0);
+					opacity: 1;
+				}
+			}
+
+			@keyframes swipeOutLeft {
+				to {
+					transform: translateX(-100%);
+					opacity: 0;
+				}
+			}
+
+			@keyframes swipeInRight {
+				from {
+					transform: translateX(100%);
 					opacity: 0;
 				}
 				to {
@@ -1348,7 +1375,7 @@
 			}
 		}
 
-		// Cycle through questions with animation
+		// Cycle through questions with animation (forward)
 		function cycleQuestion() {
 			const questionText = document.getElementById('question-text');
 
@@ -1372,6 +1399,34 @@
 				// Clean up animation class after it completes
 				setTimeout(() => {
 					questionText.classList.remove('swipe-in-left');
+				}, 400);
+			}, 400);
+		}
+
+		// Cycle through questions with animation (backward) - for swipe gestures
+		function cyclePreviousQuestion() {
+			const questionText = document.getElementById('question-text');
+
+			// Start swipe out animation to the left
+			questionText.classList.add('swipe-out-left');
+
+			// After animation completes, change text and swipe in from right
+			setTimeout(() => {
+				currentQuestionIndex = (currentQuestionIndex - 1 + questions.length) % questions.length;
+				currentQuestion = questions[currentQuestionIndex]; // Keep English for reading lookup
+
+				// Display translated question
+				const trans = translations[currentLanguage];
+				const questionKey = `question${currentQuestionIndex + 1}`;
+				questionText.textContent = trans[questionKey];
+
+				// Remove swipe out and add swipe in from right
+				questionText.classList.remove('swipe-out-left');
+				questionText.classList.add('swipe-in-right');
+
+				// Clean up animation class after it completes
+				setTimeout(() => {
+					questionText.classList.remove('swipe-in-right');
 				}, 400);
 			}, 400);
 		}
@@ -2462,6 +2517,36 @@
 			document.getElementById('language-select').value = currentLanguage;
 
 			updateUILanguage();
+
+			// Add swipe gesture support for question carousel (MEDIUM PRIORITY FIX)
+			const questionContainer = document.getElementById('question-container');
+			if (questionContainer) {
+				let touchStartX = 0;
+				let touchEndX = 0;
+				const minSwipeDistance = 50; // minimum distance for swipe
+
+				questionContainer.addEventListener('touchstart', (e) => {
+					touchStartX = e.changedTouches[0].screenX;
+				}, { passive: true });
+
+				questionContainer.addEventListener('touchend', (e) => {
+					touchEndX = e.changedTouches[0].screenX;
+					handleSwipe();
+				}, { passive: true });
+
+				function handleSwipe() {
+					const swipeDistance = touchEndX - touchStartX;
+
+					// Swipe left (next question)
+					if (swipeDistance < -minSwipeDistance) {
+						cycleQuestion();
+					}
+					// Swipe right (previous question)
+					else if (swipeDistance > minSwipeDistance) {
+						cyclePreviousQuestion();
+					}
+				}
+			}
 
 			console.log('Page loaded. Please select a deck to begin.');
 		};

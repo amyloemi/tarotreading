@@ -1,0 +1,313 @@
+/*
+ * Unified Responsive Grid System
+ * My Tarot Today
+ * MEDIUM PRIORITY FIX - Consistent grid behavior across all pages
+ */
+
+/* Base Grid Container */
+.tarot-grid {
+	display: grid;
+	gap: 20px;
+	width: 100%;
+	padding: 20px;
+}
+
+/* Card Grid - For deck selection, gallery cards */
+.tarot-card-grid {
+	display: grid;
+	gap: 30px;
+	width: 100%;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* Responsive Breakpoints - Mobile First Approach */
+
+/* Extra Small Mobile: 320px-374px (default styles above) */
+
+/* Small Mobile: 375px+ (iPhone SE, Galaxy) */
+@media (min-width: 375px) {
+	.tarot-grid {
+		gap: 20px;
+	}
+
+	.tarot-card-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 25px;
+	}
+}
+
+/* Medium Mobile / Phablet: 480px+ */
+@media (min-width: 480px) {
+	.tarot-card-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 30px;
+	}
+}
+
+/* Tablet Portrait: 768px+ */
+@media (min-width: 768px) {
+	.tarot-grid {
+		gap: 25px;
+		padding: 30px;
+	}
+
+	.tarot-card-grid {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 35px;
+	}
+}
+
+/* Tablet Landscape / Small Desktop: 1024px+ */
+@media (min-width: 1024px) {
+	.tarot-grid {
+		gap: 30px;
+		padding: 40px;
+	}
+
+	.tarot-card-grid {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 40px;
+	}
+}
+
+/* Desktop: 1280px+ */
+@media (min-width: 1280px) {
+	.tarot-grid {
+		gap: 35px;
+	}
+
+	.tarot-card-grid {
+		grid-template-columns: repeat(6, 1fr);
+		gap: 45px;
+	}
+}
+
+/* Large Desktop: 1440px+ */
+@media (min-width: 1440px) {
+	.tarot-grid {
+		max-width: 1600px;
+		margin: 0 auto;
+	}
+
+	.tarot-card-grid {
+		gap: 50px;
+	}
+}
+
+/* Ultra-Wide: 1920px+ */
+@media (min-width: 1920px) {
+	.tarot-grid {
+		max-width: 1800px;
+	}
+
+	.tarot-card-grid {
+		grid-template-columns: repeat(6, 1fr);
+		gap: 60px;
+	}
+}
+
+/* Dictionary-specific grid (Major Arcana sections) */
+.dictionary-major-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 25px;
+}
+
+@media (min-width: 480px) {
+	.dictionary-major-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 768px) {
+	.dictionary-major-grid {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 30px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.dictionary-major-grid {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 35px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.dictionary-major-grid {
+		grid-template-columns: repeat(6, 1fr);
+		gap: 40px;
+	}
+}
+
+/* Dictionary-specific grid (Minor Arcana sections) */
+.dictionary-minor-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+}
+
+@media (min-width: 480px) {
+	.dictionary-minor-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (min-width: 768px) {
+	.dictionary-minor-grid {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 25px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.dictionary-minor-grid {
+		grid-template-columns: repeat(7, 1fr);
+		gap: 30px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.dictionary-minor-grid {
+		grid-template-columns: repeat(8, 1fr);
+		gap: 35px;
+	}
+}
+
+/* Gallery grid - More dense for browsing */
+.gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+}
+
+@media (min-width: 480px) {
+	.gallery-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 25px;
+	}
+}
+
+@media (min-width: 768px) {
+	.gallery-grid {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 30px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.gallery-grid {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 35px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.gallery-grid {
+		grid-template-columns: repeat(6, 1fr);
+		gap: 40px;
+	}
+}
+
+@media (min-width: 1920px) {
+	.gallery-grid {
+		grid-template-columns: repeat(6, 1fr); /* Keep at 6 even on ultra-wide */
+		gap: 50px;
+	}
+}
+
+/* Deck selection grid (index page) */
+.deck-selection-grid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 30px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+	.deck-selection-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 768px) {
+	.deck-selection-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 40px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.deck-selection-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 50px;
+	}
+}
+
+/* Container Queries Support (Modern browsers) */
+@supports (container-type: inline-size) {
+	.tarot-grid-container {
+		container-type: inline-size;
+	}
+
+	@container (min-width: 400px) {
+		.tarot-card-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@container (min-width: 600px) {
+		.tarot-card-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@container (min-width: 900px) {
+		.tarot-card-grid {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	@container (min-width: 1200px) {
+		.tarot-card-grid {
+			grid-template-columns: repeat(5, 1fr);
+		}
+	}
+}
+
+/* Utility Classes */
+.grid-gap-small {
+	gap: 15px;
+}
+
+.grid-gap-medium {
+	gap: 30px;
+}
+
+.grid-gap-large {
+	gap: 50px;
+}
+
+/* Grid item styles */
+.grid-item {
+	position: relative;
+	overflow: hidden;
+	border-radius: 12px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (hover: none) {
+	.grid-item:hover {
+		transform: none;
+	}
+
+	.grid-item:active {
+		transform: scale(0.98);
+	}
+}

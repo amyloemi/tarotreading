@@ -283,9 +283,19 @@ class DeckLoader {
             if (options.className) img.className = options.className;
             picture.appendChild(img);
         } else {
-            // No thumbnails - use full size
+            // No thumbnails - use full size with WebP support (MEDIUM PRIORITY FIX)
+            const fullSizePath = this.getImagePath(deckId, card);
+            const webpPath = fullSizePath.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+
+            // Add WebP source for modern browsers
+            const sourceWebP = document.createElement('source');
+            sourceWebP.srcset = webpPath;
+            sourceWebP.type = 'image/webp';
+            picture.appendChild(sourceWebP);
+
+            // Fallback to PNG/JPG for older browsers
             const img = document.createElement('img');
-            img.src = this.getImagePath(deckId, card);
+            img.src = fullSizePath;
             img.alt = card.name;
             img.loading = options.loading || 'lazy';
             img.decoding = 'async';
