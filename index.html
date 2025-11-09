@@ -2583,43 +2583,56 @@
 		(function initSkeletonLoader() {
 			const deckSkeleton = document.getElementById('deck-skeleton');
 			const deckOptions = document.querySelector('.deck-options');
-			
+
 			if (!deckSkeleton || !deckOptions) return;
 
-			// Show skeleton immediately
-			deckSkeleton.style.display = 'grid';
-			deckOptions.style.opacity = '0';
-			
 			// Get all deck card images
 			const deckImages = deckOptions.querySelectorAll('.deck-preview img');
 			let loadedImages = 0;
 			const totalImages = deckImages.length;
-			
+			let skeletonShown = false;
+
+			// Function to show skeleton
+			function showSkeleton() {
+				if (skeletonShown) return;
+				skeletonShown = true;
+				deckSkeleton.style.display = 'grid';
+				deckOptions.style.opacity = '0';
+				deckOptions.style.pointerEvents = 'none'; // Disable clicks while loading
+			}
+
 			// Function to hide skeleton and show actual content
 			function hideSkeletonShowContent() {
 				// Fade out skeleton
 				deckSkeleton.style.transition = 'opacity 0.3s ease-out';
 				deckSkeleton.style.opacity = '0';
-				
+
 				// Fade in actual deck cards
 				deckOptions.style.transition = 'opacity 0.3s ease-in';
 				deckOptions.style.opacity = '1';
-				
+				deckOptions.style.pointerEvents = 'auto'; // Re-enable clicks
+
 				// Remove skeleton from DOM after animation
 				setTimeout(() => {
 					deckSkeleton.style.display = 'none';
 					deckSkeleton.setAttribute('aria-hidden', 'true');
 				}, 300);
 			}
-			
+
 			// Check if all images are loaded
 			function checkAllImagesLoaded() {
 				loadedImages++;
 				if (loadedImages === totalImages) {
-					hideSkeletonShowContent();
+					if (skeletonShown) {
+						hideSkeletonShowContent();
+					} else {
+						// Images loaded instantly from cache - no skeleton needed
+						deckOptions.style.opacity = '1';
+						deckOptions.style.pointerEvents = 'auto';
+					}
 				}
 			}
-			
+
 			// Set up image load listeners
 			deckImages.forEach((img) => {
 				if (img.complete) {
@@ -2631,15 +2644,21 @@
 					img.addEventListener('error', checkAllImagesLoaded); // Hide skeleton even on error
 				}
 			});
-			
+
+			// Only show skeleton if images haven't loaded within 100ms
+			setTimeout(() => {
+				if (loadedImages < totalImages) {
+					showSkeleton();
+				}
+			}, 100);
+
 			// Fallback: hide skeleton after 2 seconds if images don't load
 			setTimeout(() => {
-				if (deckSkeleton.style.display !== 'none') {
+				if (skeletonShown && deckSkeleton.style.display !== 'none') {
 					console.warn('Skeleton loader timeout - hiding skeleton');
 					hideSkeletonShowContent();
 				}
 			}, 2000);
-		})();
 		})();
 		</script>
 
