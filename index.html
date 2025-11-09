@@ -842,63 +842,7 @@
 				animation: fadeInUp 0.6s ease;
 			}
 
-			.btn-primary, .btn-secondary {
-				padding: 13px 35px;
-				font-size: 1.05em;
-				border: none;
-				border-radius: 30px;
-				cursor: pointer;
-				transition: all 0.3s ease;
-				font-family: 'Apple Chancery', cursive, serif;
-				font-weight: 600;
-			}
-
-			.btn-primary {
-				background: rgba(0, 0, 0, 0.8);
-				backdrop-filter: blur(10px);
-				color: #FFD700;
-				border: 2px solid #FFD700;
-				box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-				animation: pulseGlow 2s infinite;
-			}
-
-			.btn-primary:hover {
-				background: rgba(0, 0, 0, 0.9);
-				box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-				transform: scale(1.05);
-			}
-
-			.btn-primary:focus-visible {
-				outline: 3px solid #FFD700;
-				outline-offset: 4px;
-			}
-
-			.btn-secondary {
-				background: white;
-				color: #4c5c96;
-				border: 2px solid #4c5c96;
-			}
-
-			.btn-secondary:hover {
-				background: #f0f0f0;
-				transform: scale(1.05);
-			}
-
-			.btn-secondary:focus-visible {
-				outline: 3px solid #4c5c96;
-				outline-offset: 4px;
-			}
-
-			@keyframes pulseGlow {
-				0%, 100% {
-					opacity: 0.8;
-					box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-				}
-				50% {
-					opacity: 1;
-					box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-				}
-			}
+			/* Button styles now centralized in main.css */
 
 			.box.special {
 				background: rgba(255, 255, 255, 0.95);
@@ -1216,10 +1160,10 @@
 							<div class="card-reading" id="card-reading"></div>
 
 							<div id="action-buttons" style="display: none;">
-								<button class="btn-primary" onclick="drawAnotherCard()">
+								<button class="btn btn-primary" onclick="drawAnotherCard()">
 									<span data-translate="drawAnother">Draw Another Card</span>
 								</button>
-								<button class="btn-secondary" onclick="returnToDeckSelection()">
+								<button class="btn btn-secondary" onclick="returnToDeckSelection()">
 									<span data-translate="changeDeck">Choose Different Deck</span>
 								</button>
 							</div>
@@ -2160,10 +2104,10 @@
 				</div>
 				<div class="reading-text">${reading}</div>
 				<div class="reading-buttons">
-					<button class="btn-primary" onclick="drawAnotherCard()">
+					<button class="btn btn-primary" onclick="drawAnotherCard()">
 						<span>${trans.drawAnother}</span>
 					</button>
-					<button class="btn-secondary" onclick="returnToDeckSelection()">
+					<button class="btn btn-secondary" onclick="returnToDeckSelection()">
 						<span>${trans.changeDeck}</span>
 					</button>
 				</div>
