@@ -104,6 +104,24 @@
 
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<style>
+			/* Skip link for accessibility */
+			.skip-link {
+				position: absolute;
+				top: -40px;
+				left: 0;
+				background: #9370DB;
+				color: white;
+				padding: 8px 16px;
+				text-decoration: none;
+				font-weight: bold;
+				z-index: 10000;
+				border-radius: 0 0 4px 0;
+			}
+
+			.skip-link:focus {
+				top: 0;
+			}
+
 			/* Custom background with tarot image */
 			body {
 				background:
@@ -604,8 +622,8 @@
 			.tap-hint {
 				background: rgba(0, 0, 0, 0.6);
 				backdrop-filter: blur(10px);
-				color: #d4af37;
-				border: 2px solid #d4af37;
+				color: #FFD700;
+				border: 2px solid #FFD700;
 				padding: 14px 35px;
 				border-radius: 30px;
 				display: inline-block;
@@ -613,7 +631,7 @@
 				animation: pulseGlow 2s infinite;
 				font-size: 1.05em;
 				font-weight: 600;
-				box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+				box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
 				cursor: pointer;
 				transition: all 0.3s ease;
 				font-family: 'Apple Chancery', cursive, serif;
@@ -656,15 +674,15 @@
 			.btn-primary {
 				background: rgba(0, 0, 0, 0.6);
 				backdrop-filter: blur(10px);
-				color: #d4af37;
-				border: 2px solid #d4af37;
-				box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+				color: #FFD700;
+				border: 2px solid #FFD700;
+				box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
 				animation: pulseGlow 2s infinite;
 			}
 
 			.btn-primary:hover {
 				background: rgba(0, 0, 0, 0.8);
-				box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+				box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
 				transform: scale(1.05);
 			}
 
@@ -762,8 +780,8 @@
 			.btn-primary {
 				background: rgba(0, 0, 0, 0.6);
 				backdrop-filter: blur(10px);
-				color: #d4af37;
-				border: 2px solid #d4af37;
+				color: #FFD700;
+				border: 2px solid #FFD700;
 			}
 
 			.btn-primary:hover {
@@ -787,12 +805,13 @@
 			@media (max-width: 768px) {
 				.deck-options {
 					grid-template-columns: repeat(3, 1fr);
-					gap: 10px;
-					padding: 0 5px;
+					gap: 12px;
+					padding: 0 8px;
 				}
 
 				.deck-card {
-					padding: 10px 8px;
+					padding: 16px 12px;
+					min-height: 48px;
 				}
 
 				.deck-card h3 {
@@ -830,6 +849,7 @@
 		</style>
 	</head>
 	<body class="landing is-preload">
+		<a href="#main" class="skip-link">Skip to main content</a>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -842,7 +862,7 @@
 							<li><a href="journey.html">Fool's Journey</a></li>
 							<li><a href="dictionary.html">Dictionary</a></li>
 							<li class="language-dropdown">
-								<select id="language-select" onchange="changeLanguage()" style="padding: 10px 20px; border-radius: 25px; border: 2px solid rgba(255, 255, 255, 0.8); font-size: 0.95em; background: rgba(255, 255, 255, 0.95); cursor: pointer; transition: all 0.3s ease; font-weight: 500; line-height: 1.4; vertical-align: middle;">
+								<select id="language-select" onchange="changeLanguage()" aria-label="Select language" style="padding: 10px 20px; border-radius: 25px; border: 2px solid rgba(255, 255, 255, 0.8); font-size: 0.95em; background: rgba(255, 255, 255, 0.95); cursor: pointer; transition: all 0.3s ease; font-weight: 500; line-height: 1.4; vertical-align: middle;">
 									<option value="en">🇬🇧 English</option>
 									<option value="fr">🇫🇷 Français</option>
 									<option value="es">🇪🇸 Español</option>
@@ -871,18 +891,18 @@
 							<span class="search-icon">🔍</span>
 							<input
 								type="text"
-								id="deck-search"
+								id="deck-search" aria-label="Search decks"
 								placeholder="Search for a deck..."
 								data-translate-placeholder="searchPlaceholder"
 								oninput="filterDecks()"
 							>
-							<button class="search-clear" onclick="clearSearch()">✕</button>
+							<button class="search-clear" onclick="clearSearch()" aria-label="Clear search">✕</button>
 						</div>
 						<div class="no-results" id="no-results" data-translate="noResults">No decks found</div>
 
 						<div class="deck-options">
 							<!-- Rider-Waite Classic -->
-							<div class="deck-card" onclick="selectDeck('rider')">
+							<div class="deck-card" onclick="selectDeck('rider')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDeck('rider');}" role="button" aria-label="Select Rider-Waite Classic deck">
 								<div class="deck-preview">
 									<img src="../decks/images/major_arcana/00-the-fool.png" alt="The Fool">
 								</div>
@@ -890,7 +910,7 @@
 							</div>
 
 							<!-- Artistic Tarot -->
-							<div class="deck-card" onclick="selectDeck('artistic')">
+							<div class="deck-card" onclick="selectDeck('artistic')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDeck('artistic');}" role="button" aria-label="Select Artistic Tarot deck">
 								<div class="deck-preview">
 									<img src="../decks/artistic-tarot-cards/02-the-magician.png" alt="The Magician">
 								</div>
@@ -898,7 +918,7 @@
 							</div>
 
 							<!-- Miró Surrealism -->
-							<div class="deck-card" onclick="selectDeck('miro')">
+							<div class="deck-card" onclick="selectDeck('miro')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDeck('miro');}" role="button" aria-label="Select Miró Surrealism deck">
 								<div class="deck-preview">
 									<img src="../decks/miro-tarot-cards/18-the-star.png" alt="The Star">
 								</div>
@@ -906,7 +926,7 @@
 							</div>
 
 							<!-- Picasso Cubism -->
-							<div class="deck-card" onclick="selectDeck('picasso')">
+							<div class="deck-card" onclick="selectDeck('picasso')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectDeck('picasso');}" role="button" aria-label="Select Picasso Cubism deck">
 								<div class="deck-preview">
 									<img src="../decks/picasso-tarot-cards/11-wheel-of-fortune.png" alt="Wheel of Fortune">
 								</div>
@@ -928,9 +948,9 @@
 					</section>
 
 					<!-- Lightbox -->
-					<div id="lightbox" onclick="closeLightbox()">
+					<div id="lightbox" onclick="closeLightbox()" role="dialog" aria-modal="true" aria-label="Card image viewer">
 						<div class="lightbox-content" onclick="event.stopPropagation()">
-							<button class="lightbox-close" onclick="closeLightbox()">✕</button>
+							<button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">✕</button>
 							<img id="lightbox-img" src="" alt="">
 						</div>
 					</div>
@@ -1275,11 +1295,23 @@
 
 			lightboxImg.src = imagePath;
 			lightbox.classList.add('visible');
+
+			// Add keyboard event listener for Escape key
+			document.addEventListener('keydown', handleLightboxKeydown);
 		}
 
 		function closeLightbox() {
 			const lightbox = document.getElementById('lightbox');
 			lightbox.classList.remove('visible');
+
+			// Remove keyboard event listener
+			document.removeEventListener('keydown', handleLightboxKeydown);
+		}
+
+		function handleLightboxKeydown(event) {
+			if (event.key === 'Escape') {
+				closeLightbox();
+			}
 		}
 
 		function filterDecks() {
@@ -1519,7 +1551,7 @@
 				if (navPanel && !document.getElementById('language-select-mobile')) {
 					const mobileDropdownHTML = `
 						<div class="link depth-0" style="padding: 1em; border-top: solid 1px rgba(255, 255, 255, 0.05);">
-							<select id="language-select-mobile" onchange="changeMobileLanguage()" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 0.9em;">
+							<select id="language-select-mobile" onchange="changeMobileLanguage()" aria-label="Select language" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 0.9em;">
 								<option value="en">🇬🇧 English</option>
 								<option value="fr">🇫🇷 Français</option>
 								<option value="es">🇪🇸 Español</option>

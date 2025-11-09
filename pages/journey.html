@@ -50,6 +50,24 @@
 
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<style>
+			/* Skip link for accessibility */
+			.skip-link {
+				position: absolute;
+				top: -40px;
+				left: 0;
+				background: #9370DB;
+				color: white;
+				padding: 8px 16px;
+				text-decoration: none;
+				font-weight: bold;
+				z-index: 10000;
+				border-radius: 0 0 4px 0;
+			}
+
+			.skip-link:focus {
+				top: 0;
+			}
+
 			/* Custom background with tarot image */
 			body {
 				background:
@@ -268,6 +286,7 @@
 		</style>
 	</head>
 	<body class="landing is-preload">
+		<a href="#main" class="skip-link">Skip to main content</a>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -280,7 +299,7 @@
 							<li><a href="journey.html">Fool's Journey</a></li>
 							<li><a href="dictionary.html">Dictionary</a></li>
 							<li class="language-dropdown">
-								<select id="language-select" onchange="changeLanguage()" style="padding: 10px 20px; border-radius: 25px; border: 2px solid rgba(255, 255, 255, 0.8); font-size: 0.95em; background: rgba(255, 255, 255, 0.95); cursor: pointer; transition: all 0.3s ease; font-weight: 500; line-height: 1.4; vertical-align: middle;">
+								<select id="language-select" onchange="changeLanguage()" aria-label="Select language" style="padding: 10px 20px; border-radius: 25px; border: 2px solid rgba(255, 255, 255, 0.8); font-size: 0.95em; background: rgba(255, 255, 255, 0.95); cursor: pointer; transition: all 0.3s ease; font-weight: 500; line-height: 1.4; vertical-align: middle;">
 									<option value="en">🇬🇧 English</option>
 									<option value="fr">🇫🇷 Français</option>
 									<option value="es">🇪🇸 Español</option>
@@ -831,7 +850,7 @@
 				if (navPanel && !document.getElementById('language-select-mobile')) {
 					const mobileDropdownHTML = `
 						<div class="link depth-0" style="padding: 1em; border-top: solid 1px rgba(255, 255, 255, 0.05);">
-							<select id="language-select-mobile" onchange="changeMobileLanguage()" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 0.9em;">
+							<select id="language-select-mobile" onchange="changeMobileLanguage()" aria-label="Select language" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 0.9em;">
 								<option value="en">🇬🇧 English</option>
 								<option value="fr">🇫🇷 Français</option>
 								<option value="es">🇪🇸 Español</option>
