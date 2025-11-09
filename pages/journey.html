@@ -15,71 +15,22 @@
 		  gtag('config', 'G-EXTBHDX0C2');
 
 		// ============================================
-		// Initialize Journey Cards with DeckLoader (WebP Optimization)
-		// ============================================
 		(function initJourneyCards() {
-			// Major Arcana card names matching DeckLoader format
-			const majorArcanaCards = [
-				'00-the-fool',
-				'01-the-magician',
-				'02-the-high-priestess',
-				'03-the-empress',
-				'04-the-emperor',
-				'05-the-hierophant',
-				'06-the-lovers',
-				'07-the-chariot',
-				'08-strength',
-				'09-the-hermit',
-				'10-wheel-of-fortune',
-				'11-justice',
-				'12-the-hanged-man',
-				'13-death',
-				'14-temperance',
-				'15-the-devil',
-				'16-the-tower',
-				'17-the-star',
-				'18-the-moon',
-				'19-the-sun',
-				'20-judgement',
-				'21-the-world'
-			];
-
-			// Get all cards from DeckLoader
+			const majorArcanaCards = ['00-the-fool', '01-the-magician', '02-the-high-priestess', '03-the-empress', '04-the-emperor', '05-the-hierophant', '06-the-lovers', '07-the-chariot', '08-strength', '09-the-hermit', '10-wheel-of-fortune', '11-justice', '12-the-hanged-man', '13-death', '14-temperance', '15-the-devil', '16-the-tower', '17-the-star', '18-the-moon', '19-the-sun', '20-judgement', '21-the-world'];
 			const allCards = DeckLoader.getAllCards();
-
-			// Populate each placeholder with WebP-optimized image
 			majorArcanaCards.forEach((cardFilename, index) => {
 				const placeholder = document.getElementById(`journey-card-${index}`);
 				if (!placeholder) return;
-
-				// Find the card in DeckLoader data
-				const card = allCards.find(c => 
-					c.filename === cardFilename || 
-					c.filename === cardFilename.replace(/^(\d+)-/, '$1_')
-				);
-
+				const card = allCards.find(c => c.filename === cardFilename || c.filename === cardFilename.replace(/^(\d+)-/, '$1_'));
 				if (card) {
-					// Create responsive image with WebP support
-					const picture = DeckLoader.createResponsiveImage('rider-waite', card, {
-						loading: 'lazy',
-						className: 'card-image'
-					});
-
-					// Clear placeholder and add picture element
+					const picture = DeckLoader.createResponsiveImage('rider-waite', card, { loading: 'lazy', className: 'card-image' });
 					placeholder.innerHTML = '';
 					placeholder.appendChild(picture);
 					placeholder.classList.add('loaded');
-				} else {
-					console.warn(`Card not found in DeckLoader: ${cardFilename}`);
 				}
 			});
-
 			console.log('Journey cards initialized with WebP optimization');
 		})();
-		</script>
-
-		<title>Fool's Journey - My Tarot Today</title>
-		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
 		<!-- Favicons -->
@@ -901,6 +852,8 @@ tt}
 			document.querySelector('.story-intro h3').textContent = trans.introTitle;
 			document.querySelector('.story-intro p').textContent = trans.introText;
 
+
+		// ============================================
 			// Update stage titles
 			const stageTitles = document.querySelectorAll('.journey-stage h4');
 			stageTitles[0].textContent = trans.stage1Title;
@@ -954,6 +907,22 @@ tt}
 			}, 150);
 
 			document.getElementById('language-select').value = currentLanguage;
+		(function initJourneyCards() {
+			const majorArcanaCards = ['00-the-fool', '01-the-magician', '02-the-high-priestess', '03-the-empress', '04-the-emperor', '05-the-hierophant', '06-the-lovers', '07-the-chariot', '08-strength', '09-the-hermit', '10-wheel-of-fortune', '11-justice', '12-the-hanged-man', '13-death', '14-temperance', '15-the-devil', '16-the-tower', '17-the-star', '18-the-moon', '19-the-sun', '20-judgement', '21-the-world'];
+			const allCards = DeckLoader.getAllCards();
+			majorArcanaCards.forEach((cardFilename, index) => {
+				const placeholder = document.getElementById(`journey-card-${index}`);
+				if (!placeholder) return;
+				const card = allCards.find(c => c.filename === cardFilename || c.filename === cardFilename.replace(/^(\d+)-/, '$1_'));
+				if (card) {
+					const picture = DeckLoader.createResponsiveImage('rider-waite', card, { loading: 'lazy', className: 'card-image' });
+					placeholder.innerHTML = '';
+					placeholder.appendChild(picture);
+					placeholder.classList.add('loaded');
+				}
+			});
+			console.log('Journey cards initialized with WebP optimization');
+		})();
 			updateUILanguage();
 		};
 
