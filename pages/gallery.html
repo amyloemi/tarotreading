@@ -1699,10 +1699,18 @@
 			(function initGallerySkeletonLoader() {
 				const gallerySkeleton = document.getElementById('gallery-skeleton');
 				const cardGrid = document.getElementById('card-grid');
-				
-				if (!gallerySkeleton || !cardGrid) return;
+
+				if (!gallerySkeleton || !cardGrid) {
+					// Elements not found, ensure grid is visible
+					if (cardGrid) {
+						cardGrid.style.opacity = '1';
+						cardGrid.style.pointerEvents = 'auto';
+					}
+					return;
+				}
 
 				let skeletonShown = false;
+				let observerActive = false;
 
 				function showSkeleton() {
 					if (skeletonShown) return;
@@ -1713,43 +1721,65 @@
 				}
 
 				function hideSkeleton() {
+					if (!skeletonShown && cardGrid.style.opacity !== '0') {
+						// Already visible, ensure it stays that way
+						cardGrid.style.opacity = '1';
+						cardGrid.style.pointerEvents = 'auto';
+						return;
+					}
+
 					gallerySkeleton.style.transition = 'opacity 0.3s ease-out';
 					gallerySkeleton.style.opacity = '0';
 					cardGrid.style.transition = 'opacity 0.3s ease-in';
 					cardGrid.style.opacity = '1';
 					cardGrid.style.pointerEvents = 'auto';
-					
+
 					setTimeout(() => {
 						gallerySkeleton.style.display = 'none';
 						gallerySkeleton.setAttribute('aria-hidden', 'true');
 					}, 300);
 				}
 
+				// Watch for cards to be added to the grid
+				const observer = new MutationObserver((mutations) => {
+					if (cardGrid.children.length > 0) {
+						hideSkeleton();
+						if (observerActive) {
+							observer.disconnect();
+							observerActive = false;
+						}
+					}
+				});
+
+				// Start observing immediately
+				observer.observe(cardGrid, { childList: true });
+				observerActive = true;
+
 				// Show skeleton if cards haven't rendered within 100ms
 				setTimeout(() => {
 					if (cardGrid.children.length === 0) {
 						showSkeleton();
+					} else {
+						// Cards already loaded, ensure they're visible
+						hideSkeleton();
+						if (observerActive) {
+							observer.disconnect();
+							observerActive = false;
+						}
 					}
 				}, 100);
 
-				// Watch for cards to be added to the grid
-				const observer = new MutationObserver((mutations) => {
-					if (cardGrid.children.length > 0 && skeletonShown) {
-						hideSkeleton();
-						observer.disconnect();
-					}
-				});
-
-				observer.observe(cardGrid, { childList: true });
-
 				// Fallback: hide skeleton after 3 seconds
 				setTimeout(() => {
-					if (skeletonShown) {
+					if (gallerySkeleton.style.display !== 'none') {
+						console.warn('Gallery skeleton timeout - forcing hide');
 						hideSkeleton();
+					}
+					if (observerActive) {
 						observer.disconnect();
+						observerActive = false;
 					}
 				}, 3000);
-			})();
 			})();
 		};
 		</script>
