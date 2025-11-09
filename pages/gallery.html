@@ -1171,7 +1171,6 @@
 		}
 
 		function selectDeck(deckType) {
-			console.log('Selected deck:', deckType);
 			currentDeck = deckType;
 
 			// Hide deck selection and features
@@ -1441,8 +1440,6 @@
 		}
 
 		async function drawCard() {
-			console.log('Drawing card from deck:', currentDeck);
-
 			const cardImageContainer = document.getElementById('card-image-container');
 			const cardName = document.getElementById('card-name');
 			const cardOrientation = document.getElementById('card-orientation');

@@ -497,25 +497,21 @@
 
         // Placeholder functions (to be implemented with Firebase)
         function logout() {
-            alert('Logout function - will be implemented with Firebase');
             // TODO: Firebase logout
             // window.location.href = '../index.html';
         }
 
         function changePassword() {
-            alert('Change password function - will be implemented with Firebase');
             // TODO: Show password change modal
         }
 
         function deleteAccount() {
             if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
-                alert('Delete account function - will be implemented with Firebase');
                 // TODO: Firebase delete account
             }
         }
 
         function useDeck(deckId) {
-            alert('Use deck: ' + deckId + ' - will link to reading page');
             // TODO: Navigate to user reading page with selected deck
             // window.location.href = 'user-reading.html?deck=' + deckId;
         }
@@ -524,7 +520,6 @@
             const lang = document.getElementById('language-select').value;
             localStorage.setItem('tarotLanguage', lang);
             // TODO: Update UI language
-            alert('Language changed to: ' + lang);
         }
 
         // Load user data (placeholder - will use Firebase)
@@ -535,8 +530,6 @@
             // TODO: Load user's deck collection
 
             // For now, show dummy data
-            console.log('User space loaded');
-
             // Example: Show empty shelf if no decks
             // document.getElementById('user-deck-shelf').style.display = 'none';
             // document.getElementById('empty-shelf').style.display = 'block';
