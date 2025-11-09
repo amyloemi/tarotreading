@@ -55,6 +55,12 @@
 		<meta name="revisit-after" content="7 days" />
 		<meta name="rating" content="general" />
 
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="/manifest.json">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="My Tarot">
+
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<style>
 			/* Skip link for accessibility */
@@ -899,5 +905,11 @@
 			}, 100);
 		});
 		</script>
+
+		<!-- Locale Formatter -->
+		<script src="/locale-formatter.js"></script>
+
+		<!-- PWA Initialization -->
+		<script src="/pwa-init.js"></script>
 	</body>
 </html>

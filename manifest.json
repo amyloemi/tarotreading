@@ -1,0 +1,97 @@
+{
+  "name": "My Tarot Today - Daily Tarot Reading",
+  "short_name": "My Tarot",
+  "description": "Free AI-powered daily tarot card reading with 4 unique artistic decks. Get instant spiritual guidance in 6 languages.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#9370DB",
+  "orientation": "portrait-primary",
+  "categories": ["lifestyle", "entertainment", "spirituality"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "images/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshots/mobile-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "images/screenshots/desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Reading",
+      "short_name": "New Reading",
+      "description": "Get a new tarot reading",
+      "url": "/",
+      "icons": [
+        {
+          "src": "images/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Card Dictionary",
+      "short_name": "Dictionary",
+      "description": "Browse tarot card meanings",
+      "url": "/pages/dictionary.html",
+      "icons": [
+        {
+          "src": "images/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Fool's Journey",
+      "short_name": "Journey",
+      "description": "Learn the Fool's Journey",
+      "url": "/pages/journey.html",
+      "icons": [
+        {
+          "src": "images/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
