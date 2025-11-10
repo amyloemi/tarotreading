@@ -22,11 +22,6 @@ Disallow: /.git
 Disallow: /.gitignore
 Disallow: /CNAME
 
-# Disallow duplicate content (old paths if any)
-Disallow: /gallery.html
-Disallow: /journey.html
-Disallow: /dictionary.html
-
 # Crawl-delay for polite bots (1 second between requests)
 Crawl-delay: 1
 
