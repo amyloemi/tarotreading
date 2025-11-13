@@ -19,7 +19,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-		<!-- Favicons -->
+		<!-- Favicons - Ethereal Glow Logo -->
+		<link rel="icon" type="image/svg+xml" href="../images/icons/favicon.svg">
 		<link rel="icon" type="image/png" sizes="32x32" href="../images/icons/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="../images/icons/favicon-16x16.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="../images/icons/apple-touch-icon.png">
@@ -400,7 +401,45 @@
 
 			<!-- Header -->
 			<header id="header" class="alt">
-				<h1><a href="../index.html">🔮 My Tarot Today</a></h1>
+				<h1><a href="../index.html"><svg width="40" height="40" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 8px;">
+					<!-- Dark circular background (only covering the widest circle) -->
+					<circle cx="280" cy="280" r="204" fill="#1a1a2e"/>
+
+					<!-- Celestial Icon -->
+					<g transform="translate(24, 24)">
+						<circle cx="256" cy="256" r="192" fill="url(#moonGradHeaderDict)" opacity="0.3"/>
+						<circle cx="256" cy="256" r="192" fill="none" stroke="url(#gradHeaderDict)" stroke-width="12"/>
+						<circle cx="256" cy="256" r="149" fill="none" stroke="#B399E5" stroke-width="4" opacity="0.5"/>
+						<circle cx="256" cy="107" r="51" fill="url(#sunGradHeaderDict)" opacity="0.5"/>
+						<circle cx="256" cy="107" r="51" fill="none" stroke="#FFD700" stroke-width="8"/>
+						<path d="M 256,350 A 43,43 0 0,1 256,469 A 64,64 0 0,0 256,350" fill="url(#cresGradHeaderDict)" opacity="0.9"/>
+						<circle cx="192" cy="235" r="8" fill="#FFD700"/>
+						<circle cx="320" cy="245" r="6" fill="#FFD700"/>
+						<circle cx="213" cy="299" r="6" fill="#FFD700"/>
+						<circle cx="299" cy="291" r="8" fill="#FFD700"/>
+						<line x1="256" y1="43" x2="256" y2="469" stroke="url(#gradHeaderDict)" stroke-width="6" opacity="0.5"/>
+					</g>
+
+					<defs>
+						<linearGradient id="gradHeaderDict" x1="0%" y1="0%" x2="0%" y2="100%">
+							<stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+							<stop offset="50%" style="stop-color:#B399E5;stop-opacity:1" />
+							<stop offset="100%" style="stop-color:#FFD700;stop-opacity:1" />
+						</linearGradient>
+						<radialGradient id="sunGradHeaderDict">
+							<stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.6" />
+							<stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.1" />
+						</radialGradient>
+						<radialGradient id="moonGradHeaderDict">
+							<stop offset="0%" style="stop-color:#B399E5;stop-opacity:0.5" />
+							<stop offset="100%" style="stop-color:#B399E5;stop-opacity:0.1" />
+						</radialGradient>
+						<linearGradient id="cresGradHeaderDict">
+							<stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+							<stop offset="100%" style="stop-color:#B399E5;stop-opacity:0.8" />
+						</linearGradient>
+					</defs>
+				</svg> My Tarot Today</a></h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="../index.html">Card of Today</a></li>
