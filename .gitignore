@@ -2,6 +2,9 @@
 README.md
 /docs/
 
+# Local tests - never push to GitHub
+/tests/
+
 # Backup files
 *.backup
 *.skel-backup
