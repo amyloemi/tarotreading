@@ -23,7 +23,7 @@ async function loadReadings() {
 		readingsData.rider = await riderResponse.json();
 
 	} catch (error) {
-		// Error loading readings
+		window.TarotAnalytics?.error('readings_load_failed');
 	}
 }
 
@@ -177,6 +177,7 @@ function showReadingBox(card, isReversed, reading) {
 	// Show with fade in
 	setTimeout(() => {
 		readingBox.classList.add('show');
+		if (readingBox.isConnected) window.TarotAnalytics?.complete(readingBox.querySelector('.reading-text'), typeof reading === 'string' && Boolean(reading.trim()), isReversed);
 	}, 100);
 }
 
@@ -195,6 +196,7 @@ async function showFinalReading(selectedCard, isReversed) {
 	// Get reading
 	let readingEnglish = getReadingFromJSON(currentDeck, selectedCard.name, currentQuestion, isReversed);
 
+	window.TarotAnalytics?.source(readingEnglish ? 'pregenerated' : 'template_fallback');
 	if (!readingEnglish) {
 		const meaning = getCardMeaning(selectedCard.name);
 		if (meaning) {
@@ -232,6 +234,7 @@ async function showFinalReading(selectedCard, isReversed) {
 	document.getElementById('card-reading').classList.add('revealed');
 	document.getElementById('action-buttons').style.display = 'flex';
 	document.getElementById('action-buttons').classList.add('revealed');
+	window.TarotAnalytics?.complete(cardReading, typeof reading === 'string' && Boolean(reading.trim()), isReversed);
 }
 
 function positionCardAndReadingBox() {

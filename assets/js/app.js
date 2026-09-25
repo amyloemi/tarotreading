@@ -5,7 +5,10 @@ let currentDeck = null;
 
 // Main deck selection function
 async function selectDeck(deckType) {
+	// Accept one choice until the user resets; double taps must not start two flows.
+	if (currentDeck !== null) return;
 	currentDeck = deckType;
+	window.TarotAnalytics?.start(deckType);
 
 	// Ensure readings are loaded
 	if (!readingsData[deckType]) {
@@ -35,6 +38,7 @@ async function selectDeck(deckType) {
 }
 
 function returnToDeckSelection() {
+	window.TarotAnalytics?.reset('change_deck');
 	// Remove reading box
 	const readingBox = document.getElementById('reading-box');
 	if (readingBox) {
@@ -92,6 +96,7 @@ function returnToDeckSelection() {
 }
 
 function drawAnotherCard() {
+	window.TarotAnalytics?.reset('draw_another');
 	// Remove reading box
 	const readingBox = document.getElementById('reading-box');
 	if (readingBox) {

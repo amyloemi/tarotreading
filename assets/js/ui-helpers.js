@@ -19,6 +19,7 @@ function cycleQuestion() {
 	// After animation completes, change text and swipe in
 	setTimeout(() => {
 		currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+		window.TarotAnalytics?.question(currentQuestionIndex, 'next');
 		currentQuestion = questions[currentQuestionIndex]; // Keep English for reading lookup
 
 		// Display translated question
@@ -47,6 +48,7 @@ function cyclePreviousQuestion() {
 	// After animation completes, change text and swipe in from right
 	setTimeout(() => {
 		currentQuestionIndex = (currentQuestionIndex - 1 + questions.length) % questions.length;
+		window.TarotAnalytics?.question(currentQuestionIndex, 'previous');
 		currentQuestion = questions[currentQuestionIndex]; // Keep English for reading lookup
 
 		// Display translated question

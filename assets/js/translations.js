@@ -103,6 +103,7 @@ function changeLanguage() {
 	const mobileSelect = document.getElementById('language-select-mobile');
 	if (mobileSelect) mobileSelect.value = currentLanguage;
 
+	window.TarotAnalytics?.language();
 	localStorage.setItem('tarotLanguage', currentLanguage);
 	updateUILanguage();
 }
@@ -112,6 +113,7 @@ function changeMobileLanguage() {
 
 	document.getElementById('language-select').value = currentLanguage;
 
+	window.TarotAnalytics?.language();
 	localStorage.setItem('tarotLanguage', currentLanguage);
 	updateUILanguage();
 }
@@ -172,6 +174,7 @@ async function translateText(text, targetLang) {
 		console.warn('Translation failed, using English:', error);
 	}
 
+	window.TarotAnalytics?.error('translation_failed');
 	// Fallback: return English if translation fails
 	return text;
 }

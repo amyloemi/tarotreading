@@ -333,11 +333,13 @@ async function shuffleAnimation() {
 	animCards.forEach(card => card.classList.remove('shuffling'));
 
 	canPickCard = true;
+	window.TarotAnalytics?.step('cards_ready');
 	isAnimating = false;
 }
 
 async function selectAnimatedCard(selectedCard, tarotCard) {
 	if (!canPickCard || isAnimating) return;
+	window.TarotAnalytics?.step('card_selected');
 
 	isAnimating = true;
 	canPickCard = false;
@@ -463,6 +465,7 @@ async function selectAnimatedCard(selectedCard, tarotCard) {
 				resolve();
 			};
 			tempImg.onerror = () => {
+				window.TarotAnalytics?.error('card_image_failed');
 				// If image fails to load, still update but don't wait
 				cardFace.src = actualImagePath;
 				cardFace.alt = actualCard.name;
@@ -484,6 +487,7 @@ async function selectAnimatedCard(selectedCard, tarotCard) {
 	// Get reading text using the randomly selected card
 	let readingEnglish = getReadingFromJSON(currentDeck, actualCard.name, currentQuestion, isReversed);
 
+	window.TarotAnalytics?.source(readingEnglish ? 'pregenerated' : 'template_fallback');
 	if (!readingEnglish) {
 		const meaning = getCardMeaning(actualCard.name);
 		if (meaning) {
