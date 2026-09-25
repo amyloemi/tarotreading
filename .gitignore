@@ -1,5 +1,6 @@
 # Local documentation - never push to GitHub
 README.md
+/docs/
 
 # Backup files
 *.backup
